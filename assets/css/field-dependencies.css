@@ -1,0 +1,53 @@
+.scfe-field-hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+.scfe-field-visible {
+	display: block !important;
+}
+
+.scfe-dependency-fade {
+	transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+.scfe-dependency-fade.scfe-field-hidden {
+	max-height: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden;
+	opacity: 0;
+}
+
+/*
+ * No max-height cap while visible. `.scfe-field-hidden` sets `display: none`,
+ * so the transition never actually runs; a cap would only clip tall fields
+ * such as repeaters or long option lists without buying any animation.
+ */
+.scfe-dependency-fade.scfe-field-visible {
+	max-height: none;
+	opacity: 1;
+}
+
+.scfe-dependency-slide {
+	transition: max-height 0.3s ease;
+}
+
+.scfe-dependency-slide.scfe-field-hidden {
+	max-height: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden;
+}
+
+.scfe-dependency-slide.scfe-field-visible {
+	max-height: none;
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+
+	.scfe-dependency-fade,
+	.scfe-dependency-slide {
+		transition: none;
+	}
+}

@@ -1,0 +1,38 @@
+/**
+ * Phone Field Styles
+ *
+ * @package SimpleCheckoutFieldsEditor
+ */
+
+/*
+ * intl-tel-input wraps the input in `.iti`, which ships as inline-block and
+ * therefore shrinks to its content instead of filling the field wrapper. That
+ * makes a 100% phone field render narrower than every other field. Scoped to
+ * our own wrapper so other plugins' intl-tel-input instances are untouched.
+ */
+.scfe-field-width .iti {
+	display: block;
+	width: 100%;
+}
+
+/* Phone Error Message */
+.scfe-phone-error {
+	color: #e2401c;
+	font-size: 0.875em;
+	margin-top: 5px;
+	display: block;
+}
+
+/* intl-tel-input flag sprite fallback. */
+.iti__flag {
+	background-image: url('../lib/intl-tel-input/flags.png') !important;
+	background-repeat: no-repeat !important;
+	background-size: auto !important;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+	.iti__flag {
+		background-image: url('../lib/intl-tel-input/flags-2x.png') !important;
+		background-size: 5652px 15px !important;
+	}
+}

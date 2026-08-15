@@ -1,0 +1,965 @@
+/**
+ * Admin screen styling.
+ *
+ * Three colours were given and everything else is derived from them, so a
+ * change of brand is a change in one place. WordPress's own admin greys are
+ * left alone: this styles the plugin's screens, not the shell around them.
+ */
+
+/**
+ * Tokens live at the root, not on the app wrapper.
+ *
+ * WordPress renders a Modal through a portal at the end of the document, so
+ * anything scoped to the wrapper stops at the modal's edge. Scoping the tokens
+ * there left every rule inside the modal reaching for variables that were not
+ * in scope, and the condition builder rendered unstyled.
+ */
+:root {
+	--scfe-brand: #8254f5;
+	--scfe-brand-ink: #ffffff;
+	--scfe-accent: #32c7a2;
+	--scfe-surface: #f8f7fe;
+
+	// Derived. Written as rgba over the brand so a new brand colour carries
+	// its own tints rather than needing five more hex values.
+	--scfe-brand-soft: rgba(130, 84, 245, 0.08);
+	--scfe-brand-line: rgba(130, 84, 245, 0.22);
+	--scfe-brand-deep: #6a3fd4;
+	--scfe-accent-soft: rgba(50, 199, 162, 0.12);
+	--scfe-accent-deep: #1f9c7d;
+
+	--scfe-text: #1e1b2e;
+	--scfe-muted: #6b6880;
+	--scfe-line: #e6e3f5;
+	--scfe-danger: #d63638;
+
+	--scfe-radius: 10px;
+	--scfe-radius-lg: 14px;
+	--scfe-gap: 16px;
+}
+
+.scfe-app {
+	color: var(--scfe-text);
+}
+
+/* The screen's own background, rather than the admin's grey. */
+
+body.scfe-admin #wpcontent,
+body.scfe-admin #wpbody-content,
+body.scfe-admin.wp-admin {
+	background: var(--scfe-surface);
+}
+
+.scfe-app h1 {
+	font-size: 23px;
+	font-weight: 600;
+	margin: 0 0 4px;
+}
+
+.scfe-app__lede {
+	color: var(--scfe-muted);
+	margin: 0 0 var(--scfe-gap);
+}
+
+
+.scfe-app .components-tab-panel__tabs {
+	background: var(--scfe-surface);
+	border-radius: var(--scfe-radius);
+	padding: 4px;
+	gap: 2px;
+	display: inline-flex;
+	margin-bottom: var(--scfe-gap);
+}
+
+.scfe-app .components-tab-panel__tabs-item {
+	border-radius: 8px;
+	padding: 0 16px;
+	height: 36px;
+	color: var(--scfe-muted);
+	font-weight: 500;
+
+	&::after {
+		display: none; // The pill replaces the underline.
+	}
+
+	&.is-active {
+		background: #fff;
+		color: var(--scfe-brand);
+		box-shadow: 0 1px 2px rgba(30, 27, 46, 0.08);
+	}
+}
+
+
+.scfe-card {
+	background: #fff;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius-lg);
+	margin-bottom: var(--scfe-gap);
+	overflow: hidden;
+}
+
+.scfe-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 18px;
+	border-bottom: 1px solid var(--scfe-line);
+	background: var(--scfe-surface);
+}
+
+.scfe-card__title {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.scfe-card__count {
+	color: var(--scfe-muted);
+	font-size: 12px;
+	font-weight: 400;
+}
+
+
+.scfe-editor {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 340px;
+	gap: var(--scfe-gap);
+	align-items: start;
+}
+
+@media (max-width: 1100px) {
+	.scfe-editor {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.scfe-rows {
+	display: flex;
+	flex-direction: column;
+}
+
+.scfe-row {
+	display: grid;
+	grid-template-columns: 28px minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 14px;
+	border-bottom: 1px solid var(--scfe-line);
+	cursor: grab;
+	background: #fff;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+
+	&:hover {
+		background: var(--scfe-surface);
+	}
+
+	&.is-selected {
+		background: var(--scfe-brand-soft);
+		box-shadow: inset 3px 0 0 var(--scfe-brand);
+	}
+
+	&.is-dragging {
+		opacity: 0.4;
+	}
+
+	// A disabled field still has to be readable, so it is dimmed rather than
+	// greyed to the point of illegibility.
+	&.is-off .scfe-row__name {
+		opacity: 0.55;
+	}
+}
+
+.scfe-row__grip {
+	color: var(--scfe-muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+.scfe-row__name {
+	min-width: 0;
+}
+
+.scfe-row__label {
+	font-weight: 500;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.scfe-row__key {
+	font-family: Menlo, Consolas, monospace;
+	font-size: 11px;
+	color: var(--scfe-muted);
+}
+
+.scfe-row__tags {
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-top: 3px;
+}
+
+.scfe-row__actions {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+
+.scfe-tag {
+	font-size: 11px;
+	line-height: 1;
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: var(--scfe-surface);
+	color: var(--scfe-muted);
+	white-space: nowrap;
+
+	&.is-brand {
+		background: var(--scfe-brand-soft);
+		color: var(--scfe-brand-deep);
+	}
+
+	&.is-accent {
+		background: var(--scfe-accent-soft);
+		color: var(--scfe-accent-deep);
+	}
+}
+
+
+.scfe-panel {
+	position: sticky;
+	top: 46px;
+}
+
+.scfe-panel__body {
+	padding: 16px 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.scfe-panel__empty {
+	padding: 32px 18px;
+	text-align: center;
+	color: var(--scfe-muted);
+}
+
+.scfe-panel__row {
+	display: flex;
+	gap: 12px;
+
+	> * {
+		flex: 1;
+		min-width: 0;
+	}
+}
+
+.scfe-panel__note {
+	font-size: 11px;
+	color: var(--scfe-muted);
+	margin-top: 4px;
+}
+
+
+.scfe-types {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.scfe-type {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 14px 8px;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius);
+	background: #fff;
+	cursor: pointer;
+	text-align: center;
+	font-size: 12px;
+	color: var(--scfe-text);
+	min-height: 76px;
+
+	&:hover {
+		border-color: var(--scfe-brand-line);
+		background: var(--scfe-surface);
+	}
+
+	&.is-selected {
+		border-color: var(--scfe-brand);
+		background: var(--scfe-brand-soft);
+		color: var(--scfe-brand-deep);
+		font-weight: 600;
+	}
+
+	// Types the block checkout cannot render keep their place and lose their
+	// confidence, rather than disappearing and leaving a gap to wonder about.
+	&.is-limited {
+		color: var(--scfe-muted);
+	}
+}
+
+.scfe-type__icon {
+	font-size: 20px;
+	line-height: 1;
+}
+
+.scfe-type__note {
+	font-size: 10px;
+	line-height: 1.3;
+	color: var(--scfe-muted);
+}
+
+
+.scfe-rule {
+	display: grid;
+	grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) 32px;
+	gap: 8px;
+	align-items: end;
+	padding: 10px;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius);
+	background: var(--scfe-surface);
+	margin-bottom: 8px;
+}
+
+.scfe-rule__join {
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--scfe-brand-deep);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin: 0 0 8px 2px;
+}
+
+
+.scfe-app .components-button.is-primary,
+.scfe-modal .components-button.is-primary {
+	background: var(--scfe-brand);
+	color: var(--scfe-brand-ink);
+
+	&:hover:not(:disabled) {
+		background: var(--scfe-brand-deep);
+	}
+}
+
+.scfe-app .components-button.is-secondary,
+.scfe-modal .components-button.is-secondary {
+	box-shadow: inset 0 0 0 1px var(--scfe-brand-line);
+	color: var(--scfe-brand-deep);
+}
+
+.scfe-app .components-button.is-link,
+.scfe-modal .components-button.is-link {
+	color: var(--scfe-brand-deep);
+}
+
+/* The save bar sticks, because the list is long enough to scroll past it. */
+
+.scfe-savebar {
+	position: sticky;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px;
+	margin-top: var(--scfe-gap);
+	background: #fff;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius-lg);
+	box-shadow: 0 -2px 12px rgba(30, 27, 46, 0.06);
+}
+
+.scfe-savebar__dirty {
+	color: var(--scfe-danger);
+	font-size: 12px;
+}
+
+.scfe-savebar__saved {
+	color: var(--scfe-accent-deep);
+	font-size: 12px;
+}
+
+
+.scfe-group {
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius-lg);
+	padding: 12px 14px;
+	margin-bottom: 10px;
+	background: #fff;
+
+	// A group nobody has turned on is a one-line offer, so it stays quiet.
+	&.is-off {
+		background: var(--scfe-surface);
+		border-style: dashed;
+	}
+}
+
+.scfe-group__body {
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid var(--scfe-line);
+}
+
+.scfe-group__head {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 10px;
+
+	// Every select in the header shares the row evenly rather than each
+	// sizing itself to its longest option.
+	> * {
+		flex: 1 1 140px;
+		min-width: 0;
+	}
+}
+
+
+.scfe-modal .components-modal__content {
+	background: var(--scfe-surface);
+}
+
+.scfe-modal .components-modal__header {
+	background: #fff;
+	border-bottom: 1px solid var(--scfe-line);
+}
+
+// The plain controls above the condition groups sit on the surface, so they
+// get a card of their own rather than floating on it.
+.scfe-modal__section {
+	background: #fff;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius-lg);
+	padding: 14px;
+	margin-bottom: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+
+.scfe-choices {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 2px 16px;
+
+	// WordPress gives a checkbox no vertical rhythm of its own, so a list of
+	// eleven payment gateways arrives as one solid block of text.
+	.components-base-control {
+		margin: 0;
+	}
+
+	.components-checkbox-control__label {
+		line-height: 1.5;
+	}
+
+	.components-base-control__field {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 5px 6px;
+		border-radius: 6px;
+		margin: 0;
+	}
+
+	label:hover {
+		cursor: pointer;
+	}
+
+	.components-base-control__field:hover {
+		background: var(--scfe-surface);
+	}
+}
+
+
+.scfe-stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+	gap: var(--scfe-gap);
+	margin-bottom: var(--scfe-gap);
+}
+
+.scfe-stat {
+	background: #fff;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius-lg);
+	padding: 16px 18px;
+
+	// The figure that answers "is this working" carries the accent. Giving
+	// every tile one would leave none of them saying anything.
+	&.is-lead {
+		border-color: var(--scfe-accent);
+		background: var(--scfe-accent-soft);
+	}
+}
+
+.scfe-stat__label {
+	font-size: 11px;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--scfe-muted);
+}
+
+.scfe-stat__value {
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1.25;
+	margin-top: 2px;
+
+	.is-lead & {
+		color: var(--scfe-accent-deep);
+	}
+}
+
+.scfe-stat__help {
+	font-size: 12px;
+	color: var(--scfe-muted);
+}
+
+
+.scfe-counts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 14px 18px;
+}
+
+.scfe-count {
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: var(--scfe-surface);
+	font-size: 13px;
+
+	b {
+		font-weight: 600;
+	}
+
+	&.is-bad b {
+		color: var(--scfe-danger);
+	}
+}
+
+
+.scfe-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+
+	th {
+		text-align: start;
+		font-size: 11px;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--scfe-muted);
+		font-weight: 600;
+		padding: 10px 14px;
+		border-bottom: 1px solid var(--scfe-line);
+		white-space: nowrap;
+	}
+
+	td {
+		padding: 12px 14px;
+		border-bottom: 1px solid var(--scfe-line);
+		vertical-align: top;
+	}
+
+	tr:last-child td {
+		border-bottom: 0;
+	}
+
+	tbody tr:hover {
+		background: var(--scfe-surface);
+	}
+}
+
+.scfe-scroll {
+	overflow-x: auto;
+}
+
+// The status reads as a badge rather than as coloured text, so a row can be
+// scanned down the first column alone.
+.scfe-status {
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1;
+	padding: 5px 10px;
+	border-radius: 999px;
+	white-space: nowrap;
+
+	&.is-open {
+		background: var(--scfe-brand-soft);
+		color: var(--scfe-brand-deep);
+	}
+
+	&.is-abandoned {
+		background: rgba(214, 54, 56, 0.1);
+		color: var(--scfe-danger);
+	}
+
+	&.is-recovered {
+		background: var(--scfe-accent-soft);
+		color: var(--scfe-accent-deep);
+	}
+
+	&.is-completed {
+		background: var(--scfe-surface);
+		color: var(--scfe-muted);
+	}
+}
+
+.scfe-warn {
+	font-size: 11px;
+	color: var(--scfe-danger);
+	margin-top: 4px;
+}
+
+.scfe-empty {
+	padding: 40px 18px;
+	text-align: center;
+	color: var(--scfe-muted);
+}
+
+
+.scfe-settings {
+	max-width: 720px;
+}
+
+.scfe-fields {
+	padding: 16px 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.scfe-sequence-step {
+	display: grid;
+	grid-template-columns: minmax(220px, 1fr) minmax(180px, 0.7fr);
+	gap: 16px;
+	align-items: end;
+	padding: 14px;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius);
+	background: var(--scfe-surface);
+}
+
+@media (max-width: 600px) {
+	.scfe-sequence-step {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+.scfe-modules {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 8px;
+	padding: 16px 18px;
+}
+
+.scfe-module {
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius);
+	padding: 12px 14px;
+	background: var(--scfe-surface);
+
+	// On is the state worth showing, because the question a merchant is
+	// answering here is what the plugin is currently doing.
+	&.is-on {
+		background: #fff;
+		border-color: var(--scfe-brand-line);
+	}
+
+	.components-base-control {
+		margin: 0;
+	}
+}
+
+.scfe-revenue__heading,
+.scfe-revenue-filters,
+.scfe-chart-row__label,
+.scfe-recovery-value dl div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.scfe-revenue__heading {
+	gap: 16px;
+}
+
+.scfe-revenue-filters {
+	justify-content: flex-start;
+	align-items: end;
+	flex-wrap: wrap;
+	gap: 12px;
+	padding: 14px;
+	margin-bottom: 16px;
+	background: #fff;
+	border: 1px solid var(--scfe-line);
+	border-radius: var(--scfe-radius-lg);
+
+	label {
+		display: grid;
+		gap: 5px;
+		font-size: 12px;
+		color: var(--scfe-muted);
+	}
+
+	select {
+		min-width: 145px;
+		min-height: 36px;
+		border-color: var(--scfe-line);
+		border-radius: 8px;
+		color: var(--scfe-text);
+	}
+}
+
+.scfe-revenue-filters .scfe-revenue-filters__check {
+	display: flex;
+	align-items: center;
+	min-height: 36px;
+	color: var(--scfe-text);
+}
+
+.scfe-revenue__partial {
+	color: var(--scfe-muted);
+	font-size: 12px;
+}
+
+.scfe-revenue-stats {
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.scfe-delta {
+	display: inline-block;
+	margin-top: 8px;
+	font-size: 11px;
+	font-weight: 600;
+
+	&.is-up {
+		color: var(--scfe-accent-deep);
+	}
+
+	&.is-down {
+		color: var(--scfe-danger);
+	}
+
+	&.is-neutral {
+		color: var(--scfe-muted);
+		font-weight: 400;
+	}
+}
+
+.scfe-revenue-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--scfe-gap);
+}
+
+.scfe-chart-list,
+.scfe-recovery-value {
+	padding: 18px;
+}
+
+.scfe-chart-row + .scfe-chart-row {
+	margin-top: 18px;
+}
+
+.scfe-chart-row__label {
+	margin-bottom: 7px;
+	font-size: 13px;
+}
+
+.scfe-bar {
+	height: 10px;
+	background: var(--scfe-surface);
+	border-radius: 999px;
+	overflow: hidden;
+
+	span {
+		display: block;
+		height: 100%;
+		background: linear-gradient(90deg, var(--scfe-brand), var(--scfe-accent));
+		border-radius: inherit;
+	}
+}
+
+.scfe-recovery-value > strong {
+	display: block;
+	font-size: 30px;
+	color: var(--scfe-accent-deep);
+}
+
+.scfe-recovery-value > span,
+.scfe-recovery-value p {
+	color: var(--scfe-muted);
+}
+
+.scfe-recovery-value dl {
+	margin: 20px 0;
+
+	div {
+		padding: 9px 0;
+		border-bottom: 1px solid var(--scfe-line);
+	}
+
+	dd {
+		font-weight: 600;
+		margin: 0;
+	}
+}
+
+.scfe-trend__plot {
+	display: flex;
+	align-items: end;
+	gap: 4px;
+	height: 260px;
+	padding: 40px 18px 12px;
+	overflow-x: auto;
+}
+
+.scfe-trend__day {
+	position: relative;
+	display: flex;
+	flex: 1 0 14px;
+	min-width: 14px;
+	height: 100%;
+	align-items: center;
+	justify-content: end;
+	flex-direction: column;
+
+	time {
+		font-size: 9px;
+		color: var(--scfe-muted);
+		writing-mode: vertical-rl;
+		margin-top: 5px;
+	}
+}
+
+.scfe-trend__bar {
+	display: block;
+	width: 100%;
+	max-width: 24px;
+	background: var(--scfe-brand);
+	border-radius: 5px 5px 2px 2px;
+	cursor: help;
+
+	&:hover,
+	&:focus {
+		background: var(--scfe-accent-deep);
+		outline: 2px solid var(--scfe-brand-line);
+	}
+}
+
+.scfe-trend__value {
+	display: none;
+	position: absolute;
+	bottom: calc(100% + 4px);
+	z-index: 2;
+	white-space: nowrap;
+	padding: 4px 7px;
+	border-radius: 5px;
+	background: var(--scfe-text);
+	color: #fff;
+	font-size: 11px;
+}
+
+.scfe-trend__day:has(.scfe-trend__bar:hover) .scfe-trend__value,
+.scfe-trend__day:has(.scfe-trend__bar:focus) .scfe-trend__value {
+	display: block;
+}
+
+.scfe-chart-table,
+.scfe-glossary {
+	summary {
+		cursor: pointer;
+		padding: 14px 18px;
+		font-weight: 600;
+	}
+}
+
+.scfe-glossary dl {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	padding: 0 18px 18px;
+	margin: 0;
+
+	dt {
+		font-weight: 600;
+	}
+
+	dd {
+		margin: 4px 0 0;
+		color: var(--scfe-muted);
+	}
+}
+
+.scfe-revenue-upgrade {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+	padding: 18px;
+	border-color: var(--scfe-brand-line);
+	background: var(--scfe-brand-soft);
+
+	p {
+		margin: 4px 0 0;
+		color: var(--scfe-muted);
+	}
+}
+
+.scfe-pro-breakdown__filters {
+	display: flex;
+	align-items: end;
+	flex-wrap: wrap;
+	gap: 12px;
+	padding: 16px 18px;
+
+	label {
+		display: grid;
+		gap: 5px;
+		font-size: 12px;
+		color: var(--scfe-muted);
+	}
+
+	input,
+	select {
+		min-height: 36px;
+		border-color: var(--scfe-line);
+		border-radius: 8px;
+	}
+}
+
+@media (max-width: 782px) {
+	.scfe-revenue-grid,
+	.scfe-glossary dl {
+		grid-template-columns: 1fr;
+	}
+
+	.scfe-revenue-filters label,
+	.scfe-revenue-filters select {
+		width: 100%;
+	}
+
+	.scfe-revenue-upgrade {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}

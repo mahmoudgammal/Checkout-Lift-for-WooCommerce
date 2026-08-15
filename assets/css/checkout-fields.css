@@ -1,0 +1,25 @@
+.woocommerce-billing-fields__field-wrapper,
+.woocommerce-shipping-fields__field-wrapper,
+.woocommerce-additional-fields__field-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+
+/*
+ * Full width is the default. Narrower fields receive `--scfe-basis` from the
+ * inline CSS emitted per field, already carrying the gap subtraction, so a
+ * 100% row never has 15px taken off it and cannot overflow the row.
+ */
+.scfe-field-width {
+	box-sizing: border-box;
+	flex: 0 0 var(--scfe-basis, 100%);
+	width: var(--scfe-basis, 100%);
+}
+
+@media (max-width: 768px) {
+	.scfe-field-width {
+		flex: 0 0 100% !important;
+		width: 100% !important;
+	}
+}
