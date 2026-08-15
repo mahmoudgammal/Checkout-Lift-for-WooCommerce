@@ -127,7 +127,7 @@ final class AttemptRepository {
 		$table = $this->tables->name( TableNames::ATTEMPTS );
 		$sql   = 'SELECT id FROM %i WHERE token_hash=%s LIMIT 1';
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Indexed lookup in a module-owned table; identifier and value are bound.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Indexed lookup in a module-owned table; identifier and value are bound.
 		return (int) $wpdb->get_var( $wpdb->prepare( $sql, $table, $token_hash ) );
 	}
 
