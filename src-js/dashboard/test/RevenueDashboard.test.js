@@ -13,14 +13,13 @@ jest.mock( '@wordpress/api-fetch', () => jest.fn() );
 
 const response = {
 	tracking: true,
-	filters: { currency: 'EGP', currencies: [ 'EGP', 'USD' ], runtime: 'all', status: 'all' },
-	totals: { attempts: 20, open: 2, abandoned: 8, placed: 10, placement_rate: 50, abandoned_value: '1200.0000', recognized_revenue: '2100.0000' },
-	recovery: { net: '650.0000' },
+	filters: { currency: 'EGP', currencies: [ 'EGP', 'USD' ] },
+	totals: { attempts: 20, abandoned: 8, placed: 10, placement_rate: 55.6, abandoned_value: '1200.0000' },
 };
 
 describe( 'RevenueDashboard Lite', () => {
 	beforeEach( () => {
-		delete window.scfe_admin_pro;
+		delete window.scfe_admin_extensions;
 		apiFetch.mockReset();
 		apiFetch.mockResolvedValue( response );
 	} );
@@ -33,7 +32,7 @@ describe( 'RevenueDashboard Lite', () => {
 		screen.getByText( 'Captured cart value; not guaranteed lost or recoverable revenue' );
 		expect( screen.queryByText( 'Recognized revenue' ) ).toBeNull();
 		expect( screen.queryByLabelText( 'Checkout' ) ).toBeNull();
-		screen.getByRole( 'link', { name: 'Explore Pro recovery' } );
+		screen.getByRole( 'link', { name: 'Explore recovery add-ons' } );
 	} );
 
 	it( 'refetches when the merchant changes a Lite filter', async () => {

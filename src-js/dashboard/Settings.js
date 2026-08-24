@@ -41,7 +41,9 @@ export default function Settings() {
 	const set = ( key ) => ( value ) => setValues( { ...values, [ key ]: value } );
 	const setNumber = ( key ) => ( value ) =>
 		setValues( { ...values, [ key ]: parseInt( value, 10 ) || 1 } );
-	const sequence = values.email_sequence ? window.scfe_admin_pro?.RecoverySequenceSettings : null;
+	const sequence = values.email_sequence
+		? window.scfe_admin_extensions?.RecoverySequenceSettings
+		: null;
 
 	const save = () => {
 		setSaving( true );

@@ -22,20 +22,12 @@ final class MultilingualModule implements Module {
 	 * @param MultilingualProviders       $providers Provider detector.
 	 * @param CheckoutFieldStringRegistry $checkout_strings Checkout-field string registry.
 	 * @param CheckoutFieldsTranslator    $checkout_translator Checkout-field translator.
-	 * @param ProFieldStringRegistry      $pro_fields Advanced-field string registry.
-	 * @param ProSettingsStringRegistry   $pro_settings Advanced settings string registry.
-	 * @param ProCheckoutFieldsTranslator $pro_translator Advanced-field translator.
-	 * @param MultiStepSettingsTranslator $multistep_translator Multi-step settings translator.
 	 * @param MultilingualAdminNotice     $notice Admin notice and dismiss action.
 	 */
 	public function __construct(
 		private MultilingualProviders $providers,
 		private CheckoutFieldStringRegistry $checkout_strings,
 		private CheckoutFieldsTranslator $checkout_translator,
-		private ProFieldStringRegistry $pro_fields,
-		private ProSettingsStringRegistry $pro_settings,
-		private ProCheckoutFieldsTranslator $pro_translator,
-		private MultiStepSettingsTranslator $multistep_translator,
 		private MultilingualAdminNotice $notice
 	) {
 	}
@@ -60,12 +52,6 @@ final class MultilingualModule implements Module {
 	public function boot(): void {
 		add_action( 'update_option_scfe_checkout_fields', array( $this->checkout_strings, 'register_on_save' ), 10, 2 );
 		add_filter( 'woocommerce_checkout_fields', array( $this->checkout_translator, 'translate' ), 999 );
-		add_action( 'scfe_register_multilingual_strings', array( $this->pro_fields, 'register' ), 10, 2 );
-		add_action( 'update_option_scfe_multistep_settings', array( $this->pro_settings, 'register_multistep' ), 10, 2 );
-		add_action( 'update_option_scfe_address_autocomplete', array( $this->pro_settings, 'register_autocomplete' ), 10, 2 );
-		add_filter( 'woocommerce_checkout_fields', array( $this->pro_translator, 'translate' ), 1000 );
-		add_filter( 'option_scfe_multistep_settings', array( $this->multistep_translator, 'translate' ) );
-		add_action( 'init', array( $this->pro_settings, 'register_saved_settings' ), 20 );
 		add_action( 'admin_notices', array( $this->notice, 'render' ) );
 		add_action( 'wp_ajax_scfe_dismiss_multilingual_notice', array( $this->notice, 'dismiss' ) );
 		$this->register_provider_boot_hooks();

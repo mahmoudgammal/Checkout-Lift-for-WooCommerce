@@ -14,7 +14,5 @@ namespace DesignTich\SimpleCheckoutFieldsEditor\Core\Settings;
  */
 final class ModuleScheduleHooks {
 
-	public const FILE_UPLOAD_CLEANUP = 'scfe_cleanup_temp_files';
-
 	public const REVENUE_CLASSIFY = 'scfe_revenue_classify_attempts';
 }

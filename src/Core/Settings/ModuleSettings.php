@@ -12,12 +12,6 @@ namespace DesignTich\SimpleCheckoutFieldsEditor\Core\Settings;
 /**
  * Reads and writes the merchant's module choices.
  *
- * Not to be confused with `Features`, which answers what this *build* ships.
- * The two are different questions and both have to say yes: a build may
- * exclude a module a merchant would happily switch on, and a merchant may
- * switch off a module their build includes. A module runs when the package
- * carries it and the shop asked for it.
- *
  * Everything defaults to on. A merchant who upgrades should find the plugin
  * behaving as it did, not silently missing the half they never visited a
  * settings screen to enable.
@@ -39,16 +33,10 @@ final class ModuleSettings {
 	 * @var array<string, string>
 	 */
 	private const OPTIONAL = array(
-		'recovery'             => 'Checkout Recovery',
-		'conditions'           => 'Conditional fields',
-		'multistep'            => 'Multi-step checkout',
-		'address-autocomplete' => 'Address autocomplete',
-		'phone'                => 'International phone field',
-		'file-upload'          => 'File upload fields',
-		'datetime'             => 'Date and time fields',
-		'fee'                  => 'Fee fields',
-		'repeater'             => 'Repeater fields',
-		'multilingual'         => 'WPML and Polylang support',
+		'recovery'     => 'Checkout Recovery',
+		'conditions'   => 'Conditional fields',
+		'phone'        => 'International phone field',
+		'multilingual' => 'WPML and Polylang support',
 	);
 
 	/**

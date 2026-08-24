@@ -21,7 +21,6 @@ function describe( status ) {
 	const map = {
 		open: __( 'In progress', 'checkout-lift-for-woocommerce' ),
 		abandoned: __( 'Abandoned', 'checkout-lift-for-woocommerce' ),
-		recovered: __( 'Recovered', 'checkout-lift-for-woocommerce' ),
 		completed: __( 'Completed', 'checkout-lift-for-woocommerce' ),
 	};
 

@@ -1,5 +1,5 @@
 /**
- * Checkout value overview with Pro analytics expansion.
+ * Lite checkout funnel and abandoned-value overview.
  *
  * @package SimpleCheckoutFieldsEditor
  */
@@ -28,9 +28,8 @@ function Funnel( { totals } ) {
 }
 
 export default function RevenueDashboard() {
-	const RevenueAdvanced = window.scfe_admin_pro?.RevenueAdvanced;
-	const advanced = !! RevenueAdvanced;
-	const [ filters, setFilters ] = useState( { period: '30', currency: '', runtime: 'all', status: 'all', compare: advanced } );
+	const AddonAnalytics = window.scfe_admin_extensions?.RevenueAnalytics;
+	const [ filters, setFilters ] = useState( { period: '30', currency: '' } );
 	const [ data, setData ] = useState( null );
 	const [ error, setError ] = useState( '' );
 	const [ loading, setLoading ] = useState( true );
@@ -38,7 +37,7 @@ export default function RevenueDashboard() {
 	useEffect( () => {
 		let active = true;
 		setLoading( true );
-		const query = new URLSearchParams( { ...filters, compare: filters.compare ? 'true' : 'false' } );
+		const query = new URLSearchParams( filters );
 		apiFetch( { path: `${ PATH }?${ query.toString() }` } )
 			.then( ( response ) => {
 				if ( active ) {
@@ -49,20 +48,17 @@ export default function RevenueDashboard() {
 			.catch( ( requestError ) => active && setError( requestError.message ) )
 			.finally( () => active && setLoading( false ) );
 		return () => { active = false; };
-	}, [ filters.period, filters.currency, filters.runtime, filters.status, filters.compare ] );
+	}, [ filters.period, filters.currency ] );
 
-	const set = ( key ) => ( event ) => setFilters( { ...filters, [ key ]: 'checkbox' === event.target.type ? event.target.checked : event.target.value } );
+	const set = ( key ) => ( event ) => setFilters( { ...filters, [ key ]: event.target.value } );
 	const totals = data?.totals;
 	const currencies = data?.filters?.currencies?.length ? data.filters.currencies : [ data?.filters?.currency || 'USD' ];
 
 	return <div className="scfe-app scfe-revenue">
 		<div className="scfe-revenue__heading"><div><h1>{ __( 'Revenue Analytics', 'checkout-lift-for-woocommerce' ) }</h1><p className="scfe-app__lede">{ __( 'Measure checkout outcomes and the potential value sitting in abandoned checkouts.', 'checkout-lift-for-woocommerce' ) }</p></div>{ loading && <Spinner /> }</div>
 		<div className="scfe-revenue-filters">
-			<label><span>{ __( 'Period', 'checkout-lift-for-woocommerce' ) }</span><select value={ filters.period } onChange={ set( 'period' ) }><option value="7">{ __( 'Last 7 days', 'checkout-lift-for-woocommerce' ) }</option><option value="30">{ __( 'Last 30 days', 'checkout-lift-for-woocommerce' ) }</option>{ advanced && <option value="90">{ __( 'Last 90 days', 'checkout-lift-for-woocommerce' ) }</option> }</select></label>
+			<label><span>{ __( 'Period', 'checkout-lift-for-woocommerce' ) }</span><select value={ filters.period } onChange={ set( 'period' ) }><option value="7">{ __( 'Last 7 days', 'checkout-lift-for-woocommerce' ) }</option><option value="30">{ __( 'Last 30 days', 'checkout-lift-for-woocommerce' ) }</option></select></label>
 			<label><span>{ __( 'Currency', 'checkout-lift-for-woocommerce' ) }</span><select value={ filters.currency } onChange={ set( 'currency' ) }>{ currencies.map( ( currency ) => <option value={ currency } key={ currency }>{ currency }</option> ) }</select></label>
-			{ advanced && <label><span>{ __( 'Checkout', 'checkout-lift-for-woocommerce' ) }</span><select value={ filters.runtime } onChange={ set( 'runtime' ) }><option value="all">{ __( 'All checkouts', 'checkout-lift-for-woocommerce' ) }</option><option value="classic">{ __( 'Classic', 'checkout-lift-for-woocommerce' ) }</option><option value="blocks">{ __( 'Checkout Blocks', 'checkout-lift-for-woocommerce' ) }</option></select></label> }
-			{ advanced && <label><span>{ __( 'Outcome', 'checkout-lift-for-woocommerce' ) }</span><select value={ filters.status } onChange={ set( 'status' ) }><option value="all">{ __( 'All outcomes', 'checkout-lift-for-woocommerce' ) }</option><option value="open">{ __( 'In progress', 'checkout-lift-for-woocommerce' ) }</option><option value="abandoned">{ __( 'Abandoned', 'checkout-lift-for-woocommerce' ) }</option><option value="placed">{ __( 'Order placed', 'checkout-lift-for-woocommerce' ) }</option></select></label> }
-			{ advanced && <label className="scfe-revenue-filters__check"><input type="checkbox" checked={ filters.compare } onChange={ set( 'compare' ) } /> <span>{ __( 'Compare previous period', 'checkout-lift-for-woocommerce' ) }</span></label> }
 		</div>
 		{ error && <Notice status="error" isDismissible={ false }>{ error }</Notice> }
 		{ data && ! data.tracking && <Notice status="warning" isDismissible={ false }>{ __( 'Checkout measurement is off. Enable recording in Recovery settings to collect new activity.', 'checkout-lift-for-woocommerce' ) }</Notice> }
@@ -75,7 +71,7 @@ export default function RevenueDashboard() {
 				<Metric lead label={ __( 'Potential abandoned checkout value', 'checkout-lift-for-woocommerce' ) } value={ formatMoney( totals.abandoned_value, data.filters.currency ) } help={ __( 'Captured cart value; not guaranteed lost or recoverable revenue', 'checkout-lift-for-woocommerce' ) } />
 			</div>
 			<Funnel totals={ totals } />
-			{ RevenueAdvanced ? <RevenueAdvanced data={ data } /> : <div className="scfe-card scfe-revenue-upgrade"><div><strong>{ __( 'Turn abandoned checkout value into recovered orders', 'checkout-lift-for-woocommerce' ) }</strong><p>{ __( 'Pro adds four automated emails, secure cart resume, comparisons, attribution, detailed filters, and CSV breakdowns.', 'checkout-lift-for-woocommerce' ) }</p></div><a className="button button-primary" href="https://designtich.com/checkout-lift-for-woocommerce/" target="_blank" rel="noreferrer">{ __( 'Explore Pro recovery', 'checkout-lift-for-woocommerce' ) }</a></div> }
+			{ AddonAnalytics ? <AddonAnalytics currency={ data.filters.currency } /> : <div className="scfe-card scfe-revenue-upgrade"><div><strong>{ __( 'Turn abandoned checkout value into recovered orders', 'checkout-lift-for-woocommerce' ) }</strong><p>{ __( 'A separate add-on can automate recovery and add deeper reporting.', 'checkout-lift-for-woocommerce' ) }</p></div><a className="button button-primary" href="https://designtich.com/checkout-lift-for-woocommerce/" target="_blank" rel="noreferrer">{ __( 'Explore recovery add-ons', 'checkout-lift-for-woocommerce' ) }</a></div> }
 		</> }
 	</div>;
 }

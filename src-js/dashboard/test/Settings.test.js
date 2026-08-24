@@ -23,7 +23,7 @@ const settings = {
 
 describe( 'Lite recovery settings', () => {
 	beforeEach( () => {
-		delete window.scfe_admin_pro;
+		delete window.scfe_admin_extensions;
 		apiFetch.mockReset();
 		apiFetch.mockResolvedValue( settings );
 	} );

@@ -34,17 +34,12 @@ final class TableNames {
 	public const ATTEMPTS = 'scfe_checkout_attempts';
 
 	/**
-	 * Server-confirmed revenue attribution facts.
-	 */
-	public const ATTRIBUTIONS = 'scfe_attributions';
-
-	/**
 	 * Return every table this plugin owns.
 	 *
 	 * @return list<string> Unprefixed table names.
 	 */
 	public static function all(): array {
-		return array( self::CARTS, self::MESSAGES, self::ATTEMPTS, self::ATTRIBUTIONS );
+		return array( self::CARTS, self::MESSAGES, self::ATTEMPTS );
 	}
 
 	/**

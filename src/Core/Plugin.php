@@ -22,13 +22,6 @@ final class Plugin {
 	private static ?self $instance = null;
 
 	/**
-	 * Feature gate for this build.
-	 *
-	 * @var \DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features|null
-	 */
-	private ?\DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features $features = null;
-
-	/**
 	 * Return an instance of this class.
 	 *
 	 * @return self A single instance of this class.
@@ -57,7 +50,6 @@ final class Plugin {
 	private function boot_modules() {
 		$registry        = new \DesignTich\SimpleCheckoutFieldsEditor\Core\ModuleRegistry();
 		$checkout_fields = new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\CheckoutFieldsRepository();
-		$this->features  = \DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features::from_build();
 		$module_settings = new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings();
 
 		$this->register_module_providers(
@@ -67,7 +59,6 @@ final class Plugin {
 					$this->built_in_modules( $checkout_fields )
 				),
 				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Providers\OptionalModuleProvider(
-					$this->features,
 					$module_settings,
 					$this->optional_module_groups( $checkout_fields )
 				),
@@ -126,7 +117,6 @@ final class Plugin {
 			$this->custom_order_fields_module( $checkout_fields ),
 			$this->checkout_fields_admin_module( $checkout_fields ),
 			$this->settings_module(),
-			$this->admin_module(),
 		);
 	}
 
@@ -215,7 +205,6 @@ final class Plugin {
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Settings\SettingsPage(),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Settings\ModulesController(
 				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings(),
-				\DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features::from_build(),
 				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleShutdown()
 			)
 		);
@@ -297,7 +286,7 @@ final class Plugin {
 				$this->plugin_url(),
 				$this->version()
 			),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\OrderRecovery( $carts )
+			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\CheckoutCompletion( $carts )
 		);
 	}
 
@@ -355,21 +344,18 @@ final class Plugin {
 	 * @return \DesignTich\SimpleCheckoutFieldsEditor\Core\Contracts\Module
 	 */
 	private function revenue_analytics_module() {
-		$tables       = new \DesignTich\SimpleCheckoutFieldsEditor\Core\Database\TableNames();
-		$attempts     = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttemptRepository( $tables );
-		$session      = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttemptSession();
-		$tracker      = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttemptTracker(
+		$tables   = new \DesignTich\SimpleCheckoutFieldsEditor\Core\Database\TableNames();
+		$attempts = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttemptRepository( $tables );
+		$session  = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttemptSession();
+		$tracker  = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttemptTracker(
 			$attempts,
 			$session,
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\OrderFacts(),
+			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\PlacedOrderFacts(),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\PrivacySettings(),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Core\Checkout\CheckoutBlocks()
 		);
-		$attributions = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttributionRepository( $tables );
-
 		return new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\RevenueAnalyticsModule(
 			$tracker,
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AttributionRecorder( $attributions, $tracker ),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\AbandonmentClassifier(
 				$attempts,
 				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\RecoverySettings()
@@ -386,7 +372,6 @@ final class Plugin {
 			),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RevenueAnalytics\RevenueRetention(
 				$attempts,
-				$attributions,
 				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\PrivacySettings()
 			)
 		);
@@ -403,7 +388,6 @@ final class Plugin {
 		return new \DesignTich\SimpleCheckoutFieldsEditor\Modules\RecoveryDashboard\DashboardAssets(
 			new \DesignTich\SimpleCheckoutFieldsEditor\Core\Checkout\CheckoutBlocks(),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings(),
-			$this->features(),
 			$this->plugin_dir(),
 			$this->plugin_url(),
 			$this->version(),
@@ -435,8 +419,6 @@ final class Plugin {
 			),
 			$this->dashboard_assets(),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\FieldsAdmin\AdvancedController(
-				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\MultiStep\MultiStepSettingsRepository(),
-				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\AddressAutocomplete\AddressAutocompleteSettings(),
 				$checkout_fields,
 				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFieldsAdmin\FieldSettingsSanitizer()
 			)
@@ -496,9 +478,7 @@ final class Plugin {
 				$checkout_fields,
 				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields\CheckoutFieldsTransformer(
 					new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields\CustomFieldBuilder(
-						new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields\FieldOptionsParser(),
-						new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings(),
-						$this->features()
+						new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields\FieldOptionsParser()
 					),
 					new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields\FieldDecorator(
 						new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields\ConditionAttributes()
@@ -618,7 +598,6 @@ final class Plugin {
 	private function multilingual_module() {
 		$providers        = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\MultilingualProviders();
 		$base_strings     = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\TranslatableStringService( $providers, 'Checkout Lift' );
-		$pro_strings      = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\TranslatableStringService( $providers, 'Checkout Lift Pro' );
 		$checkout_strings = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\CheckoutFieldStringRegistry(
 			$base_strings,
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\OptionsStringParser()
@@ -628,29 +607,7 @@ final class Plugin {
 			$providers,
 			$checkout_strings,
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\CheckoutFieldsTranslator( $providers, $base_strings ),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\ProFieldStringRegistry(
-				$checkout_strings,
-				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\RepeaterSubFieldsParser()
-			),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\ProSettingsStringRegistry( $providers, $pro_strings ),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\ProCheckoutFieldsTranslator( $providers, $base_strings ),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\MultiStepSettingsTranslator( $providers, $pro_strings ),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Multilingual\MultilingualAdminNotice( $providers )
-		);
-	}
-
-	/**
-	 * Compose the hooks other modules extend during save and import.
-	 *
-	 * @return \DesignTich\SimpleCheckoutFieldsEditor\Core\Contracts\Module
-	 */
-	private function admin_module() {
-		$multistep    = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\MultiStep\MultiStepSettingsRepository();
-		$autocomplete = new \DesignTich\SimpleCheckoutFieldsEditor\Modules\AddressAutocomplete\AddressAutocompleteSettings();
-
-		return new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Admin\AdminModule(
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Admin\AdvancedSettingsSaveAction( $multistep, $autocomplete ),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\Admin\AdvancedSettingsHooks( $multistep, $autocomplete )
 		);
 	}
 
@@ -676,73 +633,15 @@ final class Plugin {
 	}
 
 	/**
-	 * Return the feature gate for this build.
-	 *
-	 * @return \DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features
-	 */
-	public function features(): \DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features {
-		if ( null === $this->features ) {
-			$this->features = \DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features::from_build();
-		}
-
-		return $this->features;
-	}
-
-	/**
 	 * Initialize hooks.
 	 */
 	private function init_hooks() {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-
-		add_filter( 'scfe_field_types', array( $this, 'add_pro_field_types' ) );
-
 		/**
 		 * Hook to initialize additional features (for external extensions).
 		 *
 		 * @since 1.0.0
 		 */
 		do_action( 'scfe_init_features' );
-	}
-
-	/**
-	 * Add Pro field types.
-	 *
-	 * @param array $types Field types.
-	 * @return array
-	 */
-	public function add_pro_field_types( $types ) {
-		$modules   = new \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings();
-		$pro_types = array(
-			'datetime'    => array(
-				'date'     => __( 'Date Picker', 'checkout-lift-for-woocommerce' ),
-				'time'     => __( 'Time Picker', 'checkout-lift-for-woocommerce' ),
-				'datetime' => __( 'Date & Time', 'checkout-lift-for-woocommerce' ),
-			),
-			'file-upload' => array( 'file' => __( 'File Upload', 'checkout-lift-for-woocommerce' ) ),
-			'fee'         => array( 'fee' => __( 'Price/Fee (Checkbox)', 'checkout-lift-for-woocommerce' ) ),
-			'repeater'    => array( 'repeater' => __( 'Repeater (Multiple Items)', 'checkout-lift-for-woocommerce' ) ),
-		);
-
-		foreach ( $pro_types as $module => $module_types ) {
-			if ( $this->features()->enabled( $module ) && $modules->enabled( $module ) ) {
-				$types = array_merge( $types, $module_types );
-			}
-		}
-
-		return $types;
-	}
-
-	/**
-	 * Load plugin textdomain.
-	 * Must be called on the 'init' action to comply with WP 6.7+ requirements.
-	 */
-	public function load_textdomain() {
-		// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- The bundled catalog also translates the separately distributed Pro add-on, so Lite must register this shared custom path outside WordPress.org language packs.
-		load_plugin_textdomain(
-			'checkout-lift-for-woocommerce',
-			false,
-			dirname( $this->plugin_basename() ) . '/languages'
-		);
 	}
 
 	/**
@@ -764,12 +663,5 @@ final class Plugin {
 	 */
 	private function version(): string {
 		return (string) \constant( 'SCFE_VERSION' );
-	}
-
-	/**
-	 * Return plugin basename.
-	 */
-	private function plugin_basename(): string {
-		return (string) \constant( 'SCFE_PLUGIN_BASENAME' );
 	}
 }

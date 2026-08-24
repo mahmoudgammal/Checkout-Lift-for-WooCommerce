@@ -11,9 +11,7 @@ namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\FieldsAdmin;
 
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Admin\AdminMenu;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\CheckoutFieldsRepository;
-use DesignTich\SimpleCheckoutFieldsEditor\Modules\AddressAutocomplete\AddressAutocompleteSettings;
 use DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFieldsAdmin\FieldSettingsSanitizer;
-use DesignTich\SimpleCheckoutFieldsEditor\Modules\MultiStep\MultiStepSettingsRepository;
 use UnexpectedValueException;
 use WP_Error;
 use WP_REST_Request;
@@ -23,10 +21,7 @@ use WP_REST_Server;
 /**
  * Serves everything the classic screen owned besides the field list.
  *
- * Multi-step, address autocomplete, the shipping toggle, and the export,
- * import, and reset tools. These moved rather than being dropped: the classic
- * screen held the only interface to a merchant's Google API key, and removing
- * it without a replacement would have taken that with it.
+ * Serves the free shipping toggle and checkout-field transfer tools.
  */
 final class AdvancedController {
 
@@ -38,14 +33,10 @@ final class AdvancedController {
 	/**
 	 * Create the controller.
 	 *
-	 * @param MultiStepSettingsRepository $multistep    Multi-step settings.
-	 * @param AddressAutocompleteSettings $autocomplete Autocomplete settings.
-	 * @param CheckoutFieldsRepository    $fields       Field storage.
-	 * @param FieldSettingsSanitizer      $sanitizer    Field schema sanitizer.
+	 * @param CheckoutFieldsRepository $fields    Field storage.
+	 * @param FieldSettingsSanitizer   $sanitizer Field schema sanitizer.
 	 */
 	public function __construct(
-		private MultiStepSettingsRepository $multistep,
-		private AddressAutocompleteSettings $autocomplete,
 		private CheckoutFieldsRepository $fields,
 		private FieldSettingsSanitizer $sanitizer
 	) {
@@ -69,8 +60,6 @@ final class AdvancedController {
 					'callback'            => array( $this, 'write' ),
 					'permission_callback' => array( $this, 'permitted' ),
 					'args'                => array(
-						'multistep'        => array( 'type' => 'object' ),
-						'autocomplete'     => array( 'type' => 'object' ),
 						'disable_shipping' => array( 'type' => 'boolean' ),
 					),
 				),
@@ -134,20 +123,14 @@ final class AdvancedController {
 	 * @param WP_REST_Request $request Incoming request.
 	 */
 	public function write( WP_REST_Request $request ) {
-		$multistep = $request->get_param( 'multistep' );
-
-		if ( is_array( $multistep ) && ! $this->multistep->replace( $multistep ) ) {
-			return $this->save_error();
-		}
-
-		$autocomplete = $request->get_param( 'autocomplete' );
-
-		if ( is_array( $autocomplete ) && ! $this->autocomplete->replace( $autocomplete ) ) {
-			return $this->save_error();
-		}
-
 		if ( null !== $request->get_param( 'disable_shipping' ) && ! $this->replace_option( 'scfe_disable_shipping', (bool) $request->get_param( 'disable_shipping' ) ) ) {
 			return $this->save_error();
+		}
+
+		$extension_error = apply_filters( 'scfe_save_advanced_settings', null, $request );
+
+		if ( $extension_error instanceof WP_Error ) {
+			return $extension_error;
 		}
 
 		return new WP_REST_Response( $this->current(), 200 );
@@ -157,17 +140,15 @@ final class AdvancedController {
 	 * Return everything a merchant would want to carry to another store.
 	 */
 	public function export(): WP_REST_Response {
-		return new WP_REST_Response(
-			array(
-				'plugin_version'        => defined( 'SCFE_VERSION' ) ? SCFE_VERSION : '',
-				'export_date'           => gmdate( 'Y-m-d H:i:s' ),
-				'checkout_fields'       => $this->fields->fields(),
-				'disable_shipping'      => (bool) get_option( 'scfe_disable_shipping', false ),
-				'multistep_settings'    => $this->multistep->settings(),
-				'autocomplete_settings' => (array) get_option( 'scfe_address_autocomplete', array() ),
-			),
-			200
+		$data = array(
+			'plugin_version'   => defined( 'SCFE_VERSION' ) ? SCFE_VERSION : '',
+			'export_date'      => gmdate( 'Y-m-d H:i:s' ),
+			'checkout_fields'  => $this->fields->fields(),
+			'disable_shipping' => (bool) get_option( 'scfe_disable_shipping', false ),
 		);
+		$data = apply_filters( 'scfe_export_checkout_settings', $data );
+
+		return new WP_REST_Response( is_array( $data ) ? $data : array(), 200 );
 	}
 
 	/**
@@ -205,12 +186,10 @@ final class AdvancedController {
 			return $this->save_error();
 		}
 
-		if ( is_array( $payload['multistep_settings'] ?? null ) && ! $this->multistep->replace( $payload['multistep_settings'] ) ) {
-			return $this->save_error();
-		}
+		$extension_error = apply_filters( 'scfe_import_checkout_settings', null, $payload );
 
-		if ( is_array( $payload['autocomplete_settings'] ?? null ) && ! $this->autocomplete->replace( $payload['autocomplete_settings'] ) ) {
-			return $this->save_error();
+		if ( $extension_error instanceof WP_Error ) {
+			return $extension_error;
 		}
 
 		do_action( 'scfe_save_settings' );
@@ -221,9 +200,7 @@ final class AdvancedController {
 	/**
 	 * Clear stored field settings so WooCommerce defaults apply again.
 	 *
-	 * Only the field settings are cleared. Multi-step, autocomplete, and the
-	 * recovery settings are separate features a merchant did not ask to lose
-	 * by resetting their checkout fields.
+	 * Only field settings are cleared; recovery data is independent.
 	 */
 	public function reset() {
 		if ( ! $this->fields->replace( array() ) ) {
@@ -242,22 +219,10 @@ final class AdvancedController {
 	 * @return array<string, mixed>
 	 */
 	private function current(): array {
-		return array(
-			'multistep'        => $this->multistep->settings(),
-			'autocomplete'     => wp_parse_args(
-				(array) get_option( 'scfe_address_autocomplete', array() ),
-				array(
-					'enabled'          => false,
-					'api_key'          => '',
-					'countries'        => '',
-					'billing_enabled'  => true,
-					'shipping_enabled' => true,
-					'locate_me'        => false,
-					'types'            => 'address',
-				)
-			),
-			'disable_shipping' => (bool) get_option( 'scfe_disable_shipping', false ),
-		);
+		$current = array( 'disable_shipping' => (bool) get_option( 'scfe_disable_shipping', false ) );
+		$current = apply_filters( 'scfe_advanced_settings', $current );
+
+		return is_array( $current ) ? $current : array();
 	}
 
 	/**

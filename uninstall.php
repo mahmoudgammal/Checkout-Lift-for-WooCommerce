@@ -34,8 +34,6 @@ if ( ! $scfe_delete_data ) {
 
 delete_option( 'scfe_checkout_fields' );
 delete_option( 'scfe_disable_shipping' );
-delete_option( 'scfe_multistep_settings' );
-delete_option( 'scfe_address_autocomplete' );
 delete_option( 'scfe_multilingual_notice_dismissed' );
 delete_option( 'scfe_db_version' );
 delete_option( 'scfe_privacy' );

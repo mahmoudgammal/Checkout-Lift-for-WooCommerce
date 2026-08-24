@@ -33,9 +33,6 @@ final class FieldsPayload {
 	 */
 	private const CONDITIONS = array(
 		'conditions',
-		'cart_conditions',
-		'payment_conditions',
-		'shipping_conditions',
 		'field_dependencies',
 	);
 
@@ -48,14 +45,30 @@ final class FieldsPayload {
 	 * @var array<string, list<string>>
 	 */
 	private const TYPE_SETTINGS = array(
-		'select'   => array( 'options' ),
-		'date'     => array( 'datetime_min_date', 'datetime_max_date' ),
-		'datetime' => array( 'datetime_min_date', 'datetime_max_date' ),
-		'time'     => array(),
-		'file'     => array( 'file_types', 'max_file_size' ),
-		'fee'      => array( 'fee_amount', 'fee_type', 'fee_taxable' ),
-		'repeater' => array( 'repeater_min', 'repeater_max', 'repeater_button', 'repeater_fields' ),
+		'select' => array( 'options' ),
 	);
+
+	/**
+	 * Return condition keys supplied by Lite and installed add-ons.
+	 *
+	 * @return list<string>
+	 */
+	private function condition_keys(): array {
+		$keys = apply_filters( 'scfe_field_condition_keys', self::CONDITIONS );
+
+		return is_array( $keys ) ? array_values( array_filter( $keys, 'is_string' ) ) : self::CONDITIONS;
+	}
+
+	/**
+	 * Return type settings supplied by Lite and installed add-ons.
+	 *
+	 * @return array<string, list<string>>
+	 */
+	private function type_settings(): array {
+		$settings = apply_filters( 'scfe_field_type_settings', self::TYPE_SETTINGS );
+
+		return is_array( $settings ) ? $settings : self::TYPE_SETTINGS;
+	}
 
 	/**
 	 * Every per-type setting, whatever the type.
@@ -63,7 +76,7 @@ final class FieldsPayload {
 	 * @return list<string>
 	 */
 	private function all_type_settings(): array {
-		return array_merge( array( 'type', 'default' ), ...array_values( self::TYPE_SETTINGS ) );
+		return array_merge( array( 'type', 'default' ), ...array_values( $this->type_settings() ) );
 	}
 
 	/**
@@ -72,7 +85,7 @@ final class FieldsPayload {
 	 * @return list<string>
 	 */
 	private function all_managed(): array {
-		return array_merge( self::MANAGED, $this->all_type_settings(), self::CONDITIONS );
+		return array_merge( self::MANAGED, $this->all_type_settings(), $this->condition_keys() );
 	}
 
 	/**
@@ -115,7 +128,7 @@ final class FieldsPayload {
 	private function conditions_of( array $settings ): array {
 		$groups = array();
 
-		foreach ( self::CONDITIONS as $group ) {
+		foreach ( $this->condition_keys() as $group ) {
 			$value = $settings[ $group ] ?? null;
 
 			if ( is_string( $value ) ) {
@@ -138,7 +151,7 @@ final class FieldsPayload {
 	 */
 	private function type_settings_of( array $settings ): array {
 		$type  = (string) ( $settings['type'] ?? 'text' );
-		$keys  = self::TYPE_SETTINGS[ $type ] ?? array();
+		$keys  = $this->type_settings()[ $type ] ?? array();
 		$found = array();
 
 		foreach ( $keys as $key ) {
@@ -257,7 +270,7 @@ final class FieldsPayload {
 		}
 
 		// Drop settings from prior types so hidden behavior cannot survive a type change.
-		foreach ( self::TYPE_SETTINGS[ $type ] ?? array() as $key ) {
+		foreach ( $this->type_settings()[ $type ] ?? array() as $key ) {
 			$submitted = is_array( $field['settings'] ?? null ) ? $field['settings'] : array();
 
 			if ( isset( $submitted[ $key ] ) ) {
@@ -284,7 +297,7 @@ final class FieldsPayload {
 
 		$groups = array();
 
-		foreach ( self::CONDITIONS as $group ) {
+		foreach ( $this->condition_keys() as $group ) {
 			$value = $conditions[ $group ] ?? null;
 
 			if ( ! is_array( $value ) ) {
@@ -308,7 +321,8 @@ final class FieldsPayload {
 	 * @param mixed $type Submitted type.
 	 */
 	private function type( $type ): string {
-		$supported = array( 'text', 'number', 'email', 'url', 'select', 'textarea', 'date', 'time', 'datetime', 'file', 'fee', 'repeater' );
+		$supported = apply_filters( 'scfe_custom_field_types', array( 'text', 'number', 'email', 'url', 'select', 'textarea' ) );
+		$supported = is_array( $supported ) ? $supported : array();
 
 		return in_array( $type, $supported, true ) ? (string) $type : 'text';
 	}

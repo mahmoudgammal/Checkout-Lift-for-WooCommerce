@@ -56,11 +56,6 @@ final class BlocksConditionRules {
 	private const FIELD_OPERATORS = array( 'is', 'is_not' );
 
 	/**
-	 * Cart rule types that have a path, mapped to how they are read.
-	 */
-	private const CART_TYPES = array( 'cart_total', 'product_in_cart' );
-
-	/**
 	 * Create the rule translator.
 	 *
 	 * @param BlocksCustomFields $custom_fields Block checkout field ids.
@@ -75,16 +70,8 @@ final class BlocksConditionRules {
 	 * @param int                  $decimals Currency decimal places.
 	 * @return array<string, mixed>
 	 */
-	public function for_field( array $settings, int $decimals ): array {
+	public function for_field( array $settings, int $decimals = 2 ): array {
 		$groups = array();
-
-		foreach ( array( 'shipping_conditions', 'payment_conditions' ) as $key ) {
-			$rule = $this->method_group( $settings[ $key ] ?? null, 'shipping_conditions' === $key );
-
-			if ( array() !== $rule ) {
-				$groups[] = $rule;
-			}
-		}
 
 		// Both groups compare a customer-entered value despite separate editor sections.
 		foreach ( array( 'field_dependencies', 'conditions' ) as $key ) {
@@ -95,13 +82,9 @@ final class BlocksConditionRules {
 			}
 		}
 
-		$cart = $this->cart_group( $settings['cart_conditions'] ?? null, $decimals );
+		$hidden = $this->combine( $groups );
 
-		if ( array() !== $cart ) {
-			$groups[] = $cart;
-		}
-
-		return $this->combine( $groups );
+		return apply_filters( 'scfe_checkout_block_hidden_rules', $hidden, $settings, $decimals );
 	}
 
 	/**
@@ -119,38 +102,6 @@ final class BlocksConditionRules {
 		}
 
 		return 1 === count( $groups ) ? $groups[0] : array( 'anyOf' => $groups );
-	}
-
-	/**
-	 * Express a chosen-method condition.
-	 *
-	 * @param mixed $condition   Stored condition.
-	 * @param bool  $is_shipping Whether this is the shipping condition.
-	 * @return array<string, mixed>
-	 */
-	private function method_group( $condition, bool $is_shipping ): array {
-		if ( ! is_array( $condition ) || ! is_array( $condition['methods'] ?? null ) ) {
-			return array();
-		}
-
-		$methods = array_values( array_filter( array_map( 'strval', $condition['methods'] ) ) );
-
-		if ( array() === $methods ) {
-			return array();
-		}
-
-		// Shipping rates are a list; the payment method is a scalar.
-		$matches = $is_shipping
-			? array( 'contains' => array( 'enum' => $methods ) )
-			: array( 'enum' => $methods );
-
-		$placed = $this->at(
-			$is_shipping ? 'cart' : 'checkout',
-			$is_shipping ? 'shipping_rates' : 'payment_method',
-			$matches
-		);
-
-		return $this->grouped( array( $placed ), $condition );
 	}
 
 	/**
@@ -238,118 +189,6 @@ final class BlocksConditionRules {
 		$id = $this->custom_fields->field_id( 'order', $stored_key );
 
 		return '' === $id ? array() : array( 'checkout', 'additional_fields', $id );
-	}
-
-	/**
-	 * Express a condition on the cart.
-	 *
-	 * @param mixed $group    Stored group.
-	 * @param int   $decimals Currency decimal places.
-	 * @return array<string, mixed>
-	 */
-	private function cart_group( $group, int $decimals ): array {
-		$rules = $this->rules_of( $group );
-
-		if ( array() === $rules ) {
-			return array();
-		}
-
-		$schemas = array();
-
-		foreach ( $rules as $rule ) {
-			$schema = $this->cart_rule( is_array( $rule ) ? $rule : array(), $decimals );
-
-			if ( array() === $schema ) {
-				// Category conditions have no supported document path.
-				return array();
-			}
-
-			$schemas[] = $schema;
-		}
-
-		return $this->grouped( $schemas, $group );
-	}
-
-	/**
-	 * Express one rule about the cart.
-	 *
-	 * @param array<string, mixed> $rule     Stored rule.
-	 * @param int                  $decimals Currency decimal places.
-	 * @return array<string, mixed>
-	 */
-	private function cart_rule( array $rule, int $decimals ): array {
-		$type     = (string) ( $rule['type'] ?? '' );
-		$operator = (string) ( $rule['operator'] ?? '' );
-
-		if ( ! in_array( $type, self::CART_TYPES, true ) ) {
-			return array();
-		}
-
-		if ( 'product_in_cart' === $type ) {
-			$product = (int) ( $rule['value'] ?? 0 );
-
-			if ( 1 > $product || ! in_array( $operator, self::FIELD_OPERATORS, true ) ) {
-				return array();
-			}
-
-			// `cart.items` repeats product ids by quantity.
-			$matches = array( 'contains' => array( 'const' => $product ) );
-
-			if ( 'is_not' === $operator ) {
-				$matches = array( 'not' => $matches );
-			}
-
-			return $this->at( 'cart', 'items', $matches );
-		}
-
-		$amount = $this->minor_units( $rule['value'] ?? null, $decimals );
-
-		if ( null === $amount ) {
-			return array();
-		}
-
-		// Block totals use minor units while editor rules store decimal amounts.
-		$matches = $this->amount_comparison( $operator, $amount );
-
-		return array() === $matches
-			? array()
-			: $this->at( 'cart', 'totals', $matches, 'total_price' );
-	}
-
-	/**
-	 * Express a comparison against a cart total.
-	 *
-	 * @param string $operator Stored operator.
-	 * @param int    $amount   Amount in minor units.
-	 * @return array<string, mixed>
-	 */
-	private function amount_comparison( string $operator, int $amount ): array {
-		switch ( $operator ) {
-			case 'is':
-				return array( 'const' => $amount );
-			case 'is_not':
-				return array( 'not' => array( 'const' => $amount ) );
-			case 'greater_than':
-				return array( 'exclusiveMinimum' => $amount );
-			case 'less_than':
-				return array( 'exclusiveMaximum' => $amount );
-		}
-
-		return array();
-	}
-
-	/**
-	 * Convert a stored decimal amount into minor units.
-	 *
-	 * @param mixed $value    Stored amount.
-	 * @param int   $decimals Currency decimal places.
-	 */
-	private function minor_units( $value, int $decimals ): ?int {
-		if ( ! is_scalar( $value ) || '' === (string) $value || ! is_numeric( (string) $value ) ) {
-			return null;
-		}
-
-		return (int) round( ( (float) $value ) * ( 10 ** $decimals ) );
 	}
 
 	/**

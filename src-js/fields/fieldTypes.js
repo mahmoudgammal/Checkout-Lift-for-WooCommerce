@@ -32,10 +32,10 @@ export const TYPES = [
  */
 export function availableTypes( currentType = '' ) {
 	const modules = window.scfe_admin?.modules || {};
-	const proTypes = Array.isArray( window.scfe_admin_pro?.fieldTypes )
-		? window.scfe_admin_pro.fieldTypes
+	const addOnTypes = Array.isArray( window.scfe_admin_extensions?.FieldTypes )
+		? window.scfe_admin_extensions.FieldTypes
 		: [];
-	const available = [ ...TYPES, ...proTypes ].filter( ( type ) => {
+	const available = [ ...TYPES, ...addOnTypes ].filter( ( type ) => {
 		return ! type.module || false !== modules[ type.module ] || type.value === currentType;
 	} );
 

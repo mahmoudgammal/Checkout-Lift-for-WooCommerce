@@ -13,6 +13,7 @@
  * Requires at least:    7.0
  * Requires PHP:         8.0
  * WC requires at least: 10.0
+ * Requires Plugins:     woocommerce
  *
  * @package SimpleCheckoutFieldsEditor
  */
@@ -36,10 +37,6 @@ if ( ! defined( 'SCFE_PLUGIN_BASENAME' ) ) {
 if ( ! defined( 'SCFE_PLUGIN_FILE' ) ) {
 	define( 'SCFE_PLUGIN_FILE', __FILE__ );
 }
-if ( ! defined( 'SCFE_DISABLED_FEATURES' ) ) {
-	define( 'SCFE_DISABLED_FEATURES', 'multistep,address-autocomplete,recovery.basic-email,recovery.sequence,revenue.breakdowns,conditions.cart,conditions.methods,fee,file-upload,repeater,datetime' );
-}
-
 /**
  * Autoload first-party namespaced classes.
  *
@@ -149,7 +146,6 @@ function scfe_deactivate() {
 		? \DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\RecoveryHooks::SEND
 		: 'scfe_recovery_send';
 
-	wp_clear_scheduled_hook( \DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleScheduleHooks::FILE_UPLOAD_CLEANUP );
 	wp_clear_scheduled_hook( \DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\RetentionSweep::HOOK );
 	wp_clear_scheduled_hook( $recovery_scan_hook );
 	wp_clear_scheduled_hook( $recovery_send_hook );

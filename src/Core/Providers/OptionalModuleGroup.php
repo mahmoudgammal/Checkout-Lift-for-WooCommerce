@@ -10,48 +10,42 @@ declare( strict_types=1 );
 namespace DesignTich\SimpleCheckoutFieldsEditor\Core\Providers;
 
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Contracts\Module;
-use DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings;
 
 /**
- * Keeps build availability separate from the merchant's existing setting key.
+ * Groups modules behind one merchant-controlled setting.
  */
 final class OptionalModuleGroup {
 
 	/**
 	 * Create an independently gated module group.
 	 *
-	 * @param string $capability Build capability identifier.
-	 * @param string $setting    Existing merchant setting identifier.
+	 * @param string $identifier Stable group identifier.
+	 * @param string $setting    Merchant setting identifier.
 	 * @param array  $factories  Lazy module factories.
 	 * @phpstan-param list<callable(): Module> $factories
 	 */
 	public function __construct(
-		private string $capability,
+		private string $identifier,
 		private string $setting,
 		private array $factories
 	) {
 	}
 
 	/**
-	 * Check both the legacy group gate and the granular build capability.
+	 * Check the merchant's module choice.
 	 *
-	 * @param Features       $features Build feature availability.
 	 * @param ModuleSettings $settings Merchant module choices.
 	 */
-	public function enabled( Features $features, ModuleSettings $settings ): bool {
-		if ( ! $features->enabled( $this->setting ) || ! $settings->enabled( $this->setting ) ) {
-			return false;
-		}
-
-		return $this->setting === $this->capability || $features->enabled( $this->capability );
+	public function enabled( ModuleSettings $settings ): bool {
+		return $settings->enabled( $this->setting );
 	}
 
 	/**
-	 * Return the stable build capability used to position add-on groups.
+	 * Return the stable identifier used to position add-on groups.
 	 */
 	public function capability(): string {
-		return $this->capability;
+		return $this->identifier;
 	}
 
 	/**

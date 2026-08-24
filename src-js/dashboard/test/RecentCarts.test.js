@@ -47,9 +47,9 @@ describe( 'RecentCarts', () => {
 	} );
 
 	it( 'carries the status as a class so the palette lives in one place', () => {
-		render( <RecentCarts carts={ [ cart( { status: 'recovered' } ) ] } /> );
+		render( <RecentCarts carts={ [ cart( { status: 'completed' } ) ] } /> );
 
-		expect( screen.getByText( 'Recovered' ).className ).toContain( 'is-recovered' );
+		expect( screen.getByText( 'Completed' ).className ).toContain( 'is-completed' );
 	} );
 
 	it( 'flags a record kept without the customer agreeing', () => {
@@ -58,12 +58,12 @@ describe( 'RecentCarts', () => {
 		screen.getByText( 'no permission' );
 	} );
 
-	it( 'links a recovered cart to the order it became', () => {
+	it( 'links a completed checkout to its order', () => {
 		render(
 			<RecentCarts
 				carts={ [
 					cart( {
-						status: 'recovered',
+						status: 'completed',
 						order_id: 42,
 						order_url: 'admin.php?page=wc-orders&action=edit&id=42',
 					} ),

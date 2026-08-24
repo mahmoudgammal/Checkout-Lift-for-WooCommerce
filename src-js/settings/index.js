@@ -30,11 +30,7 @@ export function tabsFor( enabled ) {
 		} );
 	}
 
-	// Multi-step and address autocomplete share a tab because they are one
-	// question to a merchant: how the checkout itself behaves.
-	if ( false !== enabled.multistep || false !== enabled[ 'address-autocomplete' ] ) {
-		tabs.push( { name: 'checkout', title: __( 'Checkout', 'checkout-lift-for-woocommerce' ) } );
-	}
+	tabs.push( { name: 'checkout', title: __( 'Checkout', 'checkout-lift-for-woocommerce' ) } );
 
 	return tabs;
 }

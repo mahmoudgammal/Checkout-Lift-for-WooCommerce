@@ -15,9 +15,7 @@ namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields;
 final class ConditionAttributes {
 
 	private const CONFIGURATIONS = array(
-		'conditions'          => array( 'rules', 'data-scfe-conditions', 'scfe-conditional-field' ),
-		'payment_conditions'  => array( 'methods', 'data-scfe-payment-conditions', 'scfe-payment-conditional-field' ),
-		'shipping_conditions' => array( 'methods', 'data-scfe-shipping-conditions', 'scfe-shipping-conditional-field' ),
+		'conditions' => array( 'rules', 'data-scfe-conditions', 'scfe-conditional-field' ),
 	);
 
 	/**
@@ -32,7 +30,9 @@ final class ConditionAttributes {
 			$field = $this->add_configuration( $field, $settings[ $setting_key ] ?? null, $configuration );
 		}
 
-		return $field;
+		$extended = apply_filters( 'scfe_checkout_condition_attributes', $field, $settings );
+
+		return is_array( $extended ) ? $extended : $field;
 	}
 
 	/**

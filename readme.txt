@@ -1,8 +1,8 @@
 === Checkout Lift for WooCommerce ===
-Contributors: designtich
+Contributors: mahmoudgammal, designtich
 Tags: woocommerce, checkout, fields, abandoned cart, conditional
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.0
 WC requires at least: 10.0
 WC tested up to: 10.9
@@ -198,4 +198,4 @@ Initial release of the checkout field editor, unfinished-checkout tracking, and 
 
 **Requirements:** WordPress 7.0 or newer, WooCommerce 10.0 or newer, PHP 8.0 or newer.
 
-**Development source:** Editable JavaScript sources and build tooling are maintained on the public repository's [main branch](https://github.com/mahmoudgammal/Checkout-Lift-for-WooCommerce). From that branch, run `npm install` and then `npm run build` to reproduce the Lite dashboard bundle.
+**Development source:** Editable JavaScript sources and build tooling are maintained in the public [GitHub repository](https://github.com/mahmoudgammal/Checkout-Lift-for-WooCommerce). From the main branch, run `npm install` and then `npm run build` to reproduce the dashboard bundle.

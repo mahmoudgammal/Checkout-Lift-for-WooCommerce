@@ -24,16 +24,16 @@ final class CartTrackingModule implements Module {
 	/**
 	 * Create the tracking module.
 	 *
-	 * @param CaptureController $controller Capture endpoint.
-	 * @param ConsentField      $field      Checkout consent control.
-	 * @param TrackingAssets    $assets     Tracker assets.
-	 * @param OrderRecovery     $outcome    Records how a tracked checkout ended.
+	 * @param CaptureController  $controller Capture endpoint.
+	 * @param ConsentField       $field      Checkout consent control.
+	 * @param TrackingAssets     $assets     Tracker assets.
+	 * @param CheckoutCompletion $completion Records completed tracked checkouts.
 	 */
 	public function __construct(
 		private CaptureController $controller,
 		private ConsentField $field,
 		private TrackingAssets $assets,
-		private OrderRecovery $outcome
+		private CheckoutCompletion $completion
 	) {
 	}
 
@@ -66,7 +66,7 @@ final class CartTrackingModule implements Module {
 		add_action( 'wp_enqueue_scripts', array( $this->assets, 'enqueue' ) );
 
 		// Close tracked carts from both classic and Store API checkout paths.
-		add_action( 'woocommerce_checkout_order_processed', array( $this->outcome, 'from_classic_checkout' ) );
-		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this->outcome, 'from_store_api' ) );
+		add_action( 'woocommerce_checkout_order_processed', array( $this->completion, 'from_classic_checkout' ) );
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this->completion, 'from_store_api' ) );
 	}
 }

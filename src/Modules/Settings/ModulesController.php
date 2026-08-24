@@ -9,7 +9,6 @@ declare( strict_types=1 );
 
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\Settings;
 
-use DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleShutdown;
 use WP_Error;
@@ -36,12 +35,10 @@ final class ModulesController {
 	 * Create the controller.
 	 *
 	 * @param ModuleSettings $modules  Stored module choices.
-	 * @param Features       $features What this build ships.
 	 * @param ModuleShutdown $shutdown Tidying up after a module switched off.
 	 */
 	public function __construct(
 		private ModuleSettings $modules,
-		private Features $features,
 		private ModuleShutdown $shutdown
 	) {
 	}
@@ -101,16 +98,11 @@ final class ModulesController {
 		$rows    = array();
 
 		foreach ( ModuleSettings::optional() as $name => $label ) {
-			$available = $this->features->enabled( $name );
-			if ( ! $available ) {
-				continue;
-			}
-
 			$rows[] = array(
 				'name'      => $name,
 				'label'     => $label,
 				'enabled'   => $enabled[ $name ] ?? true,
-				'available' => $available,
+				'available' => true,
 			);
 		}
 

@@ -94,10 +94,6 @@ final class BlocksCustomFields {
 	 * holds one as an integer in the smallest unit, so the two only meet
 	 * through the store's own precision.
 	 */
-	private function decimals(): int {
-		return function_exists( 'wc_get_price_decimals' ) ? (int) wc_get_price_decimals() : 2;
-	}
-
 	/**
 	 * Declare every custom field the block checkout can render.
 	 *
@@ -205,7 +201,8 @@ final class BlocksCustomFields {
 			$definition['options'] = $options;
 		}
 
-		$hidden = $this->conditions->for_field( $settings, $this->decimals() );
+		$decimals = function_exists( 'wc_get_price_decimals' ) ? wc_get_price_decimals() : 2;
+		$hidden   = $this->conditions->for_field( $settings, $decimals );
 
 		if ( array() !== $hidden ) {
 			$definition['hidden'] = $hidden;

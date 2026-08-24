@@ -32,24 +32,10 @@ final class FieldSettingsSanitizer {
 		'default',
 		'options',
 		'conditions',
-		'cart_conditions',
-		'payment_conditions',
-		'shipping_conditions',
-		'file_types',
-		'max_file_size',
-		'fee_amount',
-		'fee_type',
-		'fee_taxable',
-		'repeater_min',
-		'repeater_max',
-		'repeater_button',
-		'repeater_fields',
 		'field_dependencies',
-		'datetime_min_date',
-		'datetime_max_date',
 	);
 
-	private const MULTILINE_KEYS = array( 'options', 'repeater_fields' );
+	private const MULTILINE_KEYS = array( 'options' );
 
 	/**
 	 * Sanitize all checkout sections.
@@ -152,8 +138,11 @@ final class FieldSettingsSanitizer {
 	private function sanitize_field_settings( array $settings ): array {
 		$sanitized = array();
 
+		$field_keys = apply_filters( 'scfe_field_setting_keys', self::FIELD_KEYS );
+		$field_keys = is_array( $field_keys ) ? $field_keys : self::FIELD_KEYS;
+
 		foreach ( $settings as $key => $value ) {
-			if ( ! is_string( $key ) || ! in_array( $key, self::FIELD_KEYS, true ) ) {
+			if ( ! is_string( $key ) || ! in_array( $key, $field_keys, true ) ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Internal error code; SaveSettingsAction sanitizes it before output.
 				throw $this->fail( 'unknown_field_setting', $key );
 			}
@@ -161,7 +150,9 @@ final class FieldSettingsSanitizer {
 			$sanitized[ $key ] = $this->sanitize_value( $value, $key, 0 );
 		}
 
-		return $this->normalize_repeater_limits( $sanitized );
+		$sanitized = apply_filters( 'scfe_sanitized_field_settings', $sanitized );
+
+		return is_array( $sanitized ) ? $sanitized : array();
 	}
 
 	/**
@@ -180,16 +171,10 @@ final class FieldSettingsSanitizer {
 			throw $this->fail( 'settings_too_deep', $key );
 		}
 
-		if ( 'max_file_size' === $key ) {
-			return $this->sanitize_file_size( $value );
-		}
+		$extension_value = apply_filters( 'scfe_sanitize_field_setting_value', null, $value, $key, $depth );
 
-		if ( 'repeater_min' === $key ) {
-			return $this->sanitize_bounded_integer( $value, 1, 20, 'invalid_repeater_min' );
-		}
-
-		if ( 'repeater_max' === $key ) {
-			return $this->sanitize_bounded_integer( $value, 1, 50, 'invalid_repeater_max' );
+		if ( null !== $extension_value ) {
+			return $extension_value;
 		}
 
 		if ( is_array( $value ) ) {
@@ -205,53 +190,12 @@ final class FieldSettingsSanitizer {
 			throw $this->fail( 'invalid_setting_value', $key );
 		}
 
-		return in_array( $key, self::MULTILINE_KEYS, true )
+		$multiline_keys = apply_filters( 'scfe_multiline_field_setting_keys', self::MULTILINE_KEYS );
+		$multiline_keys = is_array( $multiline_keys ) ? $multiline_keys : self::MULTILINE_KEYS;
+
+		return in_array( $key, $multiline_keys, true )
 			? sanitize_textarea_field( $value )
 			: sanitize_text_field( $value );
-	}
-
-	/**
-	 * Enforce the approved one-to-five-megabyte upload setting.
-	 *
-	 * @param mixed $value Submitted maximum file size.
-	 *
-	 * @throws UnexpectedValueException When the value is not numeric.
-	 */
-	private function sanitize_file_size( $value ): int {
-		return $this->sanitize_bounded_integer( $value, 1, 5, 'invalid_file_size' );
-	}
-
-	/**
-	 * Sanitize an integer setting into an approved range.
-	 *
-	 * @param mixed  $value Submitted value.
-	 * @param int    $minimum Minimum allowed value.
-	 * @param int    $maximum Maximum allowed value.
-	 * @param string $error_code Exception code.
-	 *
-	 * @throws UnexpectedValueException When the value is not numeric.
-	 */
-	private function sanitize_bounded_integer( $value, int $minimum, int $maximum, string $error_code ): int {
-		if ( ! is_numeric( $value ) ) {
-			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Internal error code; SaveSettingsAction sanitizes it before output.
-			throw $this->fail( $error_code, $value );
-		}
-
-		return max( $minimum, min( $maximum, (int) $value ) );
-	}
-
-	/**
-	 * Keep repeater maximum at least as large as the minimum.
-	 *
-	 * @param array<string, mixed> $settings Sanitized field settings.
-	 * @return array<string, mixed>
-	 */
-	private function normalize_repeater_limits( array $settings ): array {
-		if ( isset( $settings['repeater_min'], $settings['repeater_max'] ) && $settings['repeater_max'] < $settings['repeater_min'] ) {
-			$settings['repeater_max'] = $settings['repeater_min'];
-		}
-
-		return $settings;
 	}
 
 	/**

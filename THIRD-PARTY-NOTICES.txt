@@ -1,19 +1,19 @@
 Third-Party Software Notices
 ============================
 
-intl-tel-input 17.0.8
+intl-tel-input 29.2.3
 ---------------------
 
 The phone field includes JavaScript, CSS, and flag sprites from intl-tel-input
-version 17.0.8.
+version 29.2.3. The bundled JavaScript build includes the validation utilities.
 
 Project: https://github.com/jackocnr/intl-tel-input
-Source tag: https://github.com/jackocnr/intl-tel-input/tree/v17.0.8
+Source tag: https://github.com/jackocnr/intl-tel-input/tree/v29.2.3
 License: MIT
-License text: https://github.com/jackocnr/intl-tel-input/blob/v17.0.8/LICENSE
+License text: https://github.com/jackocnr/intl-tel-input/blob/v29.2.3/LICENSE
 
-The bundled utils.js contains code generated from Google's libphonenumber and
-includes its Apache-2.0 license notice.
+The bundled validation utilities contain code generated from Google's
+libphonenumber and include its Apache-2.0 license notice.
 
 Project: https://github.com/google/libphonenumber
 License: Apache-2.0

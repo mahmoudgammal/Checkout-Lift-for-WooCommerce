@@ -25,7 +25,7 @@ export function usesBlockCheckout() {
  * rendered as something they are not.
  */
 const AS_TEXT = [ 'number', 'email', 'url', 'textarea' ];
-const UNSUPPORTED = [ 'date', 'time', 'datetime', 'file', 'fee', 'repeater' ];
+const UNSUPPORTED = [];
 
 /**
  * Say what one field type will actually do on the block checkout.
@@ -82,7 +82,6 @@ export function annotateTypes( types ) {
  * That is the part worth saying out loud.
  */
 const CARRIED_OPERATORS = [ 'is', 'is_not' ];
-const CARRIED_CART_TYPES = [ 'cart_total', 'product_in_cart' ];
 
 /**
  * Mark the entries that will not be carried.
@@ -117,16 +116,6 @@ function markUncarried( entries, carried ) {
  */
 export function annotateFieldOperators( operators ) {
 	return markUncarried( operators, CARRIED_OPERATORS );
-}
-
-/**
- * Label the things a cart rule may ask about.
- *
- * @param {Array} types Cart rule type options.
- * @return {Array} Type options, annotated on a block checkout.
- */
-export function annotateCartTypes( types ) {
-	return markUncarried( types, CARRIED_CART_TYPES );
 }
 
 /**

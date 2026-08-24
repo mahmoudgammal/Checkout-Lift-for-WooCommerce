@@ -10,7 +10,6 @@ declare( strict_types=1 );
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\RecoveryDashboard;
 
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Checkout\CheckoutBlocks;
-use DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings;
 
 /**
@@ -33,7 +32,6 @@ final class DashboardAssets {
 	 *
 	 * @param CheckoutBlocks     $blocks     Which checkout the store runs.
 	 * @param ModuleSettings     $modules    Which parts the merchant switched on.
-	 * @param Features           $features   Which parts this build ships.
 	 * @param string             $plugin_dir Plugin directory path.
 	 * @param string             $plugin_url Plugin URL.
 	 * @param string             $version    Fallback asset version.
@@ -42,7 +40,6 @@ final class DashboardAssets {
 	public function __construct(
 		private CheckoutBlocks $blocks,
 		private ModuleSettings $modules,
-		private Features $features,
 		private string $plugin_dir,
 		private string $plugin_url,
 		private string $version,
@@ -119,19 +116,13 @@ final class DashboardAssets {
 		);
 
 		// Checkout type is immutable for this screen and is embedded with the initial state.
-		$effective_modules = array();
-
-		foreach ( $this->modules->all() as $module => $enabled ) {
-			$effective_modules[ $module ] = $enabled && $this->features->enabled( $module );
-		}
-
 		wp_localize_script(
 			self::HANDLE,
 			'scfe_admin',
 			array(
 				'blockCheckout' => $this->blocks->in_use(),
 				// Tabs need module availability before their first render.
-				'modules'       => $effective_modules,
+				'modules'       => $this->modules->all(),
 			)
 		);
 

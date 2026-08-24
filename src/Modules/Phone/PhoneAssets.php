@@ -58,13 +58,13 @@ final class PhoneAssets {
 			'intl-tel-input',
 			$this->plugin_url . 'assets/lib/intl-tel-input/intlTelInput.min.css',
 			array(),
-			'17.0.8'
+			'29.2.3'
 		);
 		wp_enqueue_script(
 			'intl-tel-input',
 			$this->plugin_url . 'assets/lib/intl-tel-input/intlTelInput.min.js',
-			array( 'jquery' ),
-			'17.0.8',
+			array(),
+			'29.2.3',
 			true
 		);
 	}
@@ -89,14 +89,13 @@ final class PhoneAssets {
 	}
 
 	/**
-	 * Pass paths, country, and translated errors to the Phone module.
+	 * Pass the initial country and translated errors to the Phone module.
 	 */
 	private function localize_script(): void {
 		wp_localize_script(
 			'scfe-phone',
 			'scfePhone',
 			array(
-				'utilsScript'    => $this->plugin_url . 'assets/lib/intl-tel-input/utils.js',
 				'initialCountry' => $this->country_resolver->country_code(),
 				'errors'         => array(
 					'invalid'     => __( 'Invalid phone number', 'checkout-lift-for-woocommerce' ),

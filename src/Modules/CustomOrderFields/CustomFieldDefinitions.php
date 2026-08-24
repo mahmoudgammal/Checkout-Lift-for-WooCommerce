@@ -16,8 +16,6 @@ use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\CheckoutFieldsRepository
  */
 final class CustomFieldDefinitions {
 
-	private const SPECIALIZED_TYPES = array( 'fee', 'file', 'repeater' );
-
 	/**
 	 * Create the definitions reader.
 	 *
@@ -69,9 +67,11 @@ final class CustomFieldDefinitions {
 	 * @return array{label: string, type: string}|null
 	 */
 	private function from_settings( string $field_key, array $settings ): ?array {
-		$type = is_string( $settings['type'] ?? null ) ? $settings['type'] : 'text';
+		$type              = is_string( $settings['type'] ?? null ) ? $settings['type'] : 'text';
+		$specialized_types = apply_filters( 'scfe_specialized_custom_field_types', array() );
+		$specialized_types = is_array( $specialized_types ) ? $specialized_types : array();
 
-		if ( empty( $settings['custom'] ) || in_array( $type, self::SPECIALIZED_TYPES, true ) ) {
+		if ( empty( $settings['custom'] ) || in_array( $type, $specialized_types, true ) ) {
 			return null;
 		}
 

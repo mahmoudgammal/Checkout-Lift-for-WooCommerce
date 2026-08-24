@@ -9,9 +9,6 @@ declare( strict_types=1 );
 
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields;
 
-use DesignTich\SimpleCheckoutFieldsEditor\Core\Features\Features;
-use DesignTich\SimpleCheckoutFieldsEditor\Core\Settings\ModuleSettings;
-
 /**
  * Maps the current stored custom-field shape to WooCommerce field arguments.
  */
@@ -21,13 +18,9 @@ final class CustomFieldBuilder {
 	 * Create the custom-field builder.
 	 *
 	 * @param FieldOptionsParser $options_parser Stored option parser.
-	 * @param ModuleSettings     $modules        Merchant module choices.
-	 * @param Features           $features       Features shipped by this build.
 	 */
 	public function __construct(
-		private FieldOptionsParser $options_parser,
-		private ModuleSettings $modules,
-		private Features $features
+		private FieldOptionsParser $options_parser
 	) {
 	}
 
@@ -39,11 +32,12 @@ final class CustomFieldBuilder {
 	 * @return array<string, mixed>|null
 	 */
 	public function build( string $field_key, array $settings ): ?array {
-		$type   = (string) ( $settings['type'] ?? 'text' );
-		$module = $this->module_for_type( $type );
+		$type = (string) ( $settings['type'] ?? 'text' );
 
-		if ( null !== $module && ( ! $this->features->enabled( $module ) || ! $this->modules->enabled( $module ) ) ) {
-			return null;
+		if ( ! in_array( $type, array( 'text', 'number', 'email', 'url', 'select', 'textarea' ), true ) ) {
+			$extended = apply_filters( 'scfe_custom_checkout_field', null, $field_key, $settings );
+
+			return is_array( $extended ) ? $extended : null;
 		}
 
 		$field = array(
@@ -52,33 +46,10 @@ final class CustomFieldBuilder {
 			'placeholder'       => $settings['placeholder'] ?? '',
 			'required'          => (bool) ( $settings['required'] ?? false ),
 			'default'           => $settings['default'] ?? '',
-			'file_types'        => $settings['file_types'] ?? 'jpg,jpeg,png,pdf',
-			'max_file_size'     => $settings['max_file_size'] ?? '5',
-			'fee_amount'        => $settings['fee_amount'] ?? '0',
-			'fee_type'          => $settings['fee_type'] ?? 'fixed',
-			'fee_taxable'       => $settings['fee_taxable'] ?? '',
 			'custom_attributes' => array( 'data-width' => $settings['width'] ?? '100' ),
 		);
 
 		return $this->with_options( $field, $settings['options'] ?? null );
-	}
-
-	/**
-	 * Return the optional runtime module that owns a specialized field type.
-	 *
-	 * @param string $type Stored field type.
-	 */
-	private function module_for_type( string $type ): ?string {
-		$modules = array(
-			'date'     => 'datetime',
-			'time'     => 'datetime',
-			'datetime' => 'datetime',
-			'file'     => 'file-upload',
-			'fee'      => 'fee',
-			'repeater' => 'repeater',
-		);
-
-		return $modules[ $type ] ?? null;
 	}
 
 	/**

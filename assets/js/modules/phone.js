@@ -34,15 +34,12 @@
 		var billingCountry = String( $( '#billing_country' ).val() || '' ).toLowerCase();
 		var initialCountry = billingCountry || config.initialCountry || '';
 		var phoneWidget = window.intlTelInput( phoneInput, {
-			utilsScript: config.utilsScript,
+			allowedNumberTypes: null,
 			separateDialCode: true,
+			showFlags: true,
 			initialCountry: initialCountry,
-			preferredCountries: preferredCountries
+			countryOrder: preferredCountries
 		} );
-
-		if ( ! initialCountry ) {
-			phoneWidget.setCountry( '' );
-		}
 
 		return phoneWidget;
 	}
@@ -54,15 +51,7 @@
 			return;
 		}
 
-		var seedNumber = function() {
-			phoneWidget.setNumber( normalizedNumber );
-		};
-
-		if ( window.intlTelInputUtils ) {
-			seedNumber();
-		} else if ( phoneWidget.promise && typeof phoneWidget.promise.then === 'function' ) {
-			phoneWidget.promise.then( seedNumber, seedNumber );
-		}
+		phoneWidget.setNumber( normalizedNumber );
 	}
 
 	function normalizedPrefill( phoneNumber ) {
@@ -104,7 +93,7 @@
 			var countryCode = String( $( this ).val() || '' ).toLowerCase();
 
 			if ( countryCode ) {
-				phoneWidget.setCountry( countryCode );
+				phoneWidget.setSelectedCountry( countryCode );
 			}
 
 			clearError( phoneInput, errorMessage );
@@ -130,28 +119,22 @@
 	}
 
 	function isValidPhone( phoneInput, phoneWidget ) {
-		var validationError;
-
-		if ( ! phoneInput.value.trim() || ! phoneWidget.isValidNumber() ) {
-			return ! phoneInput.value.trim();
-		}
-
-		validationError = phoneWidget.getValidationError();
-		return validationError === -1 || validationError === 0;
+		return ! phoneInput.value.trim() || phoneWidget.isValidNumber() === true;
 	}
 
 	function showError( phoneInput, phoneWidget, errorMessage ) {
 		var errors = config.errors || {};
-		var errorMap = [
-			errors.invalid || 'Invalid phone number',
-			errors.invalidCode || 'Invalid country code',
-			errors.tooShort || 'Phone number is too short',
-			errors.tooLong || 'Phone number is too long',
-			errors.notNumber || 'Invalid phone number'
-		];
+		var errorMap = {
+			INVALID_COUNTRY_CODE: errors.invalidCode || 'Invalid country code',
+			TOO_SHORT: errors.tooShort || 'Phone number is too short',
+			TOO_LONG: errors.tooLong || 'Phone number is too long',
+			INVALID_LENGTH: errors.invalid || 'Invalid phone number',
+			IS_POSSIBLE_LOCAL_ONLY: errors.invalid || 'Invalid phone number'
+		};
+		var validationError = phoneWidget.getValidationError();
 
 		phoneInput.classList.add( 'error' );
-		errorMessage.textContent = errorMap[ phoneWidget.getValidationError() ] || errors.invalid || 'Invalid phone number';
+		errorMessage.textContent = errorMap[ validationError ] || errors.invalid || 'Invalid phone number';
 		errorMessage.style.display = 'block';
 	}
 

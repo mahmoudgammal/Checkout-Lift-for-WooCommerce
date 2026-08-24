@@ -74,7 +74,7 @@ final class AttemptRepository {
 	 * @param string $token_hash Hashed attempt token.
 	 * @param int    $order_id   WooCommerce order ID.
 	 * @param array  $facts      Order facts.
-	 * @phpstan-param array{status:string,total:string,recognized:string,refunded:string,currency:string} $facts
+	 * @phpstan-param array{total:string,currency:string} $facts
 	 */
 	public function place( string $token_hash, int $order_id, array $facts ): int {
 		global $wpdb;
@@ -87,29 +87,12 @@ final class AttemptRepository {
 
 		$table = $this->tables->name( TableNames::ATTEMPTS );
 		$now   = gmdate( 'Y-m-d H:i:s' );
-		$sql   = 'UPDATE %i SET status=%s,order_id=%d,order_status=%s,order_total=%s,recognized_total=%s,refunded_total=%s,currency=%s,placed_at=COALESCE(placed_at,%s),last_seen_at=%s,updated_at=%s WHERE id=%d';
+		$sql   = 'UPDATE %i SET status=%s,order_id=%d,order_total=%s,currency=%s,placed_at=COALESCE(placed_at,%s),last_seen_at=%s,updated_at=%s WHERE id=%d';
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Module-owned indexed fact table; identifier and values are bound.
-		$wpdb->query( $wpdb->prepare( $sql, $table, 'placed', $order_id, $facts['status'], $facts['total'], $facts['recognized'], $facts['refunded'], $facts['currency'], $now, $now, $now, $attempt_id ) );
+		$wpdb->query( $wpdb->prepare( $sql, $table, 'placed', $order_id, $facts['total'], $facts['currency'], $now, $now, $now, $attempt_id ) );
 
 		return $attempt_id;
-	}
-
-	/**
-	 * Refresh stored financial facts for an order.
-	 *
-	 * @param int   $order_id WooCommerce order ID.
-	 * @param array $facts    Order facts.
-	 * @phpstan-param array{status:string,total:string,recognized:string,refunded:string,currency:string} $facts
-	 */
-	public function reconcile_order( int $order_id, array $facts ): void {
-		global $wpdb;
-
-		$table = $this->tables->name( TableNames::ATTEMPTS );
-		$sql   = 'UPDATE %i SET order_status=%s,order_total=%s,recognized_total=%s,refunded_total=%s,currency=%s,updated_at=%s WHERE order_id=%d';
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Module-owned indexed fact table; identifier and values are bound.
-		$wpdb->query( $wpdb->prepare( $sql, $table, $facts['status'], $facts['total'], $facts['recognized'], $facts['refunded'], $facts['currency'], gmdate( 'Y-m-d H:i:s' ), $order_id ) );
 	}
 
 	/**

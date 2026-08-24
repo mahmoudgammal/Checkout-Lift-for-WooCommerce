@@ -35,10 +35,12 @@ final class ModuleShutdown {
 	 * @return array<string, array<int, string>>
 	 */
 	private function scheduled(): array {
-		return array(
-			'recovery'    => array( RecoveryHooks::SCAN, RecoveryHooks::SEND, ModuleScheduleHooks::REVENUE_CLASSIFY ),
-			'file-upload' => array( ModuleScheduleHooks::FILE_UPLOAD_CLEANUP ),
+		$schedules = array(
+			'recovery' => array( RecoveryHooks::SCAN, RecoveryHooks::SEND, ModuleScheduleHooks::REVENUE_CLASSIFY ),
 		);
+		$schedules = apply_filters( 'scfe_module_scheduled_hooks', $schedules );
+
+		return is_array( $schedules ) ? $schedules : array();
 	}
 
 	/**

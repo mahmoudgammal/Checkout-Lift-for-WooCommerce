@@ -21,13 +21,11 @@ final class RevenueRetention {
 	/**
 	 * Create the worker.
 	 *
-	 * @param AttemptRepository     $attempts     Attempt storage.
-	 * @param AttributionRepository $attributions Attribution storage.
-	 * @param PrivacySettings       $privacy      Retention setting.
+	 * @param AttemptRepository $attempts Attempt storage.
+	 * @param PrivacySettings   $privacy  Retention setting.
 	 */
 	public function __construct(
 		private AttemptRepository $attempts,
-		private AttributionRepository $attributions,
 		private PrivacySettings $privacy
 	) {
 	}
@@ -39,7 +37,6 @@ final class RevenueRetention {
 		$cutoff = gmdate( 'Y-m-d H:i:s', time() - ( $this->privacy->retention_days() * DAY_IN_SECONDS ) );
 		$ids    = $this->attempts->expired_ids( $cutoff, self::BATCH_LIMIT );
 
-		$this->attributions->delete_attempts( $ids );
 		$this->attempts->delete_ids( $ids );
 	}
 }

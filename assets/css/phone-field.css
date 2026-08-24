@@ -22,17 +22,3 @@
 	margin-top: 5px;
 	display: block;
 }
-
-/* intl-tel-input flag sprite fallback. */
-.iti__flag {
-	background-image: url('../lib/intl-tel-input/flags.png') !important;
-	background-repeat: no-repeat !important;
-	background-size: auto !important;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-	.iti__flag {
-		background-image: url('../lib/intl-tel-input/flags-2x.png') !important;
-		background-size: 5652px 15px !important;
-	}
-}

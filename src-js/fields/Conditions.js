@@ -162,71 +162,6 @@ export function RuleGroup( { title, group, onChange, subjects, operators, subjec
 }
 
 /**
- * A group that simply selects methods.
- *
- * @param {Object}   props          Component props.
- * @param {string}   props.title    Heading.
- * @param {Object?}  props.group    Stored group.
- * @param {Function} props.onChange Called with the new group, or null.
- * @param {Array}    props.methods  Available methods.
- * @return {JSX.Element} Builder.
- */
-export function MethodGroup( { title, group, onChange, methods } ) {
-	const enabled = !! group;
-	const selected = group?.methods || [];
-
-	return (
-		<div className={ enabled ? 'scfe-group' : 'scfe-group is-off' }>
-			<CheckboxControl
-				__nextHasNoMarginBottom
-				label={ title }
-				checked={ enabled }
-				onChange={ ( on ) => onChange( on ? { action: 'show', methods: [] } : null ) }
-			/>
-
-			{ enabled && (
-				<div className="scfe-group__body">
-					<div className="scfe-group__head">
-						<SelectControl
-							__nextHasNoMarginBottom
-							__next40pxDefaultSize
-							value={ group.action || 'show' }
-							options={ ACTIONS }
-							onChange={ ( action ) => onChange( { ...group, action } ) }
-						/>
-					</div>
-
-					{ 0 === methods.length && (
-						<p className="scfe-panel__note">
-							{ __( 'No methods are available on this store.', 'checkout-lift-for-woocommerce' ) }
-						</p>
-					) }
-
-					<div className="scfe-choices">
-					{ methods.map( ( method ) => (
-						<CheckboxControl
-							key={ method.value }
-							__nextHasNoMarginBottom
-							label={ method.label }
-							checked={ selected.includes( method.value ) }
-							onChange={ ( on ) =>
-								onChange( {
-									...group,
-									methods: on
-										? [ ...selected, method.value ]
-										: selected.filter( ( m ) => m !== method.value ),
-								} )
-							}
-						/>
-					) ) }
-					</div>
-				</div>
-			) }
-		</div>
-	);
-}
-
-/**
  * Every condition builder for one field.
  *
  * @param {Object}   props           Component props.
@@ -239,7 +174,7 @@ export function MethodGroup( { title, group, onChange, methods } ) {
  */
 export default function Conditions( { value, onChange, fields, payment, shipping } ) {
 	const groups = value || {};
-	const ProConditions = window.scfe_admin_pro?.Conditions;
+	const AddonConditions = window.scfe_admin_extensions?.FieldConditions;
 	const set = ( key ) => ( group ) => {
 		const next = { ...groups };
 
@@ -273,8 +208,8 @@ export default function Conditions( { value, onChange, fields, payment, shipping
 				subjectKey="field"
 			/>
 
-			{ ProConditions && (
-				<ProConditions groups={ groups } set={ set } payment={ payment } shipping={ shipping } />
+			{ AddonConditions && (
+				<AddonConditions groups={ groups } set={ set } payment={ payment } shipping={ shipping } />
 			) }
 
 			<ConditionScopeNote />

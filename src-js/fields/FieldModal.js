@@ -96,7 +96,7 @@ export default function FieldModal( {
 	// A default WooCommerce field has a fixed type and key, so only its
 	// presentation is editable here.
 	const isCustom = !! draft.custom;
-	const ProFieldSettings = window.scfe_admin_pro?.FieldSettings;
+	const AddonFieldSettings = window.scfe_admin_extensions?.FieldSettings;
 
 	return (
 		<Modal
@@ -172,8 +172,8 @@ export default function FieldModal( {
 				/>
 			) }
 
-			{ isCustom && ProFieldSettings && (
-				<ProFieldSettings type={ draft.type } setting={ setting } setSetting={ setSetting } />
+			{ isCustom && AddonFieldSettings && (
+				<AddonFieldSettings type={ draft.type } setting={ setting } setSetting={ setSetting } />
 			) }
 
 			</div>

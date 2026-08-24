@@ -22,12 +22,6 @@ const GLYPHS = {
 	url: '↗',
 	select: '⌄',
 	textarea: '¶',
-	date: '▤',
-	time: '◷',
-	datetime: '▦',
-	file: '↥',
-	fee: '$',
-	repeater: '⧉',
 };
 
 /**
@@ -68,7 +62,7 @@ export default function TypePicker( { value, onChange } ) {
 							onClick={ () => onChange( type.value ) }
 						>
 							<span className="scfe-type__icon" aria-hidden="true">
-								{ GLYPHS[ type.value ] || '•' }
+								{ type.icon || GLYPHS[ type.value ] || '•' }
 							</span>
 							<span>{ type.label }</span>
 							{ note && <span className="scfe-type__note">{ note }</span> }

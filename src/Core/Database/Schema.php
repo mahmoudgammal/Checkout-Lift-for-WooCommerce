@@ -33,7 +33,7 @@ final class Schema {
 	 * @return list<string>
 	 */
 	public function statements(): array {
-		return array( $this->carts(), $this->messages(), $this->attempts(), $this->attributions() );
+		return array( $this->carts(), $this->messages(), $this->attempts() );
 	}
 
 	/**
@@ -120,10 +120,7 @@ final class Schema {
 			runtime varchar(16) NOT NULL DEFAULT 'classic',
 			currency char(3) NOT NULL DEFAULT '',
 			order_id bigint(20) unsigned NOT NULL DEFAULT 0,
-			order_status varchar(32) NOT NULL DEFAULT '',
 			order_total decimal(19,4) NOT NULL DEFAULT 0.0000,
-			recognized_total decimal(19,4) NOT NULL DEFAULT 0.0000,
-			refunded_total decimal(19,4) NOT NULL DEFAULT 0.0000,
 			first_seen_at datetime NOT NULL,
 			last_seen_at datetime NOT NULL,
 			abandoned_at datetime NULL,
@@ -135,31 +132,6 @@ final class Schema {
 			KEY order_id (order_id),
 			KEY status_last_seen (status,last_seen_at),
 			KEY currency_first_seen (currency,first_seen_at)
-		) {$this->charset_collate()};";
-	}
-
-	/**
-	 * Server-confirmed revenue sources attached to orders.
-	 */
-	private function attributions(): string {
-		$table = $this->tables->name( TableNames::ATTRIBUTIONS );
-
-		return "CREATE TABLE {$table} (
-			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			attempt_id bigint(20) unsigned NOT NULL DEFAULT 0,
-			order_id bigint(20) unsigned NOT NULL,
-			source_type varchar(32) NOT NULL,
-			source_key varchar(64) NOT NULL DEFAULT '',
-			currency char(3) NOT NULL DEFAULT '',
-			gross_amount decimal(19,4) NOT NULL DEFAULT 0.0000,
-			refunded_amount decimal(19,4) NOT NULL DEFAULT 0.0000,
-			state varchar(20) NOT NULL DEFAULT 'placed',
-			created_at datetime NOT NULL,
-			updated_at datetime NOT NULL,
-			PRIMARY KEY  (id),
-			UNIQUE KEY order_source (order_id,source_type,source_key),
-			KEY attempt_id (attempt_id),
-			KEY source_created (source_type,created_at)
 		) {$this->charset_collate()};";
 	}
 

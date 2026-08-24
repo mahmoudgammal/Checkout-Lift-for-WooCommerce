@@ -113,10 +113,9 @@ final class SaveSettingsAction {
 			'invalid_setting_value' => __( 'A field setting has a value of an unsupported type.', 'checkout-lift-for-woocommerce' ),
 			'invalid_nested_key' => __( 'A nested setting key contains unsupported characters.', 'checkout-lift-for-woocommerce' ),
 			'settings_too_deep' => __( 'A field setting is nested more deeply than allowed.', 'checkout-lift-for-woocommerce' ),
-			'invalid_file_size' => __( 'Maximum file size must be a number.', 'checkout-lift-for-woocommerce' ),
-			'invalid_repeater_min', 'invalid_repeater_max' => __( 'Repeater limits must be numbers.', 'checkout-lift-for-woocommerce' ),
 			default => __( 'Settings data has an invalid structure.', 'checkout-lift-for-woocommerce' ),
 		};
+		$message = (string) apply_filters( 'scfe_field_settings_error_message', $message, $parts[0] );
 
 		if ( '' === $context ) {
 			return $message;
