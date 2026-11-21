@@ -209,4 +209,4 @@ Initial release of the checkout field editor, unfinished-checkout tracking, and 
 
 **Requirements:** WordPress 7.0 or newer, WooCommerce 10.0 or newer, PHP 8.0 or newer.
 
-**Development source:** Editable JavaScript sources and build tooling for this release are available in the public [GitHub repository](https://github.com/mahmoudgammal/Checkout-Lift-for-WooCommerce/tree/codex/wordpress-org-resubmission-fixes). From that branch, run `npm install` and then `npm run build` to reproduce the dashboard bundle.
+**Development source:** Editable JavaScript sources and build tooling are maintained in the public [GitHub repository](https://github.com/mahmoudgammal/Checkout-Lift-for-WooCommerce). From the main branch, run `npm install` and then `npm run build` to reproduce the dashboard bundle.
