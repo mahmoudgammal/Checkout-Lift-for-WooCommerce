@@ -276,7 +276,11 @@ final class Plugin {
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\CaptureController(
 				$capture,
 				$consent,
-				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\CaptureRateLimiter()
+				new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\CaptureRateLimiter(),
+				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\ConsentWithdrawal(
+					$carts,
+					new \DesignTich\SimpleCheckoutFieldsEditor\Core\Database\MessageRepository( $tables )
+				)
 			),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\ConsentField( $consent, $privacy, $blocks ),
 			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\TrackingAssets(

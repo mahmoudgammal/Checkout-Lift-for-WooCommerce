@@ -35,6 +35,10 @@ const FIELD_OPERATORS = [
 	'not_in',
 ].map( ( value ) => ( { value, label: value.replace( /_/g, ' ' ) } ) );
 
+// A new rule stores the operator its select already displays, so the saved
+// rule means exactly what the merchant saw.
+const NEW_RULE = { operator: 'is' };
+
 const EFFECTS = [
 	{ value: 'fade', label: __( 'Fade', 'checkout-lift-for-woocommerce' ) },
 	{ value: 'slide', label: __( 'Slide', 'checkout-lift-for-woocommerce' ) },
@@ -71,7 +75,7 @@ export function RuleGroup( { title, group, onChange, subjects, operators, subjec
 				// Unticking discards the rules rather than hiding them, so what
 				// the screen shows is always what will be saved.
 				onChange={ ( on ) =>
-					onChange( on ? { action: 'show', logic: 'all', rules: [ {} ] } : null )
+					onChange( on ? { action: 'show', logic: 'all', rules: [ { ...NEW_RULE } ] } : null )
 				}
 			/>
 
@@ -151,7 +155,7 @@ export function RuleGroup( { title, group, onChange, subjects, operators, subjec
 						size="small"
 						variant="secondary"
 						style={ { marginTop: 8 } }
-						onClick={ () => emit( { rules: [ ...rules, {} ] } ) }
+						onClick={ () => emit( { rules: [ ...rules, { ...NEW_RULE } ] } ) }
 					>
 						{ __( 'Add rule', 'checkout-lift-for-woocommerce' ) }
 					</Button>

@@ -9,6 +9,7 @@ declare( strict_types=1 );
 
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking;
 
+use DesignTich\SimpleCheckoutFieldsEditor\Core\Database\CartColumns;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Database\CartRepository;
 use WC_Order;
 
@@ -59,7 +60,8 @@ final class CheckoutCompletion {
 
 		$cart = $this->carts->find_by_session( (string) WC()->session->get_customer_id() );
 
-		if ( null === $cart ) {
+		// An order the tracker never saw must not overwrite an earlier outcome.
+		if ( null === $cart || ! CartColumns::is_unfinished( $cart ) ) {
 			return;
 		}
 

@@ -246,6 +246,25 @@ final class CartRepository implements CartStore {
 	}
 
 	/**
+	 * Delete one cart.
+	 *
+	 * @param int $cart_id Cart identifier.
+	 * @return bool Whether a row was removed.
+	 */
+	public function delete( int $cart_id ): bool {
+		global $wpdb;
+
+		if ( $cart_id < 1 ) {
+			return false;
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Custom table owned by this plugin; wpdb binds the value.
+		$deleted = $wpdb->delete( $this->table(), array( 'id' => $cart_id ), array( '%d' ) );
+
+		return is_numeric( $deleted ) && (int) $deleted > 0;
+	}
+
+	/**
 	 * Delete every cart recorded against one email address.
 	 *
 	 * Used by the WordPress personal-data eraser.

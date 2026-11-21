@@ -60,6 +60,25 @@ final class CartColumns {
 	public const STATUSES = array( 'open', 'abandoned', 'recovered', 'completed' );
 
 	/**
+	 * Statuses of a cart that has not yet ended in an order.
+	 *
+	 * Only these rows may absorb new checkout activity or be closed by an
+	 * order; a finished row keeps its outcome.
+	 *
+	 * @var list<string>
+	 */
+	public const UNFINISHED_STATUSES = array( 'open', 'abandoned' );
+
+	/**
+	 * Whether a stored row has not yet ended in an order.
+	 *
+	 * @param array<string, mixed> $row Stored cart row.
+	 */
+	public static function is_unfinished( array $row ): bool {
+		return in_array( (string) ( $row['status'] ?? '' ), self::UNFINISHED_STATUSES, true );
+	}
+
+	/**
 	 * Reduce arbitrary input to writable columns with correct types.
 	 *
 	 * Unknown keys are dropped rather than rejected, so a caller passing extra

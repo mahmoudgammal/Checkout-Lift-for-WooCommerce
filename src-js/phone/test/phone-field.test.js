@@ -46,7 +46,13 @@ function loadPhoneField( phone = '' ) {
 			tooLong: 'Too long',
 		},
 	};
-	window.intlTelInput = jest.fn( () => phoneWidget );
+	window.intlTelInput = jest.fn( ( input ) => {
+		if ( window.intlTelInputDisplayValue ) {
+			input.value = window.intlTelInputDisplayValue;
+		}
+
+		return phoneWidget;
+	} );
 	global.jQuery = jquery;
 	jest.isolateModules( () => require( PHONE_SCRIPT ) );
 }
@@ -69,6 +75,7 @@ describe( 'international phone field', () => {
 		delete global.jQuery;
 		delete window.intlTelInput;
 		delete window.scfePhone;
+		delete window.intlTelInputDisplayValue;
 		document.body.innerHTML = '';
 	} );
 
@@ -89,6 +96,16 @@ describe( 'international phone field', () => {
 		document.querySelector( '#billing_country' ).value = 'SA';
 		countryHandler.call( document.querySelector( '#billing_country' ) );
 		expect( phoneWidget.setSelectedCountry ).toHaveBeenCalledWith( 'sa' );
+	} );
+
+	test( 'seeds a saved number from its stored international form', () => {
+		// intl-tel-input 29 rewrites a prefilled "+20..." number into its national
+		// display form while it initializes; the seed must not re-read that form.
+		window.intlTelInputDisplayValue = '10 01234567';
+		loadPhoneField( '+201001234567' );
+
+		expect( phoneWidget.setNumber ).toHaveBeenCalledWith( '+201001234567' );
+		expect( phoneWidget.setNumber ).not.toHaveBeenCalledWith( '+1001234567' );
 	} );
 
 	test( 'maps string validation errors and blocks an invalid checkout', () => {

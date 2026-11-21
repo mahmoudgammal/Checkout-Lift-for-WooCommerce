@@ -30,8 +30,9 @@ final class AttemptRepository {
 	 * @param string $token_hash Hashed attempt token.
 	 * @param string $runtime    Checkout runtime.
 	 * @param string $currency   Order currency.
+	 * @param string $cart_value Current cart total, normalized by wc_format_decimal().
 	 */
-	public function start( string $token_hash, string $runtime, string $currency ): int {
+	public function start( string $token_hash, string $runtime, string $currency, string $cart_value ): int {
 		global $wpdb;
 
 		if ( ! preg_match( '/^[a-f0-9]{64}$/', $token_hash ) ) {
@@ -40,20 +41,25 @@ final class AttemptRepository {
 
 		$now   = gmdate( 'Y-m-d H:i:s' );
 		$table = $this->tables->name( TableNames::ATTEMPTS );
-		$sql   = 'INSERT INTO %i (token_hash,status,runtime,currency,first_seen_at,last_seen_at,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE last_seen_at=VALUES(last_seen_at), updated_at=VALUES(updated_at)';
+		$sql   = 'INSERT INTO %i (token_hash,status,runtime,currency,order_total,first_seen_at,last_seen_at,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE order_total=IF(status=%s,VALUES(order_total),order_total), last_seen_at=VALUES(last_seen_at), updated_at=VALUES(updated_at)';
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Module-owned indexed fact table; identifier and values are bound.
-		$wpdb->query( $wpdb->prepare( $sql, $table, $token_hash, 'open', $runtime, $currency, $now, $now, $now, $now ) );
+		$wpdb->query( $wpdb->prepare( $sql, $table, $token_hash, 'open', $runtime, $currency, $cart_value, $now, $now, $now, $now, 'open' ) );
 
 		return $this->id_for_hash( $token_hash );
 	}
 
 	/**
-	 * Record meaningful activity for an open attempt.
+	 * Record meaningful activity and the current cart value for an open attempt.
+	 *
+	 * While an attempt is open, order_total holds the captured cart value; that
+	 * is what an abandoned attempt reports as its potential value. place()
+	 * replaces it with the order total.
 	 *
 	 * @param string $token_hash Hashed attempt token.
+	 * @param string $cart_value Current cart total, normalized by wc_format_decimal().
 	 */
-	public function touch( string $token_hash ): void {
+	public function touch( string $token_hash, string $cart_value ): void {
 		global $wpdb;
 
 		if ( ! preg_match( '/^[a-f0-9]{64}$/', $token_hash ) ) {
@@ -62,10 +68,10 @@ final class AttemptRepository {
 
 		$table = $this->tables->name( TableNames::ATTEMPTS );
 		$now   = gmdate( 'Y-m-d H:i:s' );
-		$sql   = 'UPDATE %i SET last_seen_at=%s, updated_at=%s WHERE token_hash=%s AND status=%s';
+		$sql   = 'UPDATE %i SET order_total=%s, last_seen_at=%s, updated_at=%s WHERE token_hash=%s AND status=%s';
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Module-owned indexed fact table; identifier and values are bound.
-		$wpdb->query( $wpdb->prepare( $sql, $table, $now, $now, $token_hash, 'open' ) );
+		$wpdb->query( $wpdb->prepare( $sql, $table, $cart_value, $now, $now, $token_hash, 'open' ) );
 	}
 
 	/**

@@ -94,7 +94,7 @@ final class DefaultAddressFieldsTransformer {
 	 */
 	private function decorate_address_field( array $field, array $settings, int $priority ): array {
 		$field['priority'] = $priority;
-		$field['class']    = array( 'form-row', 'scfe-field-width' );
+		$field['class']    = FieldWidthClasses::replace_layout( array_merge( array( 'form-row' ), (array) ( $field['class'] ?? array() ) ) );
 
 		if ( array_key_exists( 'required', $settings ) ) {
 			$field['required'] = (bool) $settings['required'];

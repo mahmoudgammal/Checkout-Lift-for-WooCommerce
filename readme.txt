@@ -5,8 +5,8 @@ Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.0
 WC requires at least: 10.0
-WC tested up to: 10.9
-Stable tag: 1.0.0
+WC tested up to: 11.3
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,12 +163,20 @@ Yes. **Checkout Fields → Tools** exports your whole configuration to a file an
 1. The field editor, with fields grouped by section and reordered by dragging
 2. Adding a custom field and choosing its type
 3. Building a condition, so a field appears only when it is relevant
-4. The Recovery screen, showing captured checkouts and what was recovered
+4. The Recovery screen, showing captured checkout activity and potential abandoned value
 5. Recovery settings, including recording, consent, abandonment timing, and retention
 6. The checkout, with field widths laid out on a responsive grid
 7. Lite Revenue Analytics, with date and currency filters, checkout funnel, and potential abandoned checkout value
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix: A saved phone number is no longer re-read as a number from another country when the checkout page reloads
+* Fix: A condition rule saved without an operator is now treated as "is" everywhere, so a field hidden in the browser can no longer block checkout as a required field
+* Fix: Changing a field's width no longer removes WooCommerce classes, so checkout totals refresh again when the address changes
+* Fix: Potential abandoned checkout value now records the cart total of unfinished checkouts instead of zero
+* Fix: A checkout that ended in an order is no longer reopened by later activity in the same session
+* Fix: When the consent checkbox is shown and the customer unticks it, the saved unfinished checkout and its queued messages are deleted
 
 = 1.0.0 =
 * Initial release
@@ -189,6 +197,9 @@ Yes. **Checkout Fields → Tools** exports your whole configuration to a file an
 
 == Upgrade Notice ==
 
+= 1.0.1 =
+Fixes checkout being blocked by a hidden required field, totals not refreshing after a width change, and saved phone numbers changing country. Recommended for all stores.
+
 = 1.0.0 =
 Initial release of the checkout field editor, unfinished-checkout tracking, and privacy-minimized funnel analytics.
 
@@ -198,4 +209,4 @@ Initial release of the checkout field editor, unfinished-checkout tracking, and 
 
 **Requirements:** WordPress 7.0 or newer, WooCommerce 10.0 or newer, PHP 8.0 or newer.
 
-**Development source:** Editable JavaScript sources and build tooling are maintained in the public [GitHub repository](https://github.com/mahmoudgammal/Checkout-Lift-for-WooCommerce). From the main branch, run `npm install` and then `npm run build` to reproduce the dashboard bundle.
+**Development source:** Editable JavaScript sources and build tooling for this release are available in the public [GitHub repository](https://github.com/mahmoudgammal/Checkout-Lift-for-WooCommerce/tree/codex/wordpress-org-resubmission-fixes). From that branch, run `npm install` and then `npm run build` to reproduce the dashboard bundle.

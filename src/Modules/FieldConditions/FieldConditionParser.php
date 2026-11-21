@@ -15,6 +15,16 @@ namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\FieldConditions;
 final class FieldConditionParser {
 
 	/**
+	 * Operator of a rule saved without one.
+	 *
+	 * The field editor displays "is" for a rule whose operator was never
+	 * changed and, before 1.0.1, saved such rules with no operator at all.
+	 * Every reader must therefore treat a missing operator as "is", or the
+	 * server and the browser disagree about whether the field is shown.
+	 */
+	public const DEFAULT_OPERATOR = 'is';
+
+	/**
 	 * Parse an array or historical JSON string.
 	 *
 	 * @param mixed $stored_conditions Stored condition configuration.
@@ -80,6 +90,10 @@ final class FieldConditionParser {
 		$field_key = $stored_rule['field'] ?? '';
 		$operator  = $stored_rule['operator'] ?? '';
 		$expected  = $stored_rule['value'] ?? '';
+
+		if ( '' === $operator ) {
+			$operator = self::DEFAULT_OPERATOR;
+		}
 
 		if ( ! is_string( $field_key ) || 1 !== preg_match( '/^[a-z0-9_]+$/D', $field_key ) ) {
 			return null;

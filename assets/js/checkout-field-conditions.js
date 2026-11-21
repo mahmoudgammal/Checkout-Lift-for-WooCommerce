@@ -41,7 +41,8 @@
 		var currentValue = fieldValue( rule.field );
 		var targetValue = rule.value || '';
 
-		switch ( rule.operator ) {
+		// Rules saved before 1.0.1 may have no operator; the editor shows them as "is".
+		switch ( rule.operator || 'is' ) {
 			case 'is':
 				return currentValue === targetValue;
 			case 'is_not':

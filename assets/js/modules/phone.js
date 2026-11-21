@@ -11,10 +11,12 @@
 			return;
 		}
 
+		// Read the saved number before the widget rewrites it into national form.
+		var prefilledNumber = normalizedPrefill( phoneInput.value );
 		var errorMessage = createErrorMessage( phoneInput );
 		var phoneWidget = createPhoneWidget( phoneInput );
 
-		seedPrefilledNumber( phoneInput, phoneWidget );
+		seedPrefilledNumber( phoneWidget, prefilledNumber );
 		bindValidation( phoneInput, phoneWidget, errorMessage );
 		bindCountryChange( phoneWidget, errorMessage, phoneInput );
 		normalizeBeforeCheckout( phoneInput, phoneWidget, errorMessage );
@@ -44,14 +46,12 @@
 		return phoneWidget;
 	}
 
-	function seedPrefilledNumber( phoneInput, phoneWidget ) {
-		var normalizedNumber = normalizedPrefill( phoneInput.value );
-
-		if ( ! normalizedNumber ) {
+	function seedPrefilledNumber( phoneWidget, prefilledNumber ) {
+		if ( ! prefilledNumber ) {
 			return;
 		}
 
-		phoneWidget.setNumber( normalizedNumber );
+		phoneWidget.setNumber( prefilledNumber );
 	}
 
 	function normalizedPrefill( phoneNumber ) {

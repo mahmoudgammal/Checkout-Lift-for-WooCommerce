@@ -9,6 +9,7 @@ declare( strict_types=1 );
 
 namespace DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery;
 
+use DesignTich\SimpleCheckoutFieldsEditor\Core\Database\CartColumns;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Database\CartRepository;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\ConsentPolicy;
 
@@ -96,7 +97,9 @@ final class CartCapture {
 
 		$existing = $this->carts->find_by_session( $session_key );
 
-		if ( null !== $existing ) {
+		// A finished row keeps its outcome; logged-in sessions reuse the user ID
+		// as the session key, so the next checkout must start a new row.
+		if ( null !== $existing && CartColumns::is_unfinished( $existing ) ) {
 			$updated = $this->carts->update( (int) $existing['id'], $row );
 
 			return array(

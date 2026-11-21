@@ -39,7 +39,7 @@ final class FieldDecorator {
 		}
 
 		// Width travels on the wrapper class because WooCommerce puts custom attributes on the input.
-		$field['class'] = array( 'scfe-field-width' );
+		$field['class'] = FieldWidthClasses::replace_layout( $field['class'] ?? array() );
 
 		return $this->condition_attributes->add( $field, $settings );
 	}

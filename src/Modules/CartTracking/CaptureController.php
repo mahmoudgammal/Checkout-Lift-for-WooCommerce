@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking;
 
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\ConsentPolicy;
+use DesignTich\SimpleCheckoutFieldsEditor\Core\Privacy\ConsentWithdrawal;
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\CartCapture;
 use WP_Error;
 use WP_REST_Request;
@@ -41,11 +42,13 @@ final class CaptureController {
 	 * @param CartCapture        $capture Capture service.
 	 * @param ConsentPolicy      $consent Consent gate.
 	 * @param CaptureRateLimiter $limiter Throttling.
+	 * @param ConsentWithdrawal  $withdrawal Removal after consent is withdrawn.
 	 */
 	public function __construct(
 		private CartCapture $capture,
 		private ConsentPolicy $consent,
-		private CaptureRateLimiter $limiter
+		private CaptureRateLimiter $limiter,
+		private ConsentWithdrawal $withdrawal
 	) {
 	}
 
@@ -97,6 +100,13 @@ final class CaptureController {
 	public function handle( WP_REST_Request $request ): WP_REST_Response {
 		// Reject disabled tracking before starting session or cart work.
 		if ( ! $this->consent->may_store( (bool) $request->get_param( 'consent' ) ) ) {
+			// With the consent box on the page, an unticked box means the
+			// customer has not agreed or has just withdrawn; either way nothing
+			// may stay saved for this checkout.
+			if ( $this->consent->needs_control() ) {
+				$this->withdrawal->withdraw( $this->session_key() );
+			}
+
 			return new WP_REST_Response(
 				array(
 					'stored' => false,

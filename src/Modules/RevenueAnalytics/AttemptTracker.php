@@ -51,7 +51,7 @@ final class AttemptTracker {
 			return;
 		}
 
-		$this->attempts->touch( $hash );
+		$this->attempts->touch( $hash, $this->cart_value() );
 	}
 
 	/**
@@ -83,8 +83,23 @@ final class AttemptTracker {
 		$this->attempts->start(
 			$this->session->hash(),
 			$this->blocks->in_use() ? 'blocks' : 'classic',
-			function_exists( 'get_woocommerce_currency' ) ? (string) get_woocommerce_currency() : ''
+			function_exists( 'get_woocommerce_currency' ) ? (string) get_woocommerce_currency() : '',
+			$this->cart_value()
 		);
+	}
+
+	/**
+	 * Read the cart total from WooCommerce, never from the browser.
+	 *
+	 * Zero when no cart is loaded, for example an order created outside a
+	 * storefront session; place() then records the order total instead.
+	 */
+	private function cart_value(): string {
+		if ( ! function_exists( 'WC' ) || null === WC()->cart ) {
+			return '0';
+		}
+
+		return (string) wc_format_decimal( max( 0.0, (float) WC()->cart->get_total( 'edit' ) ), 4 );
 	}
 
 	/**

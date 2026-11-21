@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields;
 
+use DesignTich\SimpleCheckoutFieldsEditor\Modules\FieldConditions\FieldConditionParser;
+
 /**
  * Turns a field's stored conditions into the rules WooCommerce evaluates.
  *
@@ -141,6 +143,7 @@ final class BlocksConditionRules {
 	 */
 	private function field_rule( array $rule ): array {
 		$operator = (string) ( $rule['operator'] ?? '' );
+		$operator = '' === $operator ? FieldConditionParser::DEFAULT_OPERATOR : $operator;
 		$subject  = (string) ( $rule['field'] ?? '' );
 
 		if ( ! in_array( $operator, self::FIELD_OPERATORS, true ) || '' === $subject ) {
