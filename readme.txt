@@ -6,7 +6,7 @@ Tested up to: 7.1
 Requires PHP: 8.0
 WC requires at least: 10.0
 WC tested up to: 11.3
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,10 @@ Yes. **Checkout Fields → Tools** exports your whole configuration to a file an
 
 == Changelog ==
 
+= 1.0.2 =
+* Fix: The phone field now stays where you place it in the checkout fields editor instead of moving to the end of the form
+* Fix: A saved phone number without a country code now shows the customer's country flag and code instead of a wrong country
+
 = 1.0.1 =
 * Fix: A saved phone number is no longer re-read as a number from another country when the checkout page reloads
 * Fix: A condition rule saved without an operator is now treated as "is" everywhere, so a field hidden in the browser can no longer block checkout as a required field
@@ -196,6 +200,9 @@ Yes. **Checkout Fields → Tools** exports your whole configuration to a file an
 * Complete removal of plugin-created options when data deletion is enabled on uninstall
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Fixes the phone field moving to the end of the checkout form and saved phone numbers showing the wrong country. Recommended for all stores.
 
 = 1.0.1 =
 Fixes checkout being blocked by a hidden required field, totals not refreshing after a width change, and saved phone numbers changing country. Recommended for all stores.

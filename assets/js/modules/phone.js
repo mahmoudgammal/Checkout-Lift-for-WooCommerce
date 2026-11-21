@@ -54,6 +54,8 @@
 		phoneWidget.setNumber( prefilledNumber );
 	}
 
+	// Only a number that states its own country code is seeded. Any other saved
+	// number stays a national number in the billing or visitor country.
 	function normalizedPrefill( phoneNumber ) {
 		var normalizedNumber = String( phoneNumber || '' ).trim().replace( /[^\d+]/g, '' );
 
@@ -63,10 +65,6 @@
 
 		if ( normalizedNumber.slice( 0, 2 ) === '00' ) {
 			return '+' + normalizedNumber.slice( 2 );
-		}
-
-		if ( /^[1-9]\d{9,14}$/.test( normalizedNumber ) ) {
-			return '+' + normalizedNumber;
 		}
 
 		return '';

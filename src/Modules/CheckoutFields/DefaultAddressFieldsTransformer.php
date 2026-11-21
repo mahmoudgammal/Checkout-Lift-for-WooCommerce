@@ -14,7 +14,15 @@ namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CheckoutFields;
  */
 final class DefaultAddressFieldsTransformer {
 
+	/**
+	 * Billing keys whose shared definition WooCommerce's address script
+	 * re-applies on the page, through `woocommerce_country_locale_field_selectors`.
+	 *
+	 * Phone joined those selectors in WooCommerce 11, so its locale priority
+	 * and requirement now override the rendered row unless set here.
+	 */
 	private const ADDRESS_MAP = array(
+		'billing_phone'     => 'phone',
 		'billing_country'   => 'country',
 		'billing_address_1' => 'address_1',
 		'billing_address_2' => 'address_2',

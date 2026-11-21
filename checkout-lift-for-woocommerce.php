@@ -3,7 +3,7 @@
  * Plugin Name:          Checkout Lift for WooCommerce
  * Plugin URI:           https://designtich.com/checkout-lift-for-woocommerce/
  * Description:          Customize WooCommerce checkout fields, track unfinished checkouts, and measure potential abandoned cart value.
- * Version:              1.0.1
+ * Version:              1.0.2
  * Author:               Design Tich
  * Author URI:           https://designtich.com/
  * Text Domain:          checkout-lift-for-woocommerce
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'SCFE_VERSION' ) ) {
-	define( 'SCFE_VERSION', '1.0.1' );
+	define( 'SCFE_VERSION', '1.0.2' );
 }
 if ( ! defined( 'SCFE_PLUGIN_DIR' ) ) {
 	define( 'SCFE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );

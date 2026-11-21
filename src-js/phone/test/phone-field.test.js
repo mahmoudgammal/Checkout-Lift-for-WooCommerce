@@ -108,6 +108,16 @@ describe( 'international phone field', () => {
 		expect( phoneWidget.setNumber ).not.toHaveBeenCalledWith( '+1001234567' );
 	} );
 
+	test( 'keeps a saved number without a country code in the billing country', () => {
+		loadPhoneField( '1012345678' );
+
+		expect( window.intlTelInput ).toHaveBeenCalledWith(
+			document.querySelector( '#billing_phone' ),
+			expect.objectContaining( { initialCountry: 'eg' } )
+		);
+		expect( phoneWidget.setNumber ).not.toHaveBeenCalled();
+	} );
+
 	test( 'maps string validation errors and blocks an invalid checkout', () => {
 		loadPhoneField( '123' );
 		const phoneInput = document.querySelector( '#billing_phone' );
