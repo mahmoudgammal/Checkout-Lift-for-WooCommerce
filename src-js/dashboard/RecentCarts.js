@@ -28,6 +28,24 @@ function describe( status ) {
 }
 
 /**
+ * The human label for the furthest checkout step reached.
+ *
+ * @param {string} step Stored step.
+ * @return {string} Label.
+ */
+function describeStep( step ) {
+	const map = {
+		contact: __( 'Contact', 'checkout-lift-for-woocommerce' ),
+		billing: __( 'Billing', 'checkout-lift-for-woocommerce' ),
+		shipping: __( 'Shipping', 'checkout-lift-for-woocommerce' ),
+		payment: __( 'Payment', 'checkout-lift-for-woocommerce' ),
+		review: __( 'Review', 'checkout-lift-for-woocommerce' ),
+	};
+
+	return map[ step ] || step;
+}
+
+/**
  * Render the recent activity table.
  *
  * @param {Object} props       Component props.
@@ -94,9 +112,17 @@ export default function RecentCarts( { carts } ) {
 										{ ! cart.name && ! cart.email && ! cart.phone && '—' }
 									</td>
 									<td>{ formatMoney( cart.total, cart.currency ) }</td>
-									<td>{ cart.items }</td>
+									<td>
+										{ cart.products?.length > 0
+											? cart.products.map( ( product, index ) => (
+												<div key={ index }>
+													{ product.name } × { product.quantity }
+												</div>
+											) )
+											: cart.items }
+									</td>
 									<td>{ cart.country || '—' }</td>
-									<td>{ cart.step || '—' }</td>
+									<td>{ cart.step ? describeStep( cart.step ) : '—' }</td>
 									<td>{ formatDate( cart.updated_at ) }</td>
 									<td>
 										{ cart.order_id > 0 && cart.order_url ? (

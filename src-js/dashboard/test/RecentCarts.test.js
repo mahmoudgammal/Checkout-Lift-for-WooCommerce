@@ -52,6 +52,30 @@ describe( 'RecentCarts', () => {
 		expect( screen.getByText( 'Completed' ).className ).toContain( 'is-completed' );
 	} );
 
+	it( 'lists what was in the cart, not only how many items', () => {
+		render(
+			<RecentCarts
+				carts={ [ cart( { products: [ { name: 'Cold Peel', quantity: 2 }, { name: 'Serum', quantity: 1 } ] } ) ] }
+			/>
+		);
+
+		screen.getByText( 'Cold Peel × 2' );
+		screen.getByText( 'Serum × 1' );
+	} );
+
+	it( 'falls back to the item count for rows captured without product lines', () => {
+		render( <RecentCarts carts={ [ cart( { items: 3, products: [] } ) ] } /> );
+
+		screen.getByText( '3' );
+	} );
+
+	it( 'names the furthest step reached rather than showing its stored key', () => {
+		render( <RecentCarts carts={ [ cart() ] } /> );
+
+		screen.getByText( 'Payment' );
+		expect( screen.queryByText( 'payment' ) ).toBeNull();
+	} );
+
 	it( 'flags a record kept without the customer agreeing', () => {
 		render( <RecentCarts carts={ [ cart( { consent: 0 } ) ] } /> );
 

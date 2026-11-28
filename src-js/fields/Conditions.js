@@ -19,21 +19,21 @@ const LOGIC = [
 ];
 
 const FIELD_OPERATORS = [
-	'is',
-	'is_not',
-	'contains',
-	'not_contains',
-	'starts_with',
-	'ends_with',
-	'is_empty',
-	'is_not_empty',
-	'greater_than',
-	'less_than',
-	'checked',
-	'unchecked',
-	'in',
-	'not_in',
-].map( ( value ) => ( { value, label: value.replace( /_/g, ' ' ) } ) );
+	{ value: 'is', label: __( 'is', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'is_not', label: __( 'is not', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'contains', label: __( 'contains', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'not_contains', label: __( 'not contains', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'starts_with', label: __( 'starts with', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'ends_with', label: __( 'ends with', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'is_empty', label: __( 'is empty', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'is_not_empty', label: __( 'is not empty', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'greater_than', label: __( 'greater than', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'less_than', label: __( 'less than', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'checked', label: __( 'checked', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'unchecked', label: __( 'unchecked', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'in', label: __( 'in', 'checkout-lift-for-woocommerce' ) },
+	{ value: 'not_in', label: __( 'not in', 'checkout-lift-for-woocommerce' ) },
+];
 
 // A new rule stores the operator its select already displays, so the saved
 // rule means exactly what the merchant saw.

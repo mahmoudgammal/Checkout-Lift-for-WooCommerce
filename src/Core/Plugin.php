@@ -290,7 +290,12 @@ final class Plugin {
 				$this->plugin_url(),
 				$this->version()
 			),
-			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\CheckoutCompletion( $carts )
+			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\CheckoutCompletion( $carts ),
+			new \DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking\AbandonmentSchedule(),
+			new \DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\AbandonmentMarker(
+				$carts,
+				new \DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\RecoverySettings()
+			)
 		);
 	}
 

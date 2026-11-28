@@ -53,7 +53,7 @@ final class RecoveryStats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Custom table owned by this plugin; prepare() binds the identifier and limit.
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT id, status, email, phone, first_name, last_name, total, currency, item_count, country, checkout_step, consent, created_at, updated_at, recovered_order_id
+				'SELECT id, status, email, phone, first_name, last_name, total, currency, item_count, items, country, checkout_step, consent, created_at, updated_at, recovered_order_id
 				FROM %i ORDER BY updated_at DESC LIMIT %d',
 				$this->tables->name( TableNames::CARTS ),
 				max( 1, min( 100, $limit ) )
@@ -78,6 +78,7 @@ final class RecoveryStats {
 					'total'      => (string) $row['total'],
 					'currency'   => (string) $row['currency'],
 					'items'      => (int) $row['item_count'],
+					'products'   => self::products( (string) $row['items'] ),
 					'country'    => (string) $row['country'],
 					'step'       => (string) $row['checkout_step'],
 					'consent'    => (bool) (int) $row['consent'],
@@ -88,6 +89,33 @@ final class RecoveryStats {
 			},
 			$rows
 		);
+	}
+
+	/**
+	 * Summarise the stored cart lines as product names and quantities.
+	 *
+	 * The name is the one captured with the cart, so a product renamed or
+	 * deleted since still shows what the customer actually had.
+	 *
+	 * @param string $items Stored cart lines, JSON.
+	 * @return list<array{name: string, quantity: int}>
+	 */
+	private static function products( string $items ): array {
+		$lines    = json_decode( $items, true );
+		$products = array();
+
+		foreach ( is_array( $lines ) ? $lines : array() as $line ) {
+			if ( ! is_array( $line ) || ! is_string( $line['name'] ?? null ) || '' === $line['name'] ) {
+				continue;
+			}
+
+			$products[] = array(
+				'name'     => $line['name'],
+				'quantity' => max( 1, (int) ( $line['quantity'] ?? 1 ) ),
+			);
+		}
+
+		return $products;
 	}
 
 	/**

@@ -1,0 +1,1074 @@
+# Copyright (C) 2026 Design Tich
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Checkout Lift for WooCommerce 1.0.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/checkout-lift-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-28T11:57:32+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: checkout-lift-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "Checkout Lift for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "https://designtich.com/checkout-lift-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "Customize WooCommerce checkout fields, track unfinished checkouts, and measure potential abandoned cart value."
+msgstr ""
+
+#. Author of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "Design Tich"
+msgstr ""
+
+#. Author URI of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "https://designtich.com/"
+msgstr ""
+
+#: checkout-lift-for-woocommerce.php:77
+msgid "Activate WooCommerce"
+msgstr ""
+
+#: checkout-lift-for-woocommerce.php:81
+msgid "Install WooCommerce"
+msgstr ""
+
+#: checkout-lift-for-woocommerce.php:86
+msgid "Checkout Lift was not activated."
+msgstr ""
+
+#: checkout-lift-for-woocommerce.php:87
+msgid "Install and activate WooCommerce first, then activate Checkout Lift again."
+msgstr ""
+
+#: src/Core/Admin/AdminMenu.php:40
+#: src/Core/Admin/AdminMenu.php:41
+msgid "Checkout Lift"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataEraser.php:50
+#: src/Core/Privacy/PersonalDataExporter.php:45
+#: src/Core/Privacy/PersonalDataExporter.php:68
+msgid "Checkout activity"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:91
+msgid "Started at"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:92
+#: build/dashboard.js:1
+msgid "Last activity"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:93
+#: build/dashboard.js:1
+msgid "Status"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:94
+#: src/Modules/Admin/DefaultCheckoutFields.php:43
+#: src/Modules/Admin/DefaultCheckoutFields.php:97
+msgid "First name"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:95
+#: src/Modules/Admin/DefaultCheckoutFields.php:47
+#: src/Modules/Admin/DefaultCheckoutFields.php:101
+msgid "Last name"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:96
+#: src/Modules/Admin/DefaultCheckoutFields.php:83
+msgid "Email address"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:97
+#: src/Modules/Admin/DefaultCheckoutFields.php:79
+msgid "Phone"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:98
+#: build/dashboard.js:1
+msgid "Country"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:99
+msgid "Cart total"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:100
+#: build/dashboard.js:1
+msgid "Currency"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:101
+msgid "Items in cart"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:102
+msgid "Furthest checkout step"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:103
+msgid "Payment method"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:104
+msgid "Shipping method"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:105
+msgid "Consented to follow-up"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:106
+msgid "Consent recorded at"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:107
+msgid "Scheduled deletion"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:122
+msgid "Yes"
+msgstr ""
+
+#: src/Core/Privacy/PersonalDataExporter.php:122
+msgid "No"
+msgstr ""
+
+#: src/Core/Privacy/PrivacySettings.php:74
+msgid "Save my details so I can finish this order later."
+msgstr ""
+
+#. translators: %s: site name.
+#: src/Core/Recovery/RecoverySettings.php:79
+#, php-format
+msgid "You left something behind at %s"
+msgstr ""
+
+#: src/Core/Recovery/RecoverySettings.php:95
+msgid ""
+"Hi {name},\n"
+"\n"
+"Your order is still waiting. Pick up exactly where you left off, with your details already filled in.\n"
+"\n"
+"{link}\n"
+"\n"
+"If you have already ordered, or did not mean to start one, you can ignore this message."
+msgstr ""
+
+#: src/Core/Settings/ModuleSettings.php:55
+#: build/dashboard.js:1
+msgid "Checkout Recovery"
+msgstr ""
+
+#: src/Core/Settings/ModuleSettings.php:56
+msgid "Conditional fields"
+msgstr ""
+
+#: src/Core/Settings/ModuleSettings.php:57
+msgid "International phone field"
+msgstr ""
+
+#: src/Core/Settings/ModuleSettings.php:58
+msgid "WPML and Polylang support"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:28
+msgid "Order notes"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:51
+#: src/Modules/Admin/DefaultCheckoutFields.php:105
+msgid "Company name"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:55
+#: src/Modules/Admin/DefaultCheckoutFields.php:109
+msgid "Country / Region"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:59
+#: src/Modules/Admin/DefaultCheckoutFields.php:113
+msgid "Street address"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:63
+#: src/Modules/Admin/DefaultCheckoutFields.php:117
+msgid "Apartment, suite, unit, etc."
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:67
+#: src/Modules/Admin/DefaultCheckoutFields.php:121
+msgid "Town / City"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:71
+#: src/Modules/Admin/DefaultCheckoutFields.php:125
+msgid "State / County"
+msgstr ""
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:75
+#: src/Modules/Admin/DefaultCheckoutFields.php:129
+msgid "Postcode / ZIP"
+msgstr ""
+
+#: src/Modules/CartTracking/CaptureController.php:87
+msgid "Session expired."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:48
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:54
+msgid "Permission denied."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:58
+#: src/Modules/FieldsAdmin/FieldsController.php:223
+msgid "Checkout field settings could not be saved."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:63
+#: build/dashboard.js:1
+msgid "Settings saved."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:108
+msgid "Settings data is larger than 1 MB."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:109
+msgid "Settings data is not valid JSON."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:110
+msgid "A checkout section is not one of billing, shipping, or order."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:111
+#: src/Modules/FieldsAdmin/FieldsController.php:271
+msgid "A field key may only contain lowercase letters, numbers, and underscores."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:112
+#: src/Modules/FieldsAdmin/FieldsController.php:272
+msgid "A field carries a setting this version does not recognise."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:113
+msgid "A field setting has a value of an unsupported type."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:114
+msgid "A nested setting key contains unsupported characters."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:115
+msgid "A field setting is nested more deeply than allowed."
+msgstr ""
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:116
+msgid "Settings data has an invalid structure."
+msgstr ""
+
+#. translators: 1: error description, 2: the offending key or value.
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:125
+#, php-format
+msgid "%1$s (offending value: \"%2$s\")"
+msgstr ""
+
+#: src/Modules/CustomOrderFields/OrderFieldsRenderer.php:48
+msgid "Custom Fields"
+msgstr ""
+
+#: src/Modules/CustomOrderFields/OrderFieldsRenderer.php:71
+msgid "Additional Information"
+msgstr ""
+
+#: src/Modules/FieldConditions/FieldDependencyAssets.php:51
+msgid "Loading..."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/AdvancedController.php:166
+msgid "That file does not look like an export from this plugin."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/AdvancedController.php:176
+msgid "The file contains checkout fields this version cannot read."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/AdvancedController.php:244
+msgid "The settings could not be saved completely. Review the current values and try again."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:194
+msgid "No fields were submitted."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:205
+msgid "These fields changed somewhere else since this screen loaded. Reload to see the current values, then make your changes again."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:234
+msgid "The shipping setting could not be saved."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:252
+msgid "Billing Fields"
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:253
+msgid "Shipping Fields"
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:254
+msgid "Additional Fields"
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:270
+msgid "A section is not one of billing, shipping, or order."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsController.php:273
+msgid "The submitted fields have an invalid structure."
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsPage.php:37
+#: src/Modules/FieldsAdmin/FieldsPage.php:38
+#: build/dashboard.js:1
+msgid "Checkout Fields"
+msgstr ""
+
+#: src/Modules/FieldsAdmin/FieldsPage.php:52
+#: src/Modules/RecoveryDashboard/DashboardPage.php:54
+#: src/Modules/RevenueAnalytics/RevenuePage.php:42
+#: src/Modules/Settings/SettingsPage.php:54
+msgid "Loading…"
+msgstr ""
+
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:40
+msgid "Multilingual Support Enabled"
+msgstr ""
+
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:42
+msgid "Translate Strings"
+msgstr ""
+
+#. translators: %s: Plugin name (WPML or Polylang).
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:79
+#, php-format
+msgid "%s detected! Field labels, placeholders, and options will be automatically registered for translation. Visit your translation settings to translate checkout field strings."
+msgstr ""
+
+#: src/Modules/Phone/ClassicCheckoutValidator.php:59
+msgid "Enter a valid international phone number including the country code."
+msgstr ""
+
+#: src/Modules/Phone/PhoneAssets.php:101
+#: src/Modules/Phone/PhoneAssets.php:105
+msgid "Invalid phone number"
+msgstr ""
+
+#: src/Modules/Phone/PhoneAssets.php:102
+msgid "Invalid country code"
+msgstr ""
+
+#: src/Modules/Phone/PhoneAssets.php:103
+msgid "Phone number is too short"
+msgstr ""
+
+#: src/Modules/Phone/PhoneAssets.php:104
+msgid "Phone number is too long"
+msgstr ""
+
+#: src/Modules/RecoveryDashboard/DashboardPage.php:35
+#: src/Modules/RecoveryDashboard/DashboardPage.php:36
+msgid "Recovery"
+msgstr ""
+
+#: src/Modules/RecoveryDashboard/SettingsController.php:120
+msgid "Recovery settings could not be saved completely. Review the current values and try again."
+msgstr ""
+
+#: src/Modules/RevenueAnalytics/RevenueAnalyticsModule.php:81
+msgid "Every fifteen minutes"
+msgstr ""
+
+#: src/Modules/RevenueAnalytics/RevenuePage.php:27
+#: src/Modules/RevenueAnalytics/RevenuePage.php:28
+#: build/dashboard.js:1
+msgid "Revenue Analytics"
+msgstr ""
+
+#: src/Modules/Settings/ModulesController.php:85
+msgid "You are not allowed to change these settings."
+msgstr ""
+
+#: src/Modules/Settings/ModulesController.php:126
+msgid "Module settings could not be saved."
+msgstr ""
+
+#: src/Modules/Settings/SettingsPage.php:35
+#: src/Modules/Settings/SettingsPage.php:36
+#: build/dashboard.js:1
+msgid "Settings"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Recent checkout activity"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Nothing recorded yet. Activity appears here once customers start reaching the checkout."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Customer"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Value"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Items"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Reached"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Order"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "In progress"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Abandoned"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Completed"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "no permission"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Contact"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Billing"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Shipping"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Payment"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Review"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "not on the Checkout block"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Your checkout uses the Checkout block. A rule marked above cannot be expressed there, and one such rule stops its whole group from applying — the group is kept as a whole rather than quietly applying only part of what you asked for. The classic checkout is unaffected."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Your checkout page uses the Checkout block."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Most settings here apply to it, including field order, visibility, labels, widths and conditions. The few that WooCommerce cannot express on that checkout are marked where you choose them. Checkout Recovery works on both."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Show"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Hide"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "All conditions match"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Any condition matches"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "is"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "is not"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "contains"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "not contains"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "starts with"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "ends with"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "is empty"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "is not empty"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "greater than"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "less than"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "checked"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "unchecked"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "in"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "not in"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Fade"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Slide"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "or"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "and"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Remove rule"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Add rule"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Show or hide based on another field"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Show or hide based on entered values"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Text"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Number"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Email"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "URL"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Select"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Textarea"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Field type"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "not shown on the Checkout block"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "plain text on the Checkout block"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Add field"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Edit field"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Section"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Changing the type discards settings that belonged to the old type."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Label"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Placeholder"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Default value"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Options"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "One per line, as value|Label."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Required"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Enabled"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Update field"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Cancel"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Backup"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Download every checkout field, along with the multi-step and autocomplete settings, as one file. Keep it before making large changes, or use it to copy this setup to another store."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Settings downloaded."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Export settings"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Restore"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Importing replaces your current checkout fields with the ones in the file."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Settings imported. Reloading…"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "That file is not valid JSON."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Reset"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Clears every field customisation and returns the checkout to the WooCommerce defaults. Multi-step, autocomplete, and recovery settings are left alone."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "This clears every checkout field customisation and returns to the WooCommerce defaults. Continue?"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Reset. Reloading…"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Reset checkout fields"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Reload now"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "required"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "hidden"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "conditional"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Move up"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Move down"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Width (%)"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Show on the checkout"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Type, rules and conditions"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Remove this field?"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Remove this field"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Choose a field to edit it."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Fields saved."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Save fields"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Unsaved changes"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "All changes saved"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Decide what your checkout asks for, and when it asks for it."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Fields"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Tools"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "What this plugin does"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Switching a part off stops it loading at all, on the checkout and in the admin. Nothing you have configured is deleted, so switching it back on restores it."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Saved. Reload any open screen to see the change."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Save"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Recording"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Record checkout activity"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Stores what customers enter at checkout so unfinished orders can be recovered."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Ask the customer for permission first"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Nothing is stored unless the customer agrees. Required in the EU and UK. Only turn this off if you are certain your local law allows it."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Permission wording shown at checkout"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Timing"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Treat a checkout as abandoned after"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Minutes of no activity."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Recovery email"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Optional subject override for email 1"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Optional email subject"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Optional message added to email 1"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Email message"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Use {name} for the customer, {link} for the button back to their checkout, and {site} for your store name."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Recover abandoned checkout value automatically"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Lite records abandoned checkouts and their potential value. Pro sends a four-email sequence and restores the saved cart through a secure link."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Explore Pro recovery"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Data"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Keep checkout activity for"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Days, then delete it automatically."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Delete all plugin data when the plugin is deleted"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Turn this off to keep your settings and stored activity if you remove the plugin."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Save settings"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Remove the shipping section entirely"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "For stores that never ship anything. Shipping fields disappear from the checkout."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "General"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Checkout"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Everything the plugin can do, and how each part behaves."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Checkout attempts"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Orders placed"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Abandoned attempts"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Checkout funnel"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Measure checkout outcomes and the potential value sitting in abandoned checkouts."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Period"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Last 7 days"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Last 30 days"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Checkout measurement is off. Enable recording in Recovery settings to collect new activity."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Distinct measured sessions"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Orders created"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Placement rate"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Placed orders divided by closed attempts"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Inactive beyond your threshold"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Potential abandoned checkout value"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Captured cart value; not guaranteed lost or recoverable revenue"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Turn abandoned checkout value into recovered orders"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "A separate add-on can automate recovery and add deeper reporting."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Explore recovery add-ons"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "The dashboard could not load its figures."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Recording checkout activity is switched off, so nothing new is being captured. Turn it on in Settings."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Abandoned checkouts"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Still being filled in"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Tracked checkouts that became orders"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "You can see the lost value. The add-on helps win it back."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Automated recovery emails, secure cart-resume links, and recovered-revenue reporting are provided by a separate add-on."
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Checkout Activity"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "See unfinished checkouts and the value currently being left behind."
+msgstr ""

@@ -24,20 +24,19 @@ final class ModuleSettings {
 	private const OPTION_NAME = 'scfe_modules';
 
 	/**
-	 * Modules a merchant may switch off, and what to call them.
+	 * Modules a merchant may switch off.
 	 *
 	 * The plumbing is deliberately absent: the field editor, its storage, its
 	 * admin screens and the order display are what the plugin *is*, and
 	 * offering to switch them off would offer to break it.
 	 *
-	 * @var array<string, string>
+	 * Labels live in optional(), which runs only when the screen asks for
+	 * them, because this list is read while modules boot, before translations
+	 * may load.
+	 *
+	 * @var list<string>
 	 */
-	private const OPTIONAL = array(
-		'recovery'     => 'Checkout Recovery',
-		'conditions'   => 'Conditional fields',
-		'phone'        => 'International phone field',
-		'multilingual' => 'WPML and Polylang support',
-	);
+	private const OPTIONAL = array( 'recovery', 'conditions', 'phone', 'multilingual' );
 
 	/**
 	 * Settings cached for this request.
@@ -47,12 +46,19 @@ final class ModuleSettings {
 	private ?array $cached = null;
 
 	/**
-	 * Return every module a merchant may switch off.
+	 * Return every module a merchant may switch off, with its label.
 	 *
 	 * @return array<string, string>
 	 */
 	public static function optional(): array {
-		return self::OPTIONAL;
+		$labels = array(
+			'recovery'     => __( 'Checkout Recovery', 'checkout-lift-for-woocommerce' ),
+			'conditions'   => __( 'Conditional fields', 'checkout-lift-for-woocommerce' ),
+			'phone'        => __( 'International phone field', 'checkout-lift-for-woocommerce' ),
+			'multilingual' => __( 'WPML and Polylang support', 'checkout-lift-for-woocommerce' ),
+		);
+
+		return array_intersect_key( $labels, array_flip( self::OPTIONAL ) );
 	}
 
 	/**
@@ -64,7 +70,7 @@ final class ModuleSettings {
 	 * @param string $module Module name.
 	 */
 	public function enabled( string $module ): bool {
-		if ( ! isset( self::OPTIONAL[ $module ] ) ) {
+		if ( ! in_array( $module, self::OPTIONAL, true ) ) {
 			return true;
 		}
 
@@ -86,7 +92,7 @@ final class ModuleSettings {
 
 		$values = array();
 
-		foreach ( array_keys( self::OPTIONAL ) as $module ) {
+		foreach ( self::OPTIONAL as $module ) {
 			// Missing settings default on so newly added modules work on existing sites.
 			$values[ $module ] = ! isset( $stored[ $module ] ) || (bool) $stored[ $module ];
 		}
@@ -104,7 +110,7 @@ final class ModuleSettings {
 	public function replace( array $settings ): bool {
 		$sanitized = array();
 
-		foreach ( array_keys( self::OPTIONAL ) as $module ) {
+		foreach ( self::OPTIONAL as $module ) {
 			$sanitized[ $module ] = ! empty( $settings[ $module ] );
 		}
 

@@ -416,6 +416,24 @@ describe( 'cart tracker', () => {
 			expect( body.checkout_step ).toBe( 'shipping' );
 		} );
 
+		it( 'stores the phone with its country code when the phone widget is active', () => {
+			document.body.innerHTML = '<input id="billing_phone" value="10 14000159">';
+			window.intlTelInput = {
+				getInstance: () => ( { getNumber: () => '+201014000159' } ),
+			};
+
+			const bound = installBridge();
+
+			jest.isolateModules( () => require( TRACKER ) );
+
+			bound.fields[ 0 ].callback();
+			jest.runOnlyPendingTimers();
+
+			expect( sent().phone ).toBe( '+201014000159' );
+
+			delete window.intlTelInput;
+		} );
+
 		it( 'binds through the bridge, because Select2 tells jQuery only', () => {
 			document.body.innerHTML = '<select id="billing_country"><option value="EG" selected>EG</option></select>';
 

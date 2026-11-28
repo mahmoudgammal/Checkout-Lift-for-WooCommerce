@@ -228,7 +228,9 @@ final class FieldsController {
 		if ( null !== $request->get_param( 'disable_shipping' ) ) {
 			$disable_shipping = (bool) $request->get_param( 'disable_shipping' );
 
-			if ( get_option( 'scfe_disable_shipping', null ) !== $disable_shipping && ! update_option( 'scfe_disable_shipping', $disable_shipping ) ) {
+			// The option reads back from the database as '1' or '', never as a bool;
+			// update_option() also reports an unchanged value as a failure.
+			if ( (bool) get_option( 'scfe_disable_shipping', false ) !== $disable_shipping && ! update_option( 'scfe_disable_shipping', $disable_shipping ) ) {
 				return new WP_Error(
 					'scfe_save_failed',
 					__( 'The shipping setting could not be saved.', 'checkout-lift-for-woocommerce' ),

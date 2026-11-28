@@ -1,0 +1,1076 @@
+# Copyright (C) 2026 Design Tich
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Checkout Lift for WooCommerce 1.0.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/checkout-lift-for-woocommerce\n"
+"Last-Translator: Design Tich\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-28T11:57:32+01:00\n"
+"PO-Revision-Date: 2026-11-28 12:00+0200\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: checkout-lift-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "Checkout Lift for WooCommerce"
+msgstr "Checkout Lift for WooCommerce"
+
+#. Plugin URI of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "https://designtich.com/checkout-lift-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "Customize WooCommerce checkout fields, track unfinished checkouts, and measure potential abandoned cart value."
+msgstr "خصّص حقول إتمام الطلب في WooCommerce، وتابع عمليات إتمام الطلب غير المكتملة، وقِس القيمة المحتملة للسلات المتروكة."
+
+#. Author of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "Design Tich"
+msgstr "Design Tich"
+
+#. Author URI of the plugin
+#: checkout-lift-for-woocommerce.php
+msgid "https://designtich.com/"
+msgstr ""
+
+#: checkout-lift-for-woocommerce.php:77
+msgid "Activate WooCommerce"
+msgstr "تفعيل WooCommerce"
+
+#: checkout-lift-for-woocommerce.php:81
+msgid "Install WooCommerce"
+msgstr "تثبيت WooCommerce"
+
+#: checkout-lift-for-woocommerce.php:86
+msgid "Checkout Lift was not activated."
+msgstr "لم يتم تفعيل Checkout Lift."
+
+#: checkout-lift-for-woocommerce.php:87
+msgid "Install and activate WooCommerce first, then activate Checkout Lift again."
+msgstr "ثبّت WooCommerce وفعّله أولًا، ثم فعّل Checkout Lift مرة أخرى."
+
+#: src/Core/Admin/AdminMenu.php:40
+#: src/Core/Admin/AdminMenu.php:41
+msgid "Checkout Lift"
+msgstr "Checkout Lift"
+
+#: src/Core/Privacy/PersonalDataEraser.php:50
+#: src/Core/Privacy/PersonalDataExporter.php:45
+#: src/Core/Privacy/PersonalDataExporter.php:68
+msgid "Checkout activity"
+msgstr "نشاط إتمام الطلب"
+
+#: src/Core/Privacy/PersonalDataExporter.php:91
+msgid "Started at"
+msgstr "بدأ في"
+
+#: src/Core/Privacy/PersonalDataExporter.php:92
+#: build/dashboard.js:1
+msgid "Last activity"
+msgstr "آخر نشاط"
+
+#: src/Core/Privacy/PersonalDataExporter.php:93
+#: build/dashboard.js:1
+msgid "Status"
+msgstr "الحالة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:94
+#: src/Modules/Admin/DefaultCheckoutFields.php:43
+#: src/Modules/Admin/DefaultCheckoutFields.php:97
+msgid "First name"
+msgstr "الاسم الأول"
+
+#: src/Core/Privacy/PersonalDataExporter.php:95
+#: src/Modules/Admin/DefaultCheckoutFields.php:47
+#: src/Modules/Admin/DefaultCheckoutFields.php:101
+msgid "Last name"
+msgstr "الاسم الأخير"
+
+#: src/Core/Privacy/PersonalDataExporter.php:96
+#: src/Modules/Admin/DefaultCheckoutFields.php:83
+msgid "Email address"
+msgstr "البريد الإلكتروني"
+
+#: src/Core/Privacy/PersonalDataExporter.php:97
+#: src/Modules/Admin/DefaultCheckoutFields.php:79
+msgid "Phone"
+msgstr "الهاتف"
+
+#: src/Core/Privacy/PersonalDataExporter.php:98
+#: build/dashboard.js:1
+msgid "Country"
+msgstr "الدولة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:99
+msgid "Cart total"
+msgstr "إجمالي السلة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:100
+#: build/dashboard.js:1
+msgid "Currency"
+msgstr "العملة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:101
+msgid "Items in cart"
+msgstr "المنتجات في السلة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:102
+msgid "Furthest checkout step"
+msgstr "أبعد خطوة وصل إليها"
+
+#: src/Core/Privacy/PersonalDataExporter.php:103
+msgid "Payment method"
+msgstr "طريقة الدفع"
+
+#: src/Core/Privacy/PersonalDataExporter.php:104
+msgid "Shipping method"
+msgstr "طريقة الشحن"
+
+#: src/Core/Privacy/PersonalDataExporter.php:105
+msgid "Consented to follow-up"
+msgstr "وافق على المتابعة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:106
+msgid "Consent recorded at"
+msgstr "تاريخ تسجيل الموافقة"
+
+#: src/Core/Privacy/PersonalDataExporter.php:107
+msgid "Scheduled deletion"
+msgstr "موعد الحذف المجدول"
+
+#: src/Core/Privacy/PersonalDataExporter.php:122
+msgid "Yes"
+msgstr "نعم"
+
+#: src/Core/Privacy/PersonalDataExporter.php:122
+msgid "No"
+msgstr "لا"
+
+#: src/Core/Privacy/PrivacySettings.php:74
+msgid "Save my details so I can finish this order later."
+msgstr "احفظ بياناتي حتى أتمكن من إكمال هذا الطلب لاحقًا."
+
+#. translators: %s: site name.
+#: src/Core/Recovery/RecoverySettings.php:79
+#, php-format
+msgid "You left something behind at %s"
+msgstr "تركت شيئًا في %s"
+
+#: src/Core/Recovery/RecoverySettings.php:95
+msgid ""
+"Hi {name},\n"
+"\n"
+"Your order is still waiting. Pick up exactly where you left off, with your details already filled in.\n"
+"\n"
+"{link}\n"
+"\n"
+"If you have already ordered, or did not mean to start one, you can ignore this message."
+msgstr "مرحبًا {name}،\n\nطلبك ما زال في انتظارك. أكمل من حيث توقفت، وبياناتك معبأة بالفعل.\n\n{link}\n\nإذا كنت قد أتممت الطلب بالفعل، أو لم تكن تقصد بدء طلب، يمكنك تجاهل هذه الرسالة."
+
+#: src/Core/Settings/ModuleSettings.php:55
+#: build/dashboard.js:1
+msgid "Checkout Recovery"
+msgstr "استرداد عمليات إتمام الطلب"
+
+#: src/Core/Settings/ModuleSettings.php:56
+msgid "Conditional fields"
+msgstr "الحقول الشرطية"
+
+#: src/Core/Settings/ModuleSettings.php:57
+msgid "International phone field"
+msgstr "حقل الهاتف الدولي"
+
+#: src/Core/Settings/ModuleSettings.php:58
+msgid "WPML and Polylang support"
+msgstr "دعم WPML وPolylang"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:28
+msgid "Order notes"
+msgstr "ملاحظات الطلب"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:51
+#: src/Modules/Admin/DefaultCheckoutFields.php:105
+msgid "Company name"
+msgstr "اسم الشركة"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:55
+#: src/Modules/Admin/DefaultCheckoutFields.php:109
+msgid "Country / Region"
+msgstr "الدولة / المنطقة"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:59
+#: src/Modules/Admin/DefaultCheckoutFields.php:113
+msgid "Street address"
+msgstr "عنوان الشارع / الحي"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:63
+#: src/Modules/Admin/DefaultCheckoutFields.php:117
+msgid "Apartment, suite, unit, etc."
+msgstr "رقم الشقة، الجناح، الوحدة، إلخ."
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:67
+#: src/Modules/Admin/DefaultCheckoutFields.php:121
+msgid "Town / City"
+msgstr "المدينة"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:71
+#: src/Modules/Admin/DefaultCheckoutFields.php:125
+msgid "State / County"
+msgstr "المنطقة"
+
+#: src/Modules/Admin/DefaultCheckoutFields.php:75
+#: src/Modules/Admin/DefaultCheckoutFields.php:129
+msgid "Postcode / ZIP"
+msgstr "الرمز البريدي / ZIP"
+
+#: src/Modules/CartTracking/CaptureController.php:87
+msgid "Session expired."
+msgstr "انتهت صلاحية الجلسة."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:48
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:54
+msgid "Permission denied."
+msgstr "ليست لديك الصلاحية."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:58
+#: src/Modules/FieldsAdmin/FieldsController.php:223
+msgid "Checkout field settings could not be saved."
+msgstr "تعذر حفظ إعدادات حقول إتمام الطلب."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:63
+#: build/dashboard.js:1
+msgid "Settings saved."
+msgstr "تم حفظ الإعدادات."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:108
+msgid "Settings data is larger than 1 MB."
+msgstr "بيانات الإعدادات أكبر من 1 ميجابايت."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:109
+msgid "Settings data is not valid JSON."
+msgstr "بيانات الإعدادات ليست بصيغة JSON صحيحة."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:110
+msgid "A checkout section is not one of billing, shipping, or order."
+msgstr "أحد أقسام إتمام الطلب ليس الفاتورة أو الشحن أو الطلب."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:111
+#: src/Modules/FieldsAdmin/FieldsController.php:271
+msgid "A field key may only contain lowercase letters, numbers, and underscores."
+msgstr "مفتاح الحقل يمكن أن يحتوي فقط على حروف إنجليزية صغيرة وأرقام وشرطات سفلية."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:112
+#: src/Modules/FieldsAdmin/FieldsController.php:272
+msgid "A field carries a setting this version does not recognise."
+msgstr "أحد الحقول يحتوي على إعداد لا يتعرف عليه هذا الإصدار."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:113
+msgid "A field setting has a value of an unsupported type."
+msgstr "أحد إعدادات الحقول له قيمة من نوع غير مدعوم."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:114
+msgid "A nested setting key contains unsupported characters."
+msgstr "مفتاح إعداد متداخل يحتوي على رموز غير مدعومة."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:115
+msgid "A field setting is nested more deeply than allowed."
+msgstr "أحد إعدادات الحقول متداخل بعمق أكبر من المسموح."
+
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:116
+msgid "Settings data has an invalid structure."
+msgstr "بيانات الإعدادات ذات بنية غير صحيحة."
+
+#. translators: 1: error description, 2: the offending key or value.
+#: src/Modules/CheckoutFieldsAdmin/SaveSettingsAction.php:125
+#, php-format
+msgid "%1$s (offending value: \"%2$s\")"
+msgstr "%1$s (القيمة المسببة للمشكلة: \"%2$s\")"
+
+#: src/Modules/CustomOrderFields/OrderFieldsRenderer.php:48
+msgid "Custom Fields"
+msgstr "حقول مخصصة"
+
+#: src/Modules/CustomOrderFields/OrderFieldsRenderer.php:71
+msgid "Additional Information"
+msgstr "معلومات إضافية"
+
+#: src/Modules/FieldConditions/FieldDependencyAssets.php:51
+msgid "Loading..."
+msgstr "جارٍ التحميل..."
+
+#: src/Modules/FieldsAdmin/AdvancedController.php:166
+msgid "That file does not look like an export from this plugin."
+msgstr "لا يبدو أن هذا الملف تم تصديره من هذه الإضافة."
+
+#: src/Modules/FieldsAdmin/AdvancedController.php:176
+msgid "The file contains checkout fields this version cannot read."
+msgstr "يحتوي الملف على حقول إتمام طلب لا يستطيع هذا الإصدار قراءتها."
+
+#: src/Modules/FieldsAdmin/AdvancedController.php:244
+msgid "The settings could not be saved completely. Review the current values and try again."
+msgstr "تعذر حفظ الإعدادات بالكامل. راجع القيم الحالية وحاول مرة أخرى."
+
+#: src/Modules/FieldsAdmin/FieldsController.php:194
+msgid "No fields were submitted."
+msgstr "لم يتم إرسال أي حقول."
+
+#: src/Modules/FieldsAdmin/FieldsController.php:205
+msgid "These fields changed somewhere else since this screen loaded. Reload to see the current values, then make your changes again."
+msgstr "تم تغيير هذه الحقول من مكان آخر بعد تحميل هذه الشاشة. أعد التحميل لترى القيم الحالية، ثم أجرِ تعديلاتك مرة أخرى."
+
+#: src/Modules/FieldsAdmin/FieldsController.php:234
+msgid "The shipping setting could not be saved."
+msgstr "تعذر حفظ إعداد الشحن."
+
+#: src/Modules/FieldsAdmin/FieldsController.php:252
+msgid "Billing Fields"
+msgstr "حقول الفاتورة"
+
+#: src/Modules/FieldsAdmin/FieldsController.php:253
+msgid "Shipping Fields"
+msgstr "حقول الشحن"
+
+#: src/Modules/FieldsAdmin/FieldsController.php:254
+msgid "Additional Fields"
+msgstr "حقول إضافية"
+
+#: src/Modules/FieldsAdmin/FieldsController.php:270
+msgid "A section is not one of billing, shipping, or order."
+msgstr "أحد الأقسام ليس الفاتورة أو الشحن أو الطلب."
+
+#: src/Modules/FieldsAdmin/FieldsController.php:273
+msgid "The submitted fields have an invalid structure."
+msgstr "الحقول المرسلة ذات بنية غير صحيحة."
+
+#: src/Modules/FieldsAdmin/FieldsPage.php:37
+#: src/Modules/FieldsAdmin/FieldsPage.php:38
+#: build/dashboard.js:1
+msgid "Checkout Fields"
+msgstr "حقول إتمام الطلب"
+
+#: src/Modules/FieldsAdmin/FieldsPage.php:52
+#: src/Modules/RecoveryDashboard/DashboardPage.php:54
+#: src/Modules/RevenueAnalytics/RevenuePage.php:42
+#: src/Modules/Settings/SettingsPage.php:54
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:40
+msgid "Multilingual Support Enabled"
+msgstr "تم تفعيل دعم تعدد اللغات"
+
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:42
+msgid "Translate Strings"
+msgstr "ترجمة النصوص"
+
+#. translators: %s: Plugin name (WPML or Polylang).
+#: src/Modules/Multilingual/MultilingualAdminNotice.php:79
+#, php-format
+msgid "%s detected! Field labels, placeholders, and options will be automatically registered for translation. Visit your translation settings to translate checkout field strings."
+msgstr "تم اكتشاف %s! سيتم تسجيل عناوين الحقول والنصوص التوضيحية والخيارات للترجمة تلقائيًا. افتح إعدادات الترجمة لترجمة نصوص حقول إتمام الطلب."
+
+#: src/Modules/Phone/ClassicCheckoutValidator.php:59
+msgid "Enter a valid international phone number including the country code."
+msgstr "أدخل رقم هاتف دوليًا صحيحًا يتضمن رمز الدولة."
+
+#: src/Modules/Phone/PhoneAssets.php:101
+#: src/Modules/Phone/PhoneAssets.php:105
+msgid "Invalid phone number"
+msgstr "رقم الهاتف غير صحيح"
+
+#: src/Modules/Phone/PhoneAssets.php:102
+msgid "Invalid country code"
+msgstr "رمز الدولة غير صحيح"
+
+#: src/Modules/Phone/PhoneAssets.php:103
+msgid "Phone number is too short"
+msgstr "رقم الهاتف قصير جدًا"
+
+#: src/Modules/Phone/PhoneAssets.php:104
+msgid "Phone number is too long"
+msgstr "رقم الهاتف طويل جدًا"
+
+#: src/Modules/RecoveryDashboard/DashboardPage.php:35
+#: src/Modules/RecoveryDashboard/DashboardPage.php:36
+msgid "Recovery"
+msgstr "الاسترداد"
+
+#: src/Modules/RecoveryDashboard/SettingsController.php:120
+msgid "Recovery settings could not be saved completely. Review the current values and try again."
+msgstr "تعذر حفظ إعدادات الاسترداد بالكامل. راجع القيم الحالية وحاول مرة أخرى."
+
+#: src/Modules/RevenueAnalytics/RevenueAnalyticsModule.php:81
+msgid "Every fifteen minutes"
+msgstr "كل خمس عشرة دقيقة"
+
+#: src/Modules/RevenueAnalytics/RevenuePage.php:27
+#: src/Modules/RevenueAnalytics/RevenuePage.php:28
+#: build/dashboard.js:1
+msgid "Revenue Analytics"
+msgstr "تحليلات الإيرادات"
+
+#: src/Modules/Settings/ModulesController.php:85
+msgid "You are not allowed to change these settings."
+msgstr "غير مسموح لك بتغيير هذه الإعدادات."
+
+#: src/Modules/Settings/ModulesController.php:126
+msgid "Module settings could not be saved."
+msgstr "تعذر حفظ إعدادات الأجزاء."
+
+#: src/Modules/Settings/SettingsPage.php:35
+#: src/Modules/Settings/SettingsPage.php:36
+#: build/dashboard.js:1
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: build/dashboard.js:1
+msgid "Recent checkout activity"
+msgstr "أحدث نشاط لإتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Nothing recorded yet. Activity appears here once customers start reaching the checkout."
+msgstr "لم يُسجَّل شيء بعد. سيظهر النشاط هنا عندما يبدأ العملاء في الوصول إلى صفحة إتمام الطلب."
+
+#: build/dashboard.js:1
+msgid "Customer"
+msgstr "العميل"
+
+#: build/dashboard.js:1
+msgid "Value"
+msgstr "القيمة"
+
+#: build/dashboard.js:1
+msgid "Items"
+msgstr "المنتجات"
+
+#: build/dashboard.js:1
+msgid "Reached"
+msgstr "وصل إلى"
+
+#: build/dashboard.js:1
+msgid "Order"
+msgstr "الطلب"
+
+#: build/dashboard.js:1
+msgid "In progress"
+msgstr "قيد التنفيذ"
+
+#: build/dashboard.js:1
+msgid "Abandoned"
+msgstr "متروك"
+
+#: build/dashboard.js:1
+msgid "Completed"
+msgstr "مكتمل"
+
+#: build/dashboard.js:1
+msgid "no permission"
+msgstr "بدون موافقة"
+
+#: build/dashboard.js:1
+msgid "Contact"
+msgstr "بيانات التواصل"
+
+#: build/dashboard.js:1
+msgid "Billing"
+msgstr "الفاتورة"
+
+#: build/dashboard.js:1
+msgid "Shipping"
+msgstr "الشحن"
+
+#: build/dashboard.js:1
+msgid "Payment"
+msgstr "الدفع"
+
+#: build/dashboard.js:1
+msgid "Review"
+msgstr "المراجعة"
+
+#: build/dashboard.js:1
+msgid "not on the Checkout block"
+msgstr "غير مدعوم في مكوّن إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Your checkout uses the Checkout block. A rule marked above cannot be expressed there, and one such rule stops its whole group from applying — the group is kept as a whole rather than quietly applying only part of what you asked for. The classic checkout is unaffected."
+msgstr "صفحة إتمام الطلب لديك تستخدم مكوّن إتمام الطلب (Checkout block). القاعدة المميزة أعلاه لا يمكن تطبيقها هناك، ووجود قاعدة واحدة من هذا النوع يوقف تطبيق مجموعتها بالكامل — تُحفظ المجموعة كما هي بدلًا من تطبيق جزء فقط مما طلبته دون تنبيه. صفحة إتمام الطلب الكلاسيكية لا تتأثر."
+
+#: build/dashboard.js:1
+msgid "Your checkout page uses the Checkout block."
+msgstr "صفحة إتمام الطلب لديك تستخدم مكوّن إتمام الطلب (Checkout block)."
+
+#: build/dashboard.js:1
+msgid "Most settings here apply to it, including field order, visibility, labels, widths and conditions. The few that WooCommerce cannot express on that checkout are marked where you choose them. Checkout Recovery works on both."
+msgstr "معظم الإعدادات هنا تنطبق عليه، ومنها ترتيب الحقول وظهورها وعناوينها وعرضها وشروطها. الإعدادات القليلة التي لا يستطيع WooCommerce تطبيقها هناك مميزة عند اختيارها. استرداد عمليات إتمام الطلب يعمل في الحالتين."
+
+#: build/dashboard.js:1
+msgid "Show"
+msgstr "إظهار"
+
+#: build/dashboard.js:1
+msgid "Hide"
+msgstr "إخفاء"
+
+#: build/dashboard.js:1
+msgid "All conditions match"
+msgstr "تحقق كل الشروط"
+
+#: build/dashboard.js:1
+msgid "Any condition matches"
+msgstr "تحقق أي شرط"
+
+#: build/dashboard.js:1
+msgid "is"
+msgstr "يساوي"
+
+#: build/dashboard.js:1
+msgid "is not"
+msgstr "لا يساوي"
+
+#: build/dashboard.js:1
+msgid "contains"
+msgstr "يحتوي على"
+
+#: build/dashboard.js:1
+msgid "not contains"
+msgstr "لا يحتوي على"
+
+#: build/dashboard.js:1
+msgid "starts with"
+msgstr "يبدأ بـ"
+
+#: build/dashboard.js:1
+msgid "ends with"
+msgstr "ينتهي بـ"
+
+#: build/dashboard.js:1
+msgid "is empty"
+msgstr "فارغ"
+
+#: build/dashboard.js:1
+msgid "is not empty"
+msgstr "غير فارغ"
+
+#: build/dashboard.js:1
+msgid "greater than"
+msgstr "أكبر من"
+
+#: build/dashboard.js:1
+msgid "less than"
+msgstr "أصغر من"
+
+#: build/dashboard.js:1
+msgid "checked"
+msgstr "محدد"
+
+#: build/dashboard.js:1
+msgid "unchecked"
+msgstr "غير محدد"
+
+#: build/dashboard.js:1
+msgid "in"
+msgstr "ضمن"
+
+#: build/dashboard.js:1
+msgid "not in"
+msgstr "ليس ضمن"
+
+#: build/dashboard.js:1
+msgid "Fade"
+msgstr "تلاشي"
+
+#: build/dashboard.js:1
+msgid "Slide"
+msgstr "انزلاق"
+
+#: build/dashboard.js:1
+msgid "or"
+msgstr "أو"
+
+#: build/dashboard.js:1
+msgid "and"
+msgstr "و"
+
+#: build/dashboard.js:1
+msgid "Remove rule"
+msgstr "حذف القاعدة"
+
+#: build/dashboard.js:1
+msgid "Add rule"
+msgstr "إضافة قاعدة"
+
+#: build/dashboard.js:1
+msgid "Show or hide based on another field"
+msgstr "إظهار أو إخفاء حسب حقل آخر"
+
+#: build/dashboard.js:1
+msgid "Show or hide based on entered values"
+msgstr "إظهار أو إخفاء حسب القيم المُدخلة"
+
+#: build/dashboard.js:1
+msgid "Text"
+msgstr "نص"
+
+#: build/dashboard.js:1
+msgid "Number"
+msgstr "رقم"
+
+#: build/dashboard.js:1
+msgid "Email"
+msgstr "بريد إلكتروني"
+
+#: build/dashboard.js:1
+msgid "URL"
+msgstr "رابط"
+
+#: build/dashboard.js:1
+msgid "Select"
+msgstr "قائمة اختيار"
+
+#: build/dashboard.js:1
+msgid "Textarea"
+msgstr "نص متعدد الأسطر"
+
+#: build/dashboard.js:1
+msgid "Field type"
+msgstr "نوع الحقل"
+
+#: build/dashboard.js:1
+msgid "not shown on the Checkout block"
+msgstr "لا يظهر في مكوّن إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "plain text on the Checkout block"
+msgstr "نص عادي في مكوّن إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Add field"
+msgstr "إضافة حقل"
+
+#: build/dashboard.js:1
+msgid "Edit field"
+msgstr "تعديل الحقل"
+
+#: build/dashboard.js:1
+msgid "Section"
+msgstr "القسم"
+
+#: build/dashboard.js:1
+msgid "Changing the type discards settings that belonged to the old type."
+msgstr "تغيير النوع يحذف الإعدادات الخاصة بالنوع القديم."
+
+#: build/dashboard.js:1
+msgid "Label"
+msgstr "العنوان"
+
+#: build/dashboard.js:1
+msgid "Placeholder"
+msgstr "النص التوضيحي"
+
+#: build/dashboard.js:1
+msgid "Default value"
+msgstr "القيمة الافتراضية"
+
+#: build/dashboard.js:1
+msgid "Options"
+msgstr "الخيارات"
+
+#: build/dashboard.js:1
+msgid "One per line, as value|Label."
+msgstr "خيار في كل سطر، بالشكل value|العنوان."
+
+#: build/dashboard.js:1
+msgid "Required"
+msgstr "مطلوب"
+
+#: build/dashboard.js:1
+msgid "Enabled"
+msgstr "مفعّل"
+
+#: build/dashboard.js:1
+msgid "Update field"
+msgstr "تحديث الحقل"
+
+#: build/dashboard.js:1
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: build/dashboard.js:1
+msgid "Backup"
+msgstr "نسخة احتياطية"
+
+#: build/dashboard.js:1
+msgid "Download every checkout field, along with the multi-step and autocomplete settings, as one file. Keep it before making large changes, or use it to copy this setup to another store."
+msgstr "نزّل كل حقول إتمام الطلب، مع إعدادات الخطوات المتعددة والإكمال التلقائي، في ملف واحد. احتفظ به قبل إجراء تغييرات كبيرة، أو استخدمه لنقل هذا الإعداد إلى متجر آخر."
+
+#: build/dashboard.js:1
+msgid "Settings downloaded."
+msgstr "تم تنزيل الإعدادات."
+
+#: build/dashboard.js:1
+msgid "Export settings"
+msgstr "تصدير الإعدادات"
+
+#: build/dashboard.js:1
+msgid "Restore"
+msgstr "استعادة"
+
+#: build/dashboard.js:1
+msgid "Importing replaces your current checkout fields with the ones in the file."
+msgstr "الاستيراد يستبدل حقول إتمام الطلب الحالية بالحقول الموجودة في الملف."
+
+#: build/dashboard.js:1
+msgid "Settings imported. Reloading…"
+msgstr "تم استيراد الإعدادات. جارٍ إعادة التحميل…"
+
+#: build/dashboard.js:1
+msgid "That file is not valid JSON."
+msgstr "هذا الملف ليس بصيغة JSON صحيحة."
+
+#: build/dashboard.js:1
+msgid "Reset"
+msgstr "إعادة الضبط"
+
+#: build/dashboard.js:1
+msgid "Clears every field customisation and returns the checkout to the WooCommerce defaults. Multi-step, autocomplete, and recovery settings are left alone."
+msgstr "يمسح كل تخصيصات الحقول ويعيد صفحة إتمام الطلب إلى إعدادات WooCommerce الافتراضية. إعدادات الخطوات المتعددة والإكمال التلقائي والاسترداد لا تتأثر."
+
+#: build/dashboard.js:1
+msgid "This clears every checkout field customisation and returns to the WooCommerce defaults. Continue?"
+msgstr "سيؤدي هذا إلى مسح كل تخصيصات حقول إتمام الطلب والرجوع إلى إعدادات WooCommerce الافتراضية. هل تريد المتابعة؟"
+
+#: build/dashboard.js:1
+msgid "Reset. Reloading…"
+msgstr "تمت إعادة الضبط. جارٍ إعادة التحميل…"
+
+#: build/dashboard.js:1
+msgid "Reset checkout fields"
+msgstr "إعادة ضبط حقول إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Reload now"
+msgstr "إعادة التحميل الآن"
+
+#: build/dashboard.js:1
+msgid "required"
+msgstr "مطلوب"
+
+#: build/dashboard.js:1
+msgid "hidden"
+msgstr "مخفي"
+
+#: build/dashboard.js:1
+msgid "conditional"
+msgstr "مشروط"
+
+#: build/dashboard.js:1
+msgid "Move up"
+msgstr "تحريك لأعلى"
+
+#: build/dashboard.js:1
+msgid "Move down"
+msgstr "تحريك لأسفل"
+
+#: build/dashboard.js:1
+msgid "Width (%)"
+msgstr "العرض (%)"
+
+#: build/dashboard.js:1
+msgid "Show on the checkout"
+msgstr "إظهار في صفحة إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Type, rules and conditions"
+msgstr "النوع والقواعد والشروط"
+
+#: build/dashboard.js:1
+msgid "Remove this field?"
+msgstr "حذف هذا الحقل؟"
+
+#: build/dashboard.js:1
+msgid "Remove this field"
+msgstr "حذف هذا الحقل"
+
+#: build/dashboard.js:1
+msgid "Choose a field to edit it."
+msgstr "اختر حقلًا لتعديله."
+
+#: build/dashboard.js:1
+msgid "Fields saved."
+msgstr "تم حفظ الحقول."
+
+#: build/dashboard.js:1
+msgid "Save fields"
+msgstr "حفظ الحقول"
+
+#: build/dashboard.js:1
+msgid "Unsaved changes"
+msgstr "تغييرات غير محفوظة"
+
+#: build/dashboard.js:1
+msgid "All changes saved"
+msgstr "تم حفظ كل التغييرات"
+
+#: build/dashboard.js:1
+msgid "Decide what your checkout asks for, and when it asks for it."
+msgstr "حدد ما تطلبه صفحة إتمام الطلب من العميل، ومتى تطلبه."
+
+#: build/dashboard.js:1
+msgid "Fields"
+msgstr "الحقول"
+
+#: build/dashboard.js:1
+msgid "Tools"
+msgstr "الأدوات"
+
+#: build/dashboard.js:1
+msgid "What this plugin does"
+msgstr "ما الذي تقوم به هذه الإضافة"
+
+#: build/dashboard.js:1
+msgid "Switching a part off stops it loading at all, on the checkout and in the admin. Nothing you have configured is deleted, so switching it back on restores it."
+msgstr "إيقاف أي جزء يمنع تحميله تمامًا، في صفحة إتمام الطلب وفي لوحة التحكم. لا يُحذف أي شيء قمت بإعداده، لذا تشغيله مرة أخرى يعيده كما كان."
+
+#: build/dashboard.js:1
+msgid "Saved. Reload any open screen to see the change."
+msgstr "تم الحفظ. أعد تحميل أي شاشة مفتوحة لترى التغيير."
+
+#: build/dashboard.js:1
+msgid "Save"
+msgstr "حفظ"
+
+#: build/dashboard.js:1
+msgid "Recording"
+msgstr "التسجيل"
+
+#: build/dashboard.js:1
+msgid "Record checkout activity"
+msgstr "تسجيل نشاط إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Stores what customers enter at checkout so unfinished orders can be recovered."
+msgstr "يحفظ ما يكتبه العملاء في صفحة إتمام الطلب حتى يمكن استرداد الطلبات غير المكتملة."
+
+#: build/dashboard.js:1
+msgid "Ask the customer for permission first"
+msgstr "اطلب موافقة العميل أولًا"
+
+#: build/dashboard.js:1
+msgid "Nothing is stored unless the customer agrees. Required in the EU and UK. Only turn this off if you are certain your local law allows it."
+msgstr "لا يُحفظ أي شيء إلا بموافقة العميل. هذا مطلوب في الاتحاد الأوروبي والمملكة المتحدة. لا توقفه إلا إذا كنت متأكدًا أن القانون المحلي لديك يسمح بذلك."
+
+#: build/dashboard.js:1
+msgid "Permission wording shown at checkout"
+msgstr "نص طلب الموافقة في صفحة إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Timing"
+msgstr "التوقيت"
+
+#: build/dashboard.js:1
+msgid "Treat a checkout as abandoned after"
+msgstr "اعتبار إتمام الطلب متروكًا بعد"
+
+#: build/dashboard.js:1
+msgid "Minutes of no activity."
+msgstr "دقائق بدون أي نشاط."
+
+#: build/dashboard.js:1
+msgid "Recovery email"
+msgstr "رسالة الاسترداد"
+
+#: build/dashboard.js:1
+msgid "Optional subject override for email 1"
+msgstr "عنوان بديل اختياري للرسالة 1"
+
+#: build/dashboard.js:1
+msgid "Optional email subject"
+msgstr "عنوان الرسالة (اختياري)"
+
+#: build/dashboard.js:1
+msgid "Optional message added to email 1"
+msgstr "نص اختياري يُضاف إلى الرسالة 1"
+
+#: build/dashboard.js:1
+msgid "Email message"
+msgstr "نص الرسالة"
+
+#: build/dashboard.js:1
+msgid "Use {name} for the customer, {link} for the button back to their checkout, and {site} for your store name."
+msgstr "استخدم {name} لاسم العميل، و{link} لزر العودة إلى صفحة إتمام الطلب، و{site} لاسم متجرك."
+
+#: build/dashboard.js:1
+msgid "Recover abandoned checkout value automatically"
+msgstr "استرد قيمة عمليات إتمام الطلب المتروكة تلقائيًا"
+
+#: build/dashboard.js:1
+msgid "Lite records abandoned checkouts and their potential value. Pro sends a four-email sequence and restores the saved cart through a secure link."
+msgstr "النسخة المجانية تسجل عمليات إتمام الطلب المتروكة وقيمتها المحتملة. نسخة Pro ترسل سلسلة من أربع رسائل وتستعيد السلة المحفوظة عبر رابط آمن."
+
+#: build/dashboard.js:1
+msgid "Explore Pro recovery"
+msgstr "اكتشف الاسترداد في Pro"
+
+#: build/dashboard.js:1
+msgid "Data"
+msgstr "البيانات"
+
+#: build/dashboard.js:1
+msgid "Keep checkout activity for"
+msgstr "الاحتفاظ بنشاط إتمام الطلب لمدة"
+
+#: build/dashboard.js:1
+msgid "Days, then delete it automatically."
+msgstr "يوم، ثم يُحذف تلقائيًا."
+
+#: build/dashboard.js:1
+msgid "Delete all plugin data when the plugin is deleted"
+msgstr "حذف كل بيانات الإضافة عند حذف الإضافة"
+
+#: build/dashboard.js:1
+msgid "Turn this off to keep your settings and stored activity if you remove the plugin."
+msgstr "أوقف هذا الخيار للاحتفاظ بإعداداتك والنشاط المحفوظ إذا حذفت الإضافة."
+
+#: build/dashboard.js:1
+msgid "Save settings"
+msgstr "حفظ الإعدادات"
+
+#: build/dashboard.js:1
+msgid "Remove the shipping section entirely"
+msgstr "إزالة قسم الشحن بالكامل"
+
+#: build/dashboard.js:1
+msgid "For stores that never ship anything. Shipping fields disappear from the checkout."
+msgstr "للمتاجر التي لا تشحن أي شيء. حقول الشحن ستختفي من صفحة إتمام الطلب."
+
+#: build/dashboard.js:1
+msgid "General"
+msgstr "عام"
+
+#: build/dashboard.js:1
+msgid "Checkout"
+msgstr "إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Everything the plugin can do, and how each part behaves."
+msgstr "كل ما تستطيع الإضافة فعله، وكيف يعمل كل جزء."
+
+#: build/dashboard.js:1
+msgid "Checkout attempts"
+msgstr "محاولات إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Orders placed"
+msgstr "الطلبات المكتملة"
+
+#: build/dashboard.js:1
+msgid "Abandoned attempts"
+msgstr "المحاولات المتروكة"
+
+#: build/dashboard.js:1
+msgid "Checkout funnel"
+msgstr "مسار إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "Measure checkout outcomes and the potential value sitting in abandoned checkouts."
+msgstr "قِس نتائج إتمام الطلب والقيمة المحتملة في عمليات إتمام الطلب المتروكة."
+
+#: build/dashboard.js:1
+msgid "Period"
+msgstr "الفترة"
+
+#: build/dashboard.js:1
+msgid "Last 7 days"
+msgstr "آخر 7 أيام"
+
+#: build/dashboard.js:1
+msgid "Last 30 days"
+msgstr "آخر 30 يومًا"
+
+#: build/dashboard.js:1
+msgid "Checkout measurement is off. Enable recording in Recovery settings to collect new activity."
+msgstr "قياس إتمام الطلب متوقف. فعّل التسجيل في إعدادات الاسترداد لجمع نشاط جديد."
+
+#: build/dashboard.js:1
+msgid "Distinct measured sessions"
+msgstr "جلسات مختلفة تم قياسها"
+
+#: build/dashboard.js:1
+msgid "Orders created"
+msgstr "الطلبات التي تم إنشاؤها"
+
+#: build/dashboard.js:1
+msgid "Placement rate"
+msgstr "معدل إتمام الطلبات"
+
+#: build/dashboard.js:1
+msgid "Placed orders divided by closed attempts"
+msgstr "الطلبات المكتملة مقسومة على المحاولات المنتهية"
+
+#: build/dashboard.js:1
+msgid "Inactive beyond your threshold"
+msgstr "بدون نشاط لمدة أطول من الحد الذي حددته"
+
+#: build/dashboard.js:1
+msgid "Potential abandoned checkout value"
+msgstr "القيمة المحتملة لعمليات إتمام الطلب المتروكة"
+
+#: build/dashboard.js:1
+msgid "Captured cart value; not guaranteed lost or recoverable revenue"
+msgstr "قيمة السلات المسجلة؛ وليست بالضرورة إيرادات ضائعة أو قابلة للاسترداد"
+
+#: build/dashboard.js:1
+msgid "Turn abandoned checkout value into recovered orders"
+msgstr "حوّل قيمة عمليات إتمام الطلب المتروكة إلى طلبات مستردة"
+
+#: build/dashboard.js:1
+msgid "A separate add-on can automate recovery and add deeper reporting."
+msgstr "يمكن لإضافة منفصلة أتمتة الاسترداد وإضافة تقارير أعمق."
+
+#: build/dashboard.js:1
+msgid "Explore recovery add-ons"
+msgstr "اكتشف إضافات الاسترداد"
+
+#: build/dashboard.js:1
+msgid "The dashboard could not load its figures."
+msgstr "تعذر على لوحة التحكم تحميل الأرقام."
+
+#: build/dashboard.js:1
+msgid "Recording checkout activity is switched off, so nothing new is being captured. Turn it on in Settings."
+msgstr "تسجيل نشاط إتمام الطلب متوقف، لذلك لا يُسجَّل أي شيء جديد. شغّله من الإعدادات."
+
+#: build/dashboard.js:1
+msgid "Abandoned checkouts"
+msgstr "عمليات إتمام الطلب المتروكة"
+
+#: build/dashboard.js:1
+msgid "Still being filled in"
+msgstr "ما زالت قيد التعبئة"
+
+#: build/dashboard.js:1
+msgid "Tracked checkouts that became orders"
+msgstr "عمليات إتمام طلب مسجلة تحولت إلى طلبات"
+
+#: build/dashboard.js:1
+msgid "You can see the lost value. The add-on helps win it back."
+msgstr "يمكنك رؤية القيمة الضائعة، والإضافة تساعدك على استعادتها."
+
+#: build/dashboard.js:1
+msgid "Automated recovery emails, secure cart-resume links, and recovered-revenue reporting are provided by a separate add-on."
+msgstr "رسائل الاسترداد التلقائية وروابط استكمال السلة الآمنة وتقارير الإيرادات المستردة تقدمها إضافة منفصلة."
+
+#: build/dashboard.js:1
+msgid "Checkout Activity"
+msgstr "نشاط إتمام الطلب"
+
+#: build/dashboard.js:1
+msgid "See unfinished checkouts and the value currently being left behind."
+msgstr "شاهد عمليات إتمام الطلب غير المكتملة والقيمة المتروكة حاليًا."

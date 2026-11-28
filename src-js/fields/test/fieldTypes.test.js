@@ -4,7 +4,7 @@
  * @package SimpleCheckoutFieldsEditor
  */
 
-import { availableTypes } from '../fieldTypes';
+import { availableTypes, typeLabel } from '../fieldTypes';
 import proFieldTypes from '../../../checkout-lift-for-woocommerce-pro/src-js/admin/fieldTypes';
 
 describe( 'availableTypes', () => {
@@ -50,5 +50,15 @@ describe( 'availableTypes', () => {
 
 	it( 'keeps an existing Pro value round-trip safe when Pro is absent', () => {
 		expect( availableTypes( 'fee' ) ).toContainEqual( { value: 'fee', label: 'fee' } );
+	} );
+} );
+
+describe( 'typeLabel', () => {
+	it( 'shows the translatable label of a stored type, not its key', () => {
+		expect( typeLabel( 'textarea' ) ).toBe( 'Textarea' );
+	} );
+
+	it( 'falls back to the stored value for a type it does not know', () => {
+		expect( typeLabel( 'fee' ) ).toBe( 'fee' );
 	} );
 } );

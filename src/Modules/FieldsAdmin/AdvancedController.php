@@ -232,7 +232,15 @@ final class AdvancedController {
 	 * @param mixed  $value Sanitized value.
 	 */
 	private function replace_option( string $name, $value ): bool {
-		return get_option( $name, null ) === $value || update_option( $name, $value );
+		$current = get_option( $name, null );
+
+		// A bool reads back from the database as '1' or '', and update_option()
+		// reports an unchanged value as a failure, so compare the stored meaning.
+		if ( is_bool( $value ) && null !== $current ) {
+			$current = (bool) $current;
+		}
+
+		return $current === $value || update_option( $name, $value );
 	}
 
 	/**

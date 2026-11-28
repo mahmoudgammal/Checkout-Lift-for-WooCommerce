@@ -49,7 +49,8 @@ final class SettingsModule implements Module {
 	 * {@inheritDoc}
 	 */
 	public function boot(): void {
-		add_action( 'admin_menu', array( $this->page, 'register_menu' ) );
+		// Last in the submenu: after Recovery (20) and Revenue Analytics (21).
+		add_action( 'admin_menu', array( $this->page, 'register_menu' ), 30 );
 		add_action( 'rest_api_init', array( $this->controller, 'register_routes' ) );
 	}
 }

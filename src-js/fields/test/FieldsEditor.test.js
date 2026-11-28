@@ -66,6 +66,26 @@ describe( 'FieldsEditor', () => {
 		expect( screen.getAllByText( 'Billing Fields' ).length ).toBeGreaterThan( 0 );
 	} );
 
+	it( 'hides the shipping fields while the shipping section is removed from the checkout', async () => {
+		const shipping = {
+			key: 'shipping',
+			label: 'Shipping Fields',
+			fields: [ { ...response.sections[ 0 ].fields[ 0 ], key: 'shipping_city', label: 'City' } ],
+		};
+
+		apiFetch.mockResolvedValue( {
+			...response,
+			disable_shipping: true,
+			sections: [ ...response.sections, shipping ],
+		} );
+
+		render( <FieldsEditor /> );
+
+		await screen.findByText( 'billing_email' );
+		expect( screen.queryByText( 'shipping_city' ) ).toBeNull();
+		expect( screen.queryByText( 'Shipping Fields' ) ).toBeNull();
+	} );
+
 	it( 'reports a failure instead of rendering an empty screen', async () => {
 		apiFetch.mockRejectedValue( new Error( 'Network is down' ) );
 

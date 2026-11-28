@@ -45,3 +45,15 @@ export function availableTypes( currentType = '' ) {
 
 	return available;
 }
+
+/**
+ * The human label for a stored field type.
+ *
+ * @param {string} value Stored type.
+ * @return {string} Label, or the stored value when the type is unknown.
+ */
+export function typeLabel( value ) {
+	const type = availableTypes( value ).find( ( candidate ) => candidate.value === value );
+
+	return type ? type.label : value;
+}

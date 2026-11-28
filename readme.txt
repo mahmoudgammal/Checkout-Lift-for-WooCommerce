@@ -6,7 +6,7 @@ Tested up to: 7.1
 Requires PHP: 8.0
 WC requires at least: 10.0
 WC tested up to: 11.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,17 @@ Yes. **Checkout Fields → Tools** exports your whole configuration to a file an
 
 == Changelog ==
 
+= 1.0.3 =
+* New: Unfinished checkouts are marked abandoned after the idle time you set, so abandoned totals are counted
+* New: Recent checkout activity lists the products that were in each cart
+* New: Arabic translation included with the plugin
+* Fix: Country flags now show in the phone field
+* Fix: Phone numbers are saved with their country code
+* Fix: Saving fields no longer shows "The shipping setting could not be saved" when the shipping section is removed
+* Tweak: Shipping fields are hidden in the editor while the shipping section is removed
+* Tweak: Settings is now the last item in the Checkout Lift menu
+* Tweak: Condition operators, module names, field types and checkout steps in the admin can now be translated
+
 = 1.0.2 =
 * Fix: The phone field now stays where you place it in the checkout fields editor instead of moving to the end of the form
 * Fix: A saved phone number without a country code now shows the customer's country flag and code instead of a wrong country
@@ -200,6 +211,9 @@ Yes. **Checkout Fields → Tools** exports your whole configuration to a file an
 * Complete removal of plugin-created options when data deletion is enabled on uninstall
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Marks abandoned checkouts on the free version, shows cart products, fixes phone flags and saved phone numbers, and adds an Arabic translation.
 
 = 1.0.2 =
 Fixes the phone field moving to the end of the checkout form and saved phone numbers showing the wrong country. Recommended for all stores.

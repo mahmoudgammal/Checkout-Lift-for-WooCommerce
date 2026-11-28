@@ -62,6 +62,23 @@
 	}
 
 	/**
+	 * Read the phone with its country code when the phone widget is active.
+	 *
+	 * The widget shows a national number such as "10 14000159"; stored that
+	 * way, the country is lost and the number cannot be dialled.
+	 *
+	 * @return {string} International number, or an empty string.
+	 */
+	function internationalPhone() {
+		var field = document.getElementById( 'billing_phone' );
+		var widget = field && window.intlTelInput && window.intlTelInput.getInstance
+			? window.intlTelInput.getInstance( field )
+			: null;
+
+		return widget && field.value.trim() ? text( widget.getNumber() ) : '';
+	}
+
+	/**
 	 * Trim a value that may not be a string.
 	 *
 	 * @param {*} raw Candidate value.
@@ -105,6 +122,8 @@
 			Object.keys( WATCHED ).forEach( function ( id ) {
 				data[ WATCHED[ id ] ] = value( id );
 			} );
+
+			data.phone = internationalPhone() || data.phone;
 
 			var payment = document.querySelector( 'input[name="payment_method"]:checked' );
 			var shipping = document.querySelector( 'input[name^="shipping_method"]:checked' );

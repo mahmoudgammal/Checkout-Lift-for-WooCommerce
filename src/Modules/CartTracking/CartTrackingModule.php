@@ -10,6 +10,8 @@ declare( strict_types=1 );
 namespace DesignTich\SimpleCheckoutFieldsEditor\Modules\CartTracking;
 
 use DesignTich\SimpleCheckoutFieldsEditor\Core\Contracts\Module;
+use DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\AbandonmentMarker;
+use DesignTich\SimpleCheckoutFieldsEditor\Core\Recovery\RecoveryHooks;
 
 /**
  * Registers the capture endpoint.
@@ -24,16 +26,20 @@ final class CartTrackingModule implements Module {
 	/**
 	 * Create the tracking module.
 	 *
-	 * @param CaptureController  $controller Capture endpoint.
-	 * @param ConsentField       $field      Checkout consent control.
-	 * @param TrackingAssets     $assets     Tracker assets.
-	 * @param CheckoutCompletion $completion Records completed tracked checkouts.
+	 * @param CaptureController   $controller Capture endpoint.
+	 * @param ConsentField        $field      Checkout consent control.
+	 * @param TrackingAssets      $assets     Tracker assets.
+	 * @param CheckoutCompletion  $completion Records completed tracked checkouts.
+	 * @param AbandonmentSchedule $schedule   Keeps the abandonment check scheduled.
+	 * @param AbandonmentMarker   $marker     Marks quiet checkouts abandoned.
 	 */
 	public function __construct(
 		private CaptureController $controller,
 		private ConsentField $field,
 		private TrackingAssets $assets,
-		private CheckoutCompletion $completion
+		private CheckoutCompletion $completion,
+		private AbandonmentSchedule $schedule,
+		private AbandonmentMarker $marker
 	) {
 	}
 
@@ -68,5 +74,13 @@ final class CartTrackingModule implements Module {
 		// Close tracked carts from both classic and Store API checkout paths.
 		add_action( 'woocommerce_checkout_order_processed', array( $this->completion, 'from_classic_checkout' ) );
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this->completion, 'from_store_api' ) );
+
+		// Runs after an older add-on's own scan on the same hook, so that scan
+		// still claims the rows it schedules messages for.
+		add_filter( 'cron_schedules', array( $this->schedule, 'add_schedule' ) ); // phpcs:ignore WordPress.WP.CronInterval.ChangeDetected -- AbandonmentSchedule registers 15 minutes, the minimum the sniff allows.
+		add_action( RecoveryHooks::SCAN, array( $this->marker, 'run' ), 20 );
+
+		// Scheduling writes options, so it is kept off customer requests.
+		add_action( 'admin_init', array( $this->schedule, 'schedule' ) );
 	}
 }

@@ -20,6 +20,7 @@ import FieldModal from './FieldModal';
 import { moveField, upsertField, removeField, updateField } from './fieldOperations';
 import Tools from './Tools';
 import CheckoutNotice, { widthNote } from './CheckoutNotice';
+import { typeLabel } from './fieldTypes';
 
 const PATH = '/scfe/v1/fields';
 
@@ -49,7 +50,7 @@ function FieldList() {
 
 				// The settings panel opens on something rather than on a blank
 				// space, so the screen explains itself without a first click.
-				const first = ( loaded.sections || [] ).find( ( s ) => s.fields.length > 0 );
+				const first = shownSections( loaded ).find( ( s ) => s.fields.length > 0 );
 
 				if ( first ) {
 					setSelected( { section: first.key, key: first.fields[ 0 ].key } );
@@ -183,7 +184,7 @@ function FieldList() {
 
 			<div className="scfe-editor">
 				<div>
-					{ data.sections.map( ( section ) => (
+					{ shownSections( data ).map( ( section ) => (
 						<div className="scfe-card" key={ section.key }>
 							<div className="scfe-card__head">
 								<span className="scfe-card__title">{ section.label }</span>
@@ -243,7 +244,7 @@ function FieldList() {
 												<div className="scfe-row__tags">
 													<span className="scfe-row__key">{ field.key }</span>
 													{ field.custom && (
-														<span className="scfe-tag is-brand">{ field.type }</span>
+														<span className="scfe-tag is-brand">{ typeLabel( field.type ) }</span>
 													) }
 													{ field.required && (
 														<span className="scfe-tag">
@@ -418,7 +419,7 @@ function FieldList() {
 				<FieldModal
 					field={ editing.field }
 					section={ editing.section }
-					sections={ data.sections }
+					sections={ shownSections( data ) }
 					allFields={ data.sections.flatMap( ( s ) =>
 						s.fields.map( ( f ) => ( { value: f.key, label: `${ f.label || f.key }` } ) )
 					) }
@@ -451,6 +452,22 @@ function FieldList() {
 			</div>
 		</>
 	);
+}
+
+/**
+ * Sections the editor lists.
+ *
+ * With the shipping section removed from the checkout, its fields are hidden
+ * here too, so the editor never shows fields the checkout does not. They are
+ * still saved unchanged, so switching shipping back on restores them.
+ *
+ * @param {Object} data Loaded editor data.
+ * @return {Array} Sections to list.
+ */
+export function shownSections( data ) {
+	const sections = data.sections || [];
+
+	return data.disable_shipping ? sections.filter( ( section ) => 'shipping' !== section.key ) : sections;
 }
 
 /**
