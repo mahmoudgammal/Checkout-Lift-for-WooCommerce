@@ -1,5 +1,5 @@
 === Checkout Lift for WooCommerce ===
-Contributors: mahmoudgammal, designtich
+Contributors: mahmoudgammal
 Tags: woocommerce, checkout, fields, abandoned cart, conditional
 Requires at least: 7.0
 Tested up to: 7.1
